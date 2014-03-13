@@ -1,0 +1,54 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    tools:context=".QuickActionFragment" >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:maxHeight="100dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/bring_me_lettering" />
+
+        <Button
+            android:id="@+id/myDeliveries"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:drawableRight="@drawable/box_icon"
+            android:gravity="left|center_vertical|center_horizontal"
+            android:text="My Deliveries"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <Button
+            android:id="@+id/findCourier"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:drawableRight="@drawable/box_man_icon"
+            android:gravity="left|center_vertical"
+            android:text="Find Courier"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/deliveryStatus"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:drawableRight="@drawable/box_icon_confirm"
+            android:gravity="left|center_vertical|center_horizontal"
+            android:text="Delivery Status"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</FrameLayout>

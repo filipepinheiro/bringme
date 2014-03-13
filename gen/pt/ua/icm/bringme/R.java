@@ -40,27 +40,33 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int splashScreenTextSize=0x7f050002;
     }
     public static final class drawable {
-        public static final int bring_me_logo=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
+        public static final int box_icon=0x7f020000;
+        public static final int box_icon_confirm=0x7f020001;
+        public static final int box_man_icon=0x7f020002;
+        public static final int bring_me_lettering=0x7f020003;
+        public static final int bring_me_logo=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
     }
     public static final class id {
-        public static final int action_forgot_password=0x7f09000a;
-        public static final int action_settings=0x7f09000b;
-        public static final int button1=0x7f090009;
+        public static final int action_forgot_password=0x7f09000c;
+        public static final int action_settings=0x7f09000d;
+        public static final int deliveryStatus=0x7f09000b;
         public static final int email=0x7f090003;
+        public static final int findCourier=0x7f09000a;
+        public static final int imageView1=0x7f090008;
         public static final int login=0x7f090005;
         public static final int login_form=0x7f090001;
         public static final int login_status=0x7f090000;
         public static final int logo=0x7f090002;
+        public static final int myDeliveries=0x7f090009;
         public static final int pager=0x7f090007;
         public static final int password=0x7f090004;
-        public static final int section_label=0x7f090008;
         public static final int sign_in_button=0x7f090006;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int fragment_main_dummy=0x7f030002;
+        public static final int fragment_quick_action=0x7f030002;
     }
     public static final class menu {
         public static final int login=0x7f080000;
@@ -68,23 +74,24 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int test=0x7f080002;
     }
     public static final class string {
-        public static final int action_forgot_password=0x7f06000f;
+        public static final int action_forgot_password=0x7f060010;
         public static final int action_settings=0x7f060001;
-        public static final int action_sign_in_register=0x7f06000d;
-        public static final int action_sign_in_short=0x7f06000e;
+        public static final int action_sign_in_register=0x7f06000e;
+        public static final int action_sign_in_short=0x7f06000f;
         public static final int app_name=0x7f060000;
         public static final int dummy_button=0x7f060003;
         public static final int dummy_content=0x7f060004;
-        public static final int error_field_required=0x7f060014;
-        public static final int error_incorrect_password=0x7f060013;
-        public static final int error_invalid_email=0x7f060011;
-        public static final int error_invalid_password=0x7f060012;
-        public static final int login_progress_signing_in=0x7f060010;
+        public static final int error_field_required=0x7f060015;
+        public static final int error_incorrect_password=0x7f060014;
+        public static final int error_invalid_email=0x7f060012;
+        public static final int error_invalid_password=0x7f060013;
+        public static final int hello_blank_fragment=0x7f06000a;
+        public static final int login_progress_signing_in=0x7f060011;
         /**  Strings related to login 
          */
-        public static final int prompt_email=0x7f06000b;
-        public static final int prompt_password=0x7f06000c;
-        public static final int title_activity_login=0x7f06000a;
+        public static final int prompt_email=0x7f06000c;
+        public static final int prompt_password=0x7f06000d;
+        public static final int title_activity_login=0x7f06000b;
         public static final int title_activity_main=0x7f060009;
         public static final int title_activity_splashscreen=0x7f060002;
         public static final int title_activity_test=0x7f060005;
