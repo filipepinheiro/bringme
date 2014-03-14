@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,7 +25,7 @@ public class LoginActivity extends Activity {
 	 * TODO: remove after connecting to a real authentication system.
 	 */
 	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"test@test.com:test"};
+			"foo@example.com:hello", "bar@example.com:world" };
 
 	/**
 	 * The default email to populate the email field with.
@@ -47,6 +46,7 @@ public class LoginActivity extends Activity {
 	private EditText mPasswordView;
 	private View mLoginFormView;
 	private View mLoginStatusView;
+	private TextView mLoginStatusMessageView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,7 @@ public class LoginActivity extends Activity {
 
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
+		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -142,6 +143,7 @@ public class LoginActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
+			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((Void) null);
@@ -223,8 +225,6 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
-				Intent openMainActivity = new Intent(getApplicationContext(),MainActivity.class);
-				startActivity(openMainActivity);
 				finish();
 			} else {
 				mPasswordView
