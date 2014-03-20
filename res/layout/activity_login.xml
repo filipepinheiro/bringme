@@ -1,76 +1,83 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pt.ua.icm.bringme.LoginActivity" >
 
-    <!-- Login progress -->
+    <ImageView
+        android:id="@+id/loginBringMeLogo"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:contentDescription="@string/logo_description"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bring_me" />
+
+    <EditText
+        android:id="@+id/loginEmailField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/insert_email"
+        android:inputType="textEmailAddress" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/loginPasswordField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/insert_password"
+        android:inputType="textPassword" />
 
     <LinearLayout
-        android:id="@+id/login_status"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone" >
+        android:gravity="center_vertical|center_horizontal" >
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/loginRegisterButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp" />
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:contentDescription="@string/register_description"
+            android:onClick="registerAccount"
+            android:text="@string/register"
+            tools:ignore="ButtonStyle" />
 
-        <TextView
-            android:id="@+id/login_status_message"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/loginLoginButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/login_progress_signing_in"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:onClick="loginWithBringme"
+            android:text="@string/login"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
-    <!-- Login form -->
-
-    <ScrollView
-        android:id="@+id/login_form"
+    <TextView
+        android:id="@+id/courierFullName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="@string/or"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <LinearLayout
-            style="@style/LoginFormContainer"
-            android:orientation="vertical" >
+    <Button
+        android:id="@+id/mainMenuRequestDelivery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="loginWithFacebook"
+        android:text="@string/login_with_facebook" />
 
-            <EditText
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_password"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-            <Button
-                android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="16dp"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="@string/action_sign_in_register" />
-        </LinearLayout>
-    </ScrollView>
-
-</merge>
+</LinearLayout>

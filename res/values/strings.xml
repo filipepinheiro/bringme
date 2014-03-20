@@ -2,11 +2,36 @@
 <resources>
 
     <string name="app_name">Bring Me</string>
-    <string name="title_section_status">Delivery Status</string>
-    <string name="title_section_deliveries">Deliveries</string>
-    <string name="title_section_find_courier">Find Courier</string>
+    <string name="title_activity_login">Login to Bring Me</string>
     <string name="action_settings">Settings</string>
+    <string name="login">Login</string>
+    <string name="logo_description">BringMe Logo</string>
+    <string name="retrieve_password">Retrieve Password</string>
+    <string name="register">Register</string>
+    <string name="insert_email">Insert E-mail</string>
+    <string name="insert_password">Insert Password</string>
+    <string name="register_description">Register button to regist a new user account</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="account_info">Account information</string>
+    <string name="personal_information">Personal information</string>
+    <string name="password_confirmation">Password Confirmation</string>
+    <string name="password">Password</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="title_activity_register">Register</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="contact">Contact</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="tab_title_delivery_source">Source</string>
+    <string name="tab_title_delivery_target">Target</string>
+    <string name="tab_title_delivery_courier">Courier</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="searchHint">Search</string>
+    <string name="or">Or</string>
+    <string name="login_with_facebook">Login with facebook</string>
+    <string name="title_activity_request_delivery">RequestDeliveryActivity</string>
+    <string name="package_location">Package location</string>
+    <string name="address">Address</string>
+    <string name="package_delivery_location">Package delivery location</string>
 
 </resources>

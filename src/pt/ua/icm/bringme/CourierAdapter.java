@@ -1,37 +1,99 @@
 package pt.ua.icm.bringme;
 
+import java.util.LinkedList;
+
+import pt.ua.icm.bringme.models.Courier;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 public class CourierAdapter extends BaseAdapter {
+	private Context context;
+	private static LayoutInflater inflater = null;
 
-	public CourierAdapter() {
-		// TODO Auto-generated constructor stub
+	LinkedList<Courier> courierList = new LinkedList<Courier>();
+
+	public CourierAdapter(Context context, LinkedList<Courier> courierList) {
+		this.context = context;
+		this.courierList = courierList;
+		inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return courierList.size();
 	}
 
 	@Override
-	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+	public Courier getItem(int position) {
+		return courierList.get(position);
 	}
 
 	@Override
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getItemId(int id) {
+		return id;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		return null;
+		// Inflate with the courier_list_item.xml
+		if (convertView == null)
+			convertView = inflater.inflate(R.layout.courier_list_item, null);
+
+		Courier courier = getItem(position);
+
+		// Set full name on TextView
+		TextView fullNameTextView = (TextView) convertView
+				.findViewById(R.id.courierFullName);
+		fullNameTextView.setText(courier.getFullName());
+
+		// Set Courier Rating
+		RatingBar courierRatingBar = (RatingBar) convertView
+				.findViewById(R.id.courierRating);
+		courierRatingBar.setRating(courier.getRate());
+
+		courierRatingBar.setEnabled(false);
+
+		convertView.setOnClickListener(courierClickHandler(position));
+
+		return convertView;
 	}
+
+	public View.OnClickListener courierClickHandler(int position) {
+		final Courier courier = courierList.get(position);
+
+		View.OnClickListener handler = new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				courier.getContact();
+				String message = "Do you want to ask " + courier.getFullName()
+						+ " to pick your package?";
+
+				Builder alertDialog = new AlertDialog.Builder(context);
+				alertDialog.setMessage(message);
+				alertDialog.setNegativeButton("No", null);
+				alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						DeliveryRequestNotification.sendNotification(context);
+					}
+				});
+				alertDialog.show();
+			}
+		};
+
+		return handler;
+	}
+	
 
 }
