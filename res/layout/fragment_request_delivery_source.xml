@@ -9,7 +9,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/courierFullName"
+        android:id="@+id/deliveryRequestTargetAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/package_location"
@@ -20,13 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/address" >
+        android:hint="@string/address"
+        android:singleLine="true" >
 
         <requestFocus />
     </AutoCompleteTextView>
 
     <ImageView
-        android:id="@+id/profilePhoto"
+        android:id="@+id/requestorProfilePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="center"

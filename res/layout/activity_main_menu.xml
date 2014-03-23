@@ -14,9 +14,50 @@
         android:id="@+id/mainMenuRequestDelivery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/box_icon"
+        android:drawableRight="@drawable/box_icon_request"
         android:gravity="left|center_vertical"
+        android:maxHeight="70dp"
         android:onClick="requestDelivery"
         android:text="Request Delivery" />
+
+    <Button
+        android:id="@+id/mainMenuDeliveryStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/box_icon_status"
+        android:gravity="left|center_vertical"
+        android:maxHeight="70dp"
+        android:onClick="deliveryStatus"
+        android:text="Delivery Status" />
+
+    <Button
+        android:id="@+id/mainMenuRequestList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/box_icon_list"
+        android:gravity="left|center_vertical"
+        android:maxHeight="70dp"
+        android:onClick="myRequestsList"
+        android:text="My requests List" />
+
+    <Button
+        android:id="@+id/mainMenuMyHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/box_icon_history"
+        android:gravity="left|center_vertical"
+        android:maxHeight="70dp"
+        android:onClick="myHistorical"
+        android:text="My Historical" />
+
+    <Button
+        android:id="@+id/mainMenuProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/profile_mainmenu_icon"
+        android:gravity="left|center_vertical"
+        android:maxHeight="70dp"
+        android:onClick="profile"
+        android:text="Profile" />
 
 </LinearLayout>

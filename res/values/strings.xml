@@ -23,6 +23,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="contact">Contact</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="tab_title_delivery_order_details">Order details</string>
     <string name="tab_title_delivery_source">Source</string>
     <string name="tab_title_delivery_target">Target</string>
     <string name="tab_title_delivery_courier">Courier</string>
@@ -33,5 +34,15 @@
     <string name="package_location">Package location</string>
     <string name="address">Address</string>
     <string name="package_delivery_location">Package delivery location</string>
+    <string name="main_menu_view_requests">View requests</string>
+    <string name="title_activity_request_list">RequestListActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="profile_title">Profile</string>
+    <string name="title_activity_delivery_status">DeliveryStatusActivity</string>
+    <string name="title_activity_historical">HistoricalActivity</string>
+    <string name="order_tag">Order Tag</string>
+    <string name="order_description">Order Description</string>
+    <string name="order_special_notes">Order Special Notes (Optional)</string>
+    <string name="title_activity_rate_courier">RateCourierActivity</string>
 
 </resources>

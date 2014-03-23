@@ -1,10 +1,14 @@
 package pt.ua.icm.bringme;
 
+import pt.ua.icm.bringme.datastorage.SQLHelper;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
@@ -19,6 +23,24 @@ public class LoginActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
+	}
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+		SQLHelper BringMeSQL = new SQLHelper(this);
+		
+		SQLiteDatabase SQLDBRead = BringMeSQL.getReadableDatabase();
+		Cursor cs = SQLDBRead.rawQuery("SELECT count(*) FROM users", null);
+		cs.moveToFirst();
+		int count = cs.getInt(0);
+		
+		Toast t = Toast.makeText(this, "Got " + count + " rows", Toast.LENGTH_SHORT);
+		t.show();
+		
+		//GooglePlayServicesUtil.getErrorDialog(ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED, this, 0).show();
 	}
 	
 	/**

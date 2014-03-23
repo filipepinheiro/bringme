@@ -3,6 +3,7 @@
     android:id="@+id/loginContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -16,7 +17,7 @@
         android:layout_height="180dp"
         android:contentDescription="@string/logo_description"
         android:scaleType="fitCenter"
-        android:src="@drawable/bring_me" />
+        android:src="@drawable/bring_me_lettering" />
 
     <EditText
         android:id="@+id/loginEmailField"
@@ -65,7 +66,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/courierFullName"
+        android:id="@+id/deliveryRequestTargetAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"

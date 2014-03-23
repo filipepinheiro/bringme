@@ -1,7 +1,10 @@
-package pt.ua.icm.bringme;
+package pt.ua.icm.bringme.adapters;
 
 import java.util.LinkedList;
 
+import pt.ua.icm.bringme.BringMeNotification;
+import pt.ua.icm.bringme.R;
+import pt.ua.icm.bringme.RequestListActivity;
 import pt.ua.icm.bringme.models.Courier;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -52,7 +55,7 @@ public class CourierAdapter extends BaseAdapter {
 
 		// Set full name on TextView
 		TextView fullNameTextView = (TextView) convertView
-				.findViewById(R.id.courierFullName);
+				.findViewById(R.id.deliveryRequestTargetAddress);
 		fullNameTextView.setText(courier.getFullName());
 
 		// Set Courier Rating
@@ -74,26 +77,33 @@ public class CourierAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				courier.getContact();
 				String message = "Do you want to ask " + courier.getFullName()
 						+ " to pick your package?";
 
 				Builder alertDialog = new AlertDialog.Builder(context);
 				alertDialog.setMessage(message);
 				alertDialog.setNegativeButton("No", null);
-				alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						DeliveryRequestNotification.sendNotification(context);
-					}
-				});
+				alertDialog.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								int icon = BringMeNotification.smallIconDeliveryRequest;
+								BringMeNotification
+										.sendNotification(
+												context,
+												icon,
+												"Delivery Request",
+												"[User] asked you to delivery a package",
+												true, RequestListActivity.class);
+							}
+						});
 				alertDialog.show();
 			}
 		};
 
 		return handler;
 	}
-	
 
 }

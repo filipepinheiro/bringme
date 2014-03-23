@@ -30,5 +30,38 @@ public class MainMenuActivity extends Activity {
 		Intent requestDeliveryIntent = new Intent(this,RequestDeliveryActivity.class);
 		startActivity(requestDeliveryIntent);
 	}
+	
+	/**
+	 * 
+	 * @param view
+	 */
+	public void deliveryStatus(View view){
+		Intent deliveryStatusIntent = new Intent(this,DeliveryStatusActivity.class);
+		startActivity(deliveryStatusIntent);
+	}
+	/**
+	 * 
+	 * @param view
+	 */
+	public void myRequestsList(View view){
+		Intent myRequestListIntent = new Intent(this,RequestListActivity.class);
+		startActivity(myRequestListIntent);
+	}
 
+	/**
+	 * 
+	 * @param view
+	 */
+	public void myHistorical(View view){
+		Intent historicalIntent = new Intent(this,HistoricalActivity.class);
+		startActivity(historicalIntent);
+	}
+	/**
+	 * 
+	 * @param view
+	 */
+	public void profile(View view){
+		Intent profileIntent = new Intent(this,ProfileActivity.class);
+		startActivity(profileIntent);
+	}
 }

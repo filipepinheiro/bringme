@@ -2,12 +2,22 @@ package pt.ua.icm.bringme.models;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class User implements Serializable {
 	private static final long serialVersionUID = -8121361232996384115L;
-	private String firstName,lastName,email,password;
-	private double contact;
-	private float rate;
+	private String firstName, lastName, email, password;
+	private String phoneNumber;
 	private int id;
+
+	/**
+	 * @param firstName
+	 * @param lastName
+	 * @param contact
+	 */
+	public User(String firstName, String lastName, String phoneNumber) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+	}
 
 	/**
 	 * @param firstName
@@ -17,12 +27,26 @@ public class User implements Serializable{
 	 * @param contact
 	 */
 	public User(String firstName, String lastName, String email,
-			String password, double contact) {
+			String password, String phoneNumber) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.contact = contact;
+		this.phoneNumber = phoneNumber;
+	}
+
+	/**
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param phoneNumber
+	 */
+	public User(String firstName, String lastName, String email, String phoneNumber) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
 	}
 
 	/**
@@ -33,7 +57,8 @@ public class User implements Serializable{
 	}
 
 	/**
-	 * @param firstName the firstName to set
+	 * @param firstName
+	 *            the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -47,7 +72,8 @@ public class User implements Serializable{
 	}
 
 	/**
-	 * @param lastName the lastName to set
+	 * @param lastName
+	 *            the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -61,7 +87,8 @@ public class User implements Serializable{
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -75,7 +102,8 @@ public class User implements Serializable{
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -84,56 +112,43 @@ public class User implements Serializable{
 	/**
 	 * @return the contact
 	 */
-	public double getContact() {
-		return contact;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
 	/**
-	 * @param contact the contact to set
+	 * @param contact
+	 *            the contact to set
 	 */
-	public void setContact(double contact) {
-		this.contact = contact;
+	public void setContact(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
-	/**
-	 * @return the rate
-	 */
-	public float getRate() {
-		return rate;
-	}
-
-	/**
-	 * @param rate the rate to set
-	 */
-	public void setRate(float rate) {
-		this.rate = rate;
-	}
-	
 	/**
 	 * @return the id
 	 */
 	public int getId() {
 		return id;
 	}
-	
+
 	/**
 	 * 
 	 * @return the User full name
 	 */
-	public String getFullName(){
+	public String getFullName() {
 		return getFirstName().concat(" ").concat(getLastName());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + ", password=" + password + ", contact="
-				+ contact + ", rate=" + rate + "]";
+				+ ", email=" + email + ", password=" + password + ", phoneNumber="
+				+ phoneNumber + "]";
 	}
-	
-	
 
 }

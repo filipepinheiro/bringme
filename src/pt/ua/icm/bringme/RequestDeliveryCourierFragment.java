@@ -2,6 +2,7 @@ package pt.ua.icm.bringme;
 
 import java.util.LinkedList;
 
+import pt.ua.icm.bringme.adapters.CourierAdapter;
 import pt.ua.icm.bringme.models.Courier;
 import android.app.Activity;
 import android.net.Uri;

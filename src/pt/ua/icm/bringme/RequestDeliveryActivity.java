@@ -133,12 +133,16 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			// below).
 			switch (position) {
 			case 0:
-				return RequestDeliverySourceFragment.newInstance();
+				return RequestDeliveryOrderDetailsFragment.newInstance();
 			case 1:
-				return RequestDeliveryTargetFragment.newInstance();
+				return RequestDeliverySourceFragment.newInstance();
 			case 2:
+				return RequestDeliveryTargetFragment.newInstance();
+			case 3:
 				LinkedList<Courier> courierList = new LinkedList<Courier>();
-				courierList.add(new Courier("Teste", "Teste", "asd", "123", 916413327));
+				//TODO: Retrieve the couriers that are close to the package source area, from cloud
+				courierList.add(new Courier("Hermes", "Courier", "hermes@fastmail.com", 911234567));
+				courierList.add(new Courier("Roger", "Snail", "i.am.slow@mail.com", 911234567));
 				RequestDeliveryCourierFragment courierListFragment = RequestDeliveryCourierFragment.newInstance(); 
 				RequestDeliveryCourierFragment.setCourierlist(courierList);
 				return courierListFragment;
@@ -151,7 +155,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return 4;
 		}
 
 		@Override
@@ -159,10 +163,12 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.tab_title_delivery_source).toUpperCase(l);
+				return getString(R.string.tab_title_delivery_order_details).toUpperCase(l);
 			case 1:
-				return getString(R.string.tab_title_delivery_target).toUpperCase(l);
+				return getString(R.string.tab_title_delivery_source).toUpperCase(l);
 			case 2:
+				return getString(R.string.tab_title_delivery_target).toUpperCase(l);
+			case 3:
 				return getString(R.string.tab_title_delivery_courier).toUpperCase(l);
 			}
 			return null;
