@@ -300,8 +300,10 @@ int drawable ic_plusone_small_off_client 0x7f020080
 int drawable ic_plusone_standard_off_client 0x7f020081
 int drawable ic_plusone_tall_off_client 0x7f020082
 int drawable map_placeholder 0x7f020083
-int drawable profile_icon 0x7f020084
-int drawable profile_mainmenu_icon 0x7f020085
+int drawable pin_destination 0x7f020084
+int drawable pin_origin 0x7f020085
+int drawable profile_icon 0x7f020086
+int drawable profile_mainmenu_icon 0x7f020087
 int id LinearLayout1 0x7f06007b
 int id MapPlaceholder 0x7f060049
 int id TextView01 0x7f060076
@@ -318,7 +320,7 @@ int id action_context_bar 0x7f060020
 int id action_menu_divider 0x7f060019
 int id action_menu_presenter 0x7f06001a
 int id action_mode_close_button 0x7f060027
-int id action_settings 0x7f060082
+int id action_settings 0x7f060084
 int id activity_chooser_view_content 0x7f060028
 int id always 0x7f06000f
 int id beginning 0x7f060014
@@ -427,6 +429,8 @@ int id sourceMapAddress 0x7f060080
 int id split_action_bar 0x7f060021
 int id submit_area 0x7f06003c
 int id tabMode 0x7f060006
+int id targetMap 0x7f060083
+int id targetMapAddress 0x7f060082
 int id terrain 0x7f060003
 int id title 0x7f06002e
 int id top_action_bar 0x7f060023
