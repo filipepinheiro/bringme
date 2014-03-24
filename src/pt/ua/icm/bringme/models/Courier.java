@@ -18,4 +18,12 @@ public class Courier extends User {
 		this(firstName,lastName,email,String.valueOf(phoneNumber));
 	}
 
+	public float getRate() {
+		return rate;
+	}
+
+	public void setRate(float rate) {
+		this.rate = rate;
+	}
+
 }
