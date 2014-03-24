@@ -16,7 +16,7 @@ public class SQLHelper extends SQLiteOpenHelper {
     public static final int INVALID_USER_AUTHENTICATION = -1;
     private static final String USER_TABLE_CREATE =
     		"CREATE TABLE " + USER_TABLE_NAME + " (" +
-    				"id INT PRIMARY KEY, " +
+    				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
     				"firstName TEXT, " +
     				"lastName TEXT, " +
     				"email TEXT, " +
@@ -65,6 +65,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 		Log.i("BringMeLogin", count + " account matched!");
 		if(count == 1){
 			cs = db.rawQuery("SELECT id FROM users WHERE email='" + email + "' AND password='" + password +"';", null);
+			cs.moveToFirst();
 			return cs.getInt(0);
 		}
 		cs.close();

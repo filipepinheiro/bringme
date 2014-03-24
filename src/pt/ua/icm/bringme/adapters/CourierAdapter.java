@@ -61,7 +61,7 @@ public class CourierAdapter extends BaseAdapter {
 		// Set Courier Rating
 		RatingBar courierRatingBar = (RatingBar) convertView
 				.findViewById(R.id.courierRating);
-		courierRatingBar.setRating(courier.getRate());
+		courierRatingBar.setRating((float) courier.getRate());
 
 		courierRatingBar.setEnabled(false);
 

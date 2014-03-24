@@ -141,8 +141,8 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			case 3:
 				LinkedList<Courier> courierList = new LinkedList<Courier>();
 				//TODO: Retrieve the couriers that are close to the package source area, from cloud
-				courierList.add(new Courier("Hermes", "Courier", "hermes@fastmail.com", 911234567));
-				courierList.add(new Courier("Roger", "Snail", "i.am.slow@mail.com", 911234567));
+				courierList.add(new Courier("Hermes", "Courier", "hermes@fastmail.com", 911234567,4.5));
+				courierList.add(new Courier("Roger", "Snail", "i.am.slow@mail.com", 911234567,2.0));
 				RequestDeliveryCourierFragment courierListFragment = RequestDeliveryCourierFragment.newInstance(); 
 				RequestDeliveryCourierFragment.setCourierlist(courierList);
 				return courierListFragment;

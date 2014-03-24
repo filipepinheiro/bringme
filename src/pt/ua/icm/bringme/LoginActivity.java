@@ -38,7 +38,6 @@ public class LoginActivity extends Activity {
 	
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
 		
 		SQLHelper BringMeSQL = new SQLHelper(this);
@@ -62,9 +61,8 @@ public class LoginActivity extends Activity {
 		String email = ((TextView) findViewById(R.id.loginEmailField)).getText().toString();
 		String password = ((TextView) findViewById(R.id.loginPasswordField)).getText().toString();
 		
-		Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"},
-		         false, null, null, null, null);
-		 startActivityForResult(intent, 2);
+		//Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"},false, null, null, null, null);
+		 //startActivityForResult(intent, 2);
 
 		
 		int userID = new SQLHelper(this).existsUser(email, password);
@@ -72,7 +70,7 @@ public class LoginActivity extends Activity {
 		if(userID != SQLHelper.INVALID_USER_AUTHENTICATION){
 			//Get private SharedPreferences
 			SharedPreferences prefs = this.getSharedPreferences("pt.ua.icm.bringme", Context.MODE_PRIVATE);
-			prefs.edit().putInt("userID", userID);
+			prefs.edit().putInt("userID", userID).commit();
 			
 			Intent mainMenuIntent = new Intent(this,MainMenuActivity.class);
 			startActivity(mainMenuIntent);
