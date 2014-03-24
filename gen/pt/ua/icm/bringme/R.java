@@ -1213,7 +1213,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060019;
         public static final int action_menu_presenter=0x7f06001a;
         public static final int action_mode_close_button=0x7f060027;
-        public static final int action_settings=0x7f060081;
+        public static final int action_settings=0x7f060082;
         public static final int activity_chooser_view_content=0x7f060028;
         public static final int always=0x7f06000f;
         public static final int autoCompleteTextView1=0x7f060080;
@@ -1318,6 +1318,7 @@ containing a value of this type.
         public static final int showCustom=0x7f06000b;
         public static final int showHome=0x7f060008;
         public static final int showTitle=0x7f06000a;
+        public static final int sourceMap=0x7f060081;
         public static final int split_action_bar=0x7f060021;
         public static final int submit_area=0x7f06003c;
         public static final int tabMode=0x7f060006;

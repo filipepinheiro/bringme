@@ -1,5 +1,9 @@
 package pt.ua.icm.bringme;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,14 +49,19 @@ public class RequestDeliverySourceFragment extends Fragment {
 		if (getArguments() != null) {
 			//TODO: Implement
 		}
+		
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_request_delivery_source,
+		View v = inflater.inflate(R.layout.fragment_request_delivery_source,
 				container, false);
+		
+		GoogleMap sourceMap = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.sourceMap)).getMap();
+		
+		return v;
 	}
 
 	// TODO: Rename method, update argument and hook method into UI event

@@ -3,6 +3,8 @@ package pt.ua.icm.bringme;
 import java.util.prefs.Preferences;
 
 import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.internal.em;
 
 import pt.ua.icm.bringme.datastorage.SQLHelper;

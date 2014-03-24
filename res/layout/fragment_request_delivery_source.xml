@@ -26,11 +26,17 @@
         <requestFocus />
     </AutoCompleteTextView>
 
-    <ImageView
+    <!--  ImageView
         android:id="@+id/requestorProfilePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="center"
-        android:src="@drawable/map_placeholder" />
+        android:src="@drawable/map_placeholder" /-->
+        
+        <fragment
+            android:id="@+id/sourceMap"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" 
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
 
 </LinearLayout>

@@ -318,7 +318,7 @@ int id action_context_bar 0x7f060020
 int id action_menu_divider 0x7f060019
 int id action_menu_presenter 0x7f06001a
 int id action_mode_close_button 0x7f060027
-int id action_settings 0x7f060081
+int id action_settings 0x7f060082
 int id activity_chooser_view_content 0x7f060028
 int id always 0x7f06000f
 int id autoCompleteTextView1 0x7f060080
@@ -423,6 +423,7 @@ int id shortcut 0x7f060031
 int id showCustom 0x7f06000b
 int id showHome 0x7f060008
 int id showTitle 0x7f06000a
+int id sourceMap 0x7f060081
 int id split_action_bar 0x7f060021
 int id submit_area 0x7f06003c
 int id tabMode 0x7f060006
