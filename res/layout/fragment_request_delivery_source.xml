@@ -16,7 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView1"
+        android:id="@+id/sourceMapAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
