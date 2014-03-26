@@ -12,6 +12,10 @@ This app is result of collaboration of two courses (Tecnologies and Information 
 wouldn't it be nice if someone you can thrust pass by on your house and picked the lunchbox and deliver it at the school?</p>
 Well, BringMe wants to help you with this kind of matters.
 
+<h2>Requirements</h2>
+To use it properly you should <b>connect to internet</b> via wifi  
+This project requires android version 3.2, but we recomend versions 4+
+
 <h2>How it works</h2>
 <p>Well, if you read yourself the topic above, we will explain you what the app does so that you get your problem solved.</p>
 1. Download and install the app
@@ -50,10 +54,6 @@ Well, BringMe wants to help you with this kind of matters.
 <h2>Status</h2>
 <p>This project is currently in its early stage and still hasn't any backend already.</p>
 <p>Actually presented is a simulation of the system with some static data on it.</p>
-
-<h2>Requirements</h2>
-<b>[Important]</b> To use it properly you should connect to the internet via wifi  
-This project requires android version 3.2, but we recomend versions 4+
 
 <h2>Goals</h2>
 *  Make the application usable and fully implemented  
