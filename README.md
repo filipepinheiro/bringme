@@ -59,8 +59,8 @@ Well, BringMe wants to help you with this kind of matters.
 <h2>Who is working on it</h2>
 From Tecnologies and Information Systems:  
 +  Filipe Manuel Couto Pinheiro  
-+  Hugo Correia  
++  Hugo André Martins Correia  
   
 From Design:  
-+  Ana Ribeiro  
-+  Laura Gouveia  
++  Ana Catarina Machado Ribeiro  
++  Laura Alexandra de Gouveia  
