@@ -14,7 +14,7 @@ Well, BringMe wants to help you with this kind of matters.
 
 <h2>Requirements</h2>
 To use it properly you should <b>connect to internet</b> via wifi  
-This project requires android version 3.2, but we recomend versions 4+
+This project requires android version 3.2 (API 13), but we recomend versions 4+
 
 <h2>How it works</h2>
 <p>Well, if you read yourself the topic above, we will explain you what the app does so that you get your problem solved.</p>
