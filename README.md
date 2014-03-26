@@ -51,6 +51,10 @@ Well, BringMe wants to help you with this kind of matters.
 <p>This project is currently in its early stage and still hasn't any backend already.</p>
 <p>Actually presented is a simulation of the system with some static data on it.</p>
 
+<h2>Requirements</h2>
+<b>[Important]</b> To use it properly you should connect to the internet via wifi  
+This project requires android version 3.2, but we recomend versions 4+
+
 <h2>Goals</h2>
 *  Make the application usable and fully implemented  
 *  Smooth performance on (at least) latest android devices  
