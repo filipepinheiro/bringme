@@ -14,26 +14,26 @@ Well, BringMe wants to help you with this kind of matters.
 
 <h2>How it works</h2>
 <p>Well, if you read yourself the topic above, we will explain you what the app does so that you get your problem solved.</p>
-<li>Download and install the app</li>
-<li>Start the app, and register yourself an account of sign up with your facebook account</li>
-<li>Now on the menu you can use what the app has to offer</li>
+1. Download and install the app
+2. Start the app, and register yourself an account of sign up with your facebook account
+3. Now on the menu you can use what the app has to offer:
 
 <h3>Request Delivery</h3>
 <p>This option is to make a request for someone to make a delivery. To request a delivery you first need to complete 4 small steps (each tab is a step).</p>
 
-<ul><b>Order Details:</b> Here is where you describe your Order/Parcel.</ul>
-  <li><b>Order Tag [Required]</b> - The tag for you order and it meants to be the reference name for the delivery.</li>
-  <li><b>Order Description [Required]</b> - The Description of the order.</li>
-  <li><b>Order Special Notes [Optional]</b> - Here you can write some special notes for the order (example: "Fragile!").</li>
+1. <b>Order Details:</b> Here is where you describe your Order/Parcel.
+  *  <b>Order Tag [Required]</b> - The tag for you order and it meants to be the reference name for the delivery.  
+  *  <b>Order Description [Required]</b> - The Description of the order.  
+  *  <b>Order Special Notes [Optional]</b> - Here you can write some special notes for the order (example: "Fragile!").  
 
-<ul><b>Origin:</b> This is where you say where the package is, so that the courier know where to pick it up.</ul>
-  <li><b>Origin Address [Required]</b> - The address where the package is located.</li>
+2. <b>Origin:</b> This is where you say where the package is, so that the courier know where to pick it up.
+  *  <b>Origin Address [Required]</b> - The address where the package is located.
   
-<ul><b>Destination:</b> This is where you say where the package will be delivered.</ul>
-  <li><b>Destination Address [Required]</b> - The address where the package will be taken to.</li>
+3. <b>Destination:</b> This is where you say where the package will be delivered.
+  *  <b>Destination Address [Required]</b> - The address where the package will be taken to.
   
-<ul><b>Courier:</b> In this step will be given you a list of couriers close by the address of the package origin.</ul>
-  <li><b>Courier [Required]</b> - The courier you picked will get a notification on his smartphone asking him to make the delivery. The courier can accept of reject, and you will be noticed of that too.</li>
+4. <b>Courier:</b> In this step will be given you a list of couriers close by the address of the package origin.
+  *  <b>Courier [Required]</b> - The courier you picked will get a notification on his smartphone asking him to make the delivery. The courier can accept of reject, and you will be noticed of that too.
 
 <h3>Delivery Status</h3>
 <p>This is the option where you can get the information (track) your delivery, by monitoring the courier gps location.</p>
@@ -52,15 +52,15 @@ Well, BringMe wants to help you with this kind of matters.
 <p>Actually presented is a simulation of the system with some static data on it.</p>
 
 <h2>Goals</h2>
-<li>Make the application usable and fully implemented</li>
-<li>Smooth performance on (at least) latest android devices</li>
-<li>Clean and intuitive Design</li>
+*  Make the application usable and fully implemented  
+*  Smooth performance on (at least) latest android devices  
+*  Clean and intuitive Design  
 
 <h2>Who is working on it</h2>
-From Tecnologies and Information Systems:
-<li>Filipe Manuel Couto Pinheiro</li>
-<li>Hugo Correia</li>
-
-From Design:
-<li>Ana Ribeiro</li>
-<li>Laura Gouveia</li>
+From Tecnologies and Information Systems:  
++  Filipe Manuel Couto Pinheiro  
++  Hugo Correia  
+  
+From Design:  
++  Ana Ribeiro  
++  Laura Gouveia  
