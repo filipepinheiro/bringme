@@ -42,7 +42,8 @@ public class User implements Serializable {
 	 * @param email
 	 * @param phoneNumber
 	 */
-	public User(String firstName, String lastName, String email, String phoneNumber) {
+	public User(String firstName, String lastName, String email,
+			String phoneNumber) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -147,8 +148,8 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + ", password=" + password + ", phoneNumber="
-				+ phoneNumber + "]";
+				+ ", email=" + email + ", password=" + password
+				+ ", phoneNumber=" + phoneNumber + "]";
 	}
 
 }

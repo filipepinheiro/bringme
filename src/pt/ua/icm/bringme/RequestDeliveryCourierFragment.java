@@ -22,10 +22,10 @@ import android.widget.ListView;
  * an instance of this fragment.
  * 
  */
-public class RequestDeliveryCourierFragment extends Fragment{
+public class RequestDeliveryCourierFragment extends Fragment {
 
-	private static LinkedList<Courier> courierList = new LinkedList<Courier>();
-	
+	private LinkedList<Courier> courierList = new LinkedList<Courier>();
+		
 	private OnFragmentInteractionListener mListener;
 
 	public static RequestDeliveryCourierFragment newInstance() {
@@ -39,30 +39,33 @@ public class RequestDeliveryCourierFragment extends Fragment{
 		// Required empty public constructor
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			//TODO: Implement
+			courierList = (LinkedList<Courier>) getArguments().getSerializable("COURIER_LIST");
 		}
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.fragment_request_delivery_courier,
 				container, false);
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		
-		ListView courierListView = (ListView) getView().findViewById(R.id.courierListView);
-		courierListView.setAdapter(new CourierAdapter(getActivity(), courierList));
+
+		ListView courierListView = 
+				(ListView) getView().findViewById(R.id.courierListView);
+		courierListView.setAdapter(
+				new CourierAdapter(getActivity(), courierList));
 	}
 
 	// TODO: Rename method, update argument and hook method into UI event
@@ -89,12 +92,12 @@ public class RequestDeliveryCourierFragment extends Fragment{
 		mListener = null;
 	}
 
-	public static LinkedList<Courier> getCourierlist() {
+	public LinkedList<Courier> getCourierlist() {
 		return courierList;
 	}
 
-	public static void setCourierlist(LinkedList<Courier> courierlist) {
-		RequestDeliveryCourierFragment.courierList = courierlist;
+	public void setCourierlist(LinkedList<Courier> courierlist) {
+		courierList = courierlist;
 	}
 
 	/**

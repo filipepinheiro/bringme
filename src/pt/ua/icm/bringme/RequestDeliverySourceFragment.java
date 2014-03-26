@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ua.icm.bringme.datastorage.StaticDatabase;
+import pt.ua.icm.bringme.helpers.AddressHelper;
+
 import android.app.Activity;
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,9 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -42,7 +40,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class RequestDeliverySourceFragment extends Fragment {
 	private OnFragmentInteractionListener mListener;
-	
 	private Geocoder coder;
 
 	/**
@@ -67,11 +64,11 @@ public class RequestDeliverySourceFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			//TODO: Implement
+			// TODO: Implement
 		}
-		
+
 		coder = new Geocoder(getActivity());
-		
+
 	}
 
 	@Override
@@ -80,77 +77,103 @@ public class RequestDeliverySourceFragment extends Fragment {
 		// Inflate the layout for this fragment
 		View v = inflater.inflate(R.layout.fragment_request_delivery_source,
 				container, false);
-		
-		SupportMapFragment supMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.sourceMap);
+
+		SupportMapFragment supMapFragment = (SupportMapFragment) getFragmentManager()
+				.findFragmentById(R.id.sourceMap);
 		final GoogleMap sourceMap = supMapFragment.getMap();
 
-		//TODO: Make this async
-		LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-		Location actualLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		
-		//Default location Aveiro
-		sourceMap.moveCamera(CameraUpdateFactory.newLatLng( new LatLng(40.6273385,-8.6395553)));
+		// TODO: Make this async
+		/*LocationManager mLocationManager = (LocationManager) getActivity()
+				.getSystemService(Context.LOCATION_SERVICE);
+		Location actualLocation = mLocationManager
+				.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);*/
+
+		// Default location Aveiro
+		sourceMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(40.6273385, -8.6395553)));
 		sourceMap.animateCamera(CameraUpdateFactory.zoomTo(8));
-		
-		
-		final AutoCompleteTextView sourceLocationAutoComplete = (AutoCompleteTextView) v.findViewById(R.id.sourceMapAddress);
-		
+
+		final AutoCompleteTextView sourceLocationAutoComplete = 
+				(AutoCompleteTextView) v.findViewById(R.id.sourceMapAddress);
+
 		sourceMap.setOnMapClickListener(new OnMapClickListener() {
-			
+
 			@Override
 			public void onMapClick(LatLng coordinates) {
-				sourceMap.addMarker(new MarkerOptions().position(coordinates).icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_origin)));
+				sourceMap.addMarker(new MarkerOptions().position(coordinates)
+						.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_origin)));
+				
+				StaticDatabase.setOriginCoordinates(coordinates);
+				
 				try {
-					String address = coder.getFromLocation(coordinates.latitude, coordinates.longitude, 1).get(0).getAddressLine(0).toString() +
-							", " + coder.getFromLocation(coordinates.latitude, coordinates.longitude, 1).get(0).getAddressLine(1).toString();
-					sourceLocationAutoComplete.setText(address);
+					Address address = coder.getFromLocation(coordinates.latitude, 
+							coordinates.longitude, 1).get(0);
+
+					String prettyAddress = AddressHelper.getPrettyAddress(address); 
+
+					sourceLocationAutoComplete.setText(prettyAddress);
+					
+					StaticDatabase.setOriginAddress(prettyAddress);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 			}
 		});
-		
+
 		sourceLocationAutoComplete.addTextChangedListener(new TextWatcher() {
 			List<String> addressNameList = new ArrayList<String>();
-			
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if(s.length()<3)
+				if (s.length() < 3){
+					StaticDatabase.originAddress = null;
+					StaticDatabase.originCoordinates = null;
+					sourceMap.clear();
 					return;
-				
+				}
+					
+
 				try {
 					addressNameList.clear();
 					List<Address> addressList = coder.getFromLocationName(s.toString(), 3);
-					
-					for(Address address : addressList){
-						addressNameList.add(address.getAddressLine(0) + ", " + address.getAddressLine(1));
+
+					for (Address address : addressList) {
+						addressNameList.add(AddressHelper.getPrettyAddress(address));
 					}
-					
-					sourceLocationAutoComplete.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line,addressNameList));
+
+					sourceLocationAutoComplete.setAdapter(
+							new ArrayAdapter<String>(
+									getActivity(),
+									android.R.layout.simple_dropdown_item_1line,
+									addressNameList));
 					sourceLocationAutoComplete.showDropDown();
-					
-					if(!addressList.isEmpty()){
-						LatLng address = new LatLng(addressList.get(0).getLatitude(),addressList.get(0).getLongitude());
-						sourceMap.clear();
+
+					if (!addressList.isEmpty()) {
+						LatLng address = new LatLng(addressList.get(0)
+								.getLatitude(), addressList.get(0)
+								.getLongitude());
 						
-						sourceMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_origin)).position(address).flat(true).rotation(0));
+						StaticDatabase.setOriginCoordinates(address);
+						
+						sourceMap.clear();
+
+						sourceMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory
+								.fromResource(R.drawable.pin_origin))
+								.position(address).flat(true).rotation(0));
 					}
-				
-				
-	
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			
+
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {}
-			
+			public void beforeTextChanged(CharSequence s, int start, int count,	int after) {}
+
 			@Override
-			public void afterTextChanged(Editable s) {}
+			public void afterTextChanged(Editable s) {
+				StaticDatabase.setOriginAddress(s.toString());
+			}
 		});
 		return v;
 	}

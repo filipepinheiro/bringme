@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 
 import pt.ua.icm.bringme.models.Courier;
-
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,11 +17,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class RequestDeliveryActivity extends ActionBarActivity implements
-		ActionBar.TabListener, 
-		pt.ua.icm.bringme.RequestDeliveryCourierFragment.OnFragmentInteractionListener, 
+public class RequestDeliveryActivity extends ActionBarActivity
+		implements
+		ActionBar.TabListener,
+		pt.ua.icm.bringme.RequestDeliveryCourierFragment.OnFragmentInteractionListener,
 		pt.ua.icm.bringme.RequestDeliverySourceFragment.OnFragmentInteractionListener,
-		pt.ua.icm.bringme.RequestDeliveryTargetFragment.OnFragmentInteractionListener{
+		pt.ua.icm.bringme.RequestDeliveryTargetFragment.OnFragmentInteractionListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -45,11 +46,13 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		
+		//Enable ActionBar Home
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -58,8 +61,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
-		mViewPager
-				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 					@Override
 					public void onPageSelected(int position) {
 						actionBar.setSelectedNavigationItem(position);
@@ -86,7 +88,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		return true;
 	}
 
-	@Override
+	/*@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
@@ -96,6 +98,17 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}*/
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem menuItem) {
+	    switch (menuItem.getItemId()) {
+	    case android.R.id.home:
+	      Intent homeIntent = new Intent(this, MainMenuActivity.class);
+	      homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	      startActivity(homeIntent);
+	    }
+	  return (super.onOptionsItemSelected(menuItem));
 	}
 
 	@Override
@@ -107,13 +120,11 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 	}
 
 	@Override
-	public void onTabUnselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 	}
 
 	@Override
-	public void onTabReselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
+	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 	}
 
 	/**
@@ -140,12 +151,18 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 				return RequestDeliveryTargetFragment.newInstance();
 			case 3:
 				LinkedList<Courier> courierList = new LinkedList<Courier>();
-				//TODO: Retrieve the couriers that are close to the package source area, from cloud
-				courierList.add(new Courier("Hermes", "Courier", "hermes@fastmail.com", 911234567,4.5));
-				courierList.add(new Courier("Roger", "Snail", "i.am.slow@mail.com", 911234567,2.0));
-				RequestDeliveryCourierFragment courierListFragment = RequestDeliveryCourierFragment.newInstance(); 
-				RequestDeliveryCourierFragment.setCourierlist(courierList);
-				return courierListFragment;
+				// TODO: Retrieve the couriers that are close to the package
+				// source area, from cloud
+				courierList.add(new Courier("Hermes", "Courier",
+						"hermes@fastmail.com", 911234567, 4.5));
+				courierList.add(new Courier("Roger", "Snail",
+						"i.am.slow@mail.com", 911234567, 2.0));
+				
+				RequestDeliveryCourierFragment courierFragment = RequestDeliveryCourierFragment.newInstance();
+				Bundle args = new Bundle();
+				args.putSerializable("COURIER_LIST", courierList);
+				courierFragment.setArguments(args);
+				return courierFragment;
 			}
 
 			return null;
@@ -163,13 +180,17 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.tab_title_delivery_order_details).toUpperCase(l);
+				return getString(R.string.tab_title_delivery_order_details)
+						.toUpperCase(l);
 			case 1:
-				return getString(R.string.tab_title_delivery_source).toUpperCase(l);
+				return getString(R.string.tab_title_delivery_source)
+						.toUpperCase(l);
 			case 2:
-				return getString(R.string.tab_title_delivery_target).toUpperCase(l);
+				return getString(R.string.tab_title_delivery_target)
+						.toUpperCase(l);
 			case 3:
-				return getString(R.string.tab_title_delivery_courier).toUpperCase(l);
+				return getString(R.string.tab_title_delivery_courier)
+						.toUpperCase(l);
 			}
 			return null;
 		}

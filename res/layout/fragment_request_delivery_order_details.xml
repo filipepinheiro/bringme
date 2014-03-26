@@ -9,26 +9,25 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/courierRateCourierNameField"
+        android:id="@+id/deliveryRequestOrderTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Order Details"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/reqDeliveryOrderDetailsTagField"
+        android:id="@+id/orderTagField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/order_tag"
         android:inputType="textShortMessage"
         android:singleLine="true" >
-
         <requestFocus />
     </EditText>
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/orderDescriptionField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -36,12 +35,18 @@
         android:inputType="textMultiLine" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/orderSpecialNotesField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/order_special_notes"
         android:inputType="textShortMessage"
         android:singleLine="true" />
+
+    <Button
+        android:id="@+id/saveOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Order" />
 
 </LinearLayout>

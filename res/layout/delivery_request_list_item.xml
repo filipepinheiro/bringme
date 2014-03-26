@@ -24,7 +24,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/courierRateCourierNameField"
+            android:id="@+id/deliveryRequestOrderTag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.04"

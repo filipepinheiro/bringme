@@ -1,6 +1,7 @@
 package pt.ua.icm.bringme.adapters;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import pt.ua.icm.bringme.R;
 import pt.ua.icm.bringme.models.Delivery;
@@ -14,12 +15,12 @@ import android.widget.TextView;
 public class HistoricalAdapter extends BaseAdapter {
 	private static LayoutInflater inflater = null;
 
-	LinkedList<Delivery> deliveryRequestList = new LinkedList<Delivery>();
+	List<Delivery> deliveryRequestList = new LinkedList<Delivery>();
 
-	public HistoricalAdapter(Context context, LinkedList<Delivery> deliveryRequestList) {
+	public HistoricalAdapter(Context context, List<Delivery> deliveryRequestList) {
 		this.deliveryRequestList = deliveryRequestList;
-		inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = 
+				(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
@@ -45,51 +46,23 @@ public class HistoricalAdapter extends BaseAdapter {
 
 		Delivery deliveryRequest = getItem(position);
 		
-		TextView sourceAddressText = (TextView) convertView.findViewById(R.id.deliveryRequestSourceAddress);
-		sourceAddressText.setText(deliveryRequest.getOriginAddress());
-		TextView targetAddressText = (TextView) convertView.findViewById(R.id.deliveryRequestTargetAddress);
-		targetAddressText.setText(deliveryRequest.getDestinationAddress());
+		TextView orderTagText = (TextView) convertView.findViewById(R.id.deliveryRequestOrderTag);
+			orderTagText.setText(deliveryRequest.getOrder().getTag());
 
-		//TODO: Rebuild for future click event or delete
-		//convertView.setOnClickListener(requestClickHandler(position));
+		TextView sourceAddressText = (TextView) convertView
+				.findViewById(R.id.deliveryRequestSourceAddress);
+		sourceAddressText.setText(deliveryRequest.getOriginAddress());
+		
+		TextView targetAddressText = (TextView) convertView
+				.findViewById(R.id.deliveryRequestTargetAddress);
+		targetAddressText.setText(deliveryRequest.getDestinationAddress());
+		
+		TextView deliveryStatusText = (TextView) convertView.
+				findViewById(R.id.deliveryRequestStatus);
+		if(deliveryRequest.isFinished()){
+			deliveryStatusText.setText("Finished");
+		}
 
 		return convertView;
 	}
-
-	//TODO: Rebuild for future click event or delete
-	/*public View.OnClickListener requestClickHandler(int position) {
-		final Delivery delivery = deliveryRequestList.get(position);
-
-		View.OnClickListener handler = new View.OnClickListener() {
-
-			@Override
-			public void onClick(final View v) {
-				AlertDialog.Builder optionDialog = new AlertDialog.Builder(context);
-				optionDialog.setTitle("Can you make this delivery for [Requestor]?");
-				optionDialog.setItems(new CharSequence[] {"Accept","Decline"}, new OnClickListener(){
-				TextView requestStatus = (TextView) v.findViewById(R.id.deliveryRequestStatus);
-					@Override
-					public void onClick(DialogInterface dialog, int position) {
-						switch(position) {
-						case 0:
-							DeliveryRequestNotification.sendDeliveryRequestAccepted(context,"User Name");
-							requestStatus.setText("Accepted");
-							break;
-						case 1:
-							DeliveryRequestNotification.sendDeliveryRequestRejected(context,"User Name");
-							requestStatus.setText("Rejected");
-							break;
-						default:
-							throw new UnsupportedOperationException("This is a Yes/No dialog, you weren't supposed to be here!"); 
-						}						
-					}
-					
-				});
-				optionDialog.show();
-			}
-		};
-
-		return handler;
-	}*/
-	
 }

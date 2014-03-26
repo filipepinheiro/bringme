@@ -1,10 +1,12 @@
 package pt.ua.icm.bringme.adapters;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import pt.ua.icm.bringme.BringMeNotification;
 import pt.ua.icm.bringme.R;
 import pt.ua.icm.bringme.RateCourierActivity;
+import pt.ua.icm.bringme.datastorage.StaticDatabase;
 import pt.ua.icm.bringme.models.Delivery;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,13 +23,13 @@ public class DeliveryRequestAdapter extends BaseAdapter {
 	private Context context;
 	private static LayoutInflater inflater = null;
 
-	LinkedList<Delivery> deliveryRequestList = new LinkedList<Delivery>();
+	List<Delivery> deliveryRequestList = new LinkedList<Delivery>();
 
-	public DeliveryRequestAdapter(Context context, LinkedList<Delivery> deliveryRequestList) {
+	public DeliveryRequestAdapter(Context context,
+			List<Delivery> deliveryRequestList) {
 		this.context = context;
 		this.deliveryRequestList = deliveryRequestList;
-		inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
@@ -49,13 +51,20 @@ public class DeliveryRequestAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// Inflate with the courier_list_item.xml
 		if (convertView == null)
-			convertView = inflater.inflate(R.layout.delivery_request_list_item, null);
+			convertView = inflater.inflate(R.layout.delivery_request_list_item,	null);
 
 		Delivery deliveryRequest = getItem(position);
 		
-		TextView sourceAddressText = (TextView) convertView.findViewById(R.id.deliveryRequestSourceAddress);
+		TextView deliveryOrderTagText = 
+				(TextView) convertView.findViewById(R.id.deliveryRequestOrderTag);
+		deliveryOrderTagText.setText(deliveryRequest.getOrder().getTag());
+
+		TextView sourceAddressText = 
+				(TextView) convertView.findViewById(R.id.deliveryRequestSourceAddress);
 		sourceAddressText.setText(deliveryRequest.getOriginAddress());
-		TextView targetAddressText = (TextView) convertView.findViewById(R.id.deliveryRequestTargetAddress);
+		
+		TextView targetAddressText = 
+				(TextView) convertView.findViewById(R.id.deliveryRequestTargetAddress);
 		targetAddressText.setText(deliveryRequest.getDestinationAddress());
 
 		convertView.setOnClickListener(requestClickHandler(position));
@@ -70,83 +79,106 @@ public class DeliveryRequestAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(final View v) {
-				AlertDialog.Builder optionDialog = new AlertDialog.Builder(context);
-				final TextView requestStatus = (TextView) v.findViewById(R.id.deliveryRequestStatus);
-				
-				//If the delivery is not accepted
-				if(!delivery.isAccepted()){
+				AlertDialog.Builder optionDialog = new AlertDialog.Builder(
+						context);
+				final TextView requestStatus = (TextView) v
+						.findViewById(R.id.deliveryRequestStatus);
+
+				// If the delivery is not accepted
+				if (!delivery.isAccepted()) {
 					optionDialog.setTitle("Can you make this delivery for [Requestor]?");
-					optionDialog.setItems(new CharSequence[] {"Accept","Decline"}, new OnClickListener(){
+					optionDialog.setItems(new CharSequence[] { "Accept","Decline" }, 
+							new OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int position) {
-							switch(position) {
+							switch (position) {
 							case 0:
-								BringMeNotification.sendDeliveryRequestAccepted(context,"User Name");
+								BringMeNotification
+										.sendDeliveryRequestAccepted(context,"User Name");
 								requestStatus.setText("Accepted");
 								delivery.setAccepted(true);
 								break;
 							case 1:
-								BringMeNotification.sendDeliveryRequestRejected(context,"User Name");
+								BringMeNotification
+										.sendDeliveryRequestRejected(context,"User Name");
 								requestStatus.setText("Rejected");
-								//TODO: Remove from the list
+								// TODO: Remove from the list
 								break;
 							default:
-								throw new UnsupportedOperationException("This is a Yes/No dialog, you weren't supposed to be here!"); 
-							}						
+								throw new UnsupportedOperationException(
+										"This is a Yes/No dialog, you weren't supposed to be here!");
+							}
 						}
-						
+
 					});
 				}
-				
-				//If the delivery was accepted and is not finished
-				if(delivery.isAccepted() && !delivery.isFinished()){
+
+				// If the delivery was accepted and is not finished
+				if (delivery.isAccepted() && !delivery.isFinished()) {
 					optionDialog.setTitle("Have you finished the delivery?");
-					optionDialog.setItems(new CharSequence[] {"Yes","Not yet"}, new OnClickListener(){
-						@Override
-						public void onClick(DialogInterface dialog, int position) {
-							switch(position) {
-							case 0:
-								requestStatus.setText("Finished");
-								delivery.setFinished(true);
-								//TODO: Send this notification to the Requestor
-								BringMeNotification.sendNotification(context, BringMeNotification.smallIconDeliveryRequest, "Delivery Finished!", "[Courier] finished your delivery! Rate him!", true, RateCourierActivity.class);
-								
-								AlertDialog.Builder courierRateDialog = new AlertDialog.Builder(context);
-								LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+					optionDialog.setItems(
+						new CharSequence[] { "Yes", "Not yet" },
+						new OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,	int position) {
+								switch (position) {
+								case 0:
+									requestStatus.setText("Finished");
+									StaticDatabase.deliveryRequestList.remove(delivery);
+									StaticDatabase.finishedRequests.add(delivery);
+									
+									delivery.setFinished(true);
+									// TODO: Send this notification to the Requestor
+									BringMeNotification.sendNotification(context, 
+										BringMeNotification.smallIconDeliveryRequest,
+										"Delivery Finished!", "[Courier] finished your delivery! Rate him!",
+										true, RateCourierActivity.class);
 
-								courierRateDialog.setTitle("Please rate the courier job");
-							    // Inflate and set the layout for the dialog
-							    // Pass null as the parent view because its going in the dialog layout
-								courierRateDialog.setView(inflater.inflate(R.layout.dialog_rate_courier, null))
-							    // Add action buttons
-							           .setPositiveButton("Rate it!", new DialogInterface.OnClickListener() {
-							               @Override
-							               public void onClick(DialogInterface dialog, int id) {
-							                   // TODO: Add rate to the database
-							               }
-							           })
-							           .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-							               public void onClick(DialogInterface dialog, int id) {
+									AlertDialog.Builder courierRateDialog = 
+											new AlertDialog.Builder(context);
+									LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 
-							               }
-							           });
-								courierRateDialog.show();
-								
-								break;
-							case 1:
-								break;
-							default:
-								throw new UnsupportedOperationException("This is a Yes/No dialog, you weren't supposed to be here!"); 
-							}						
-						}
-					});
+									courierRateDialog.setTitle("Please rate the courier job");
+									// Inflate and set the layout for the dialog Pass null as the parent 
+									// view because its going in the dialog layout
+									courierRateDialog
+											.setView(inflater.inflate(R.layout.dialog_rate_courier, null))
+											// Add action buttons
+											.setPositiveButton(
+													"Rate it!",
+													new DialogInterface.OnClickListener() {
+														@Override
+														public void onClick(DialogInterface dialog, int id) {
+															// TODO: Add rate to the database
+														}
+													})
+											.setNegativeButton(
+													"Cancel",
+													new DialogInterface.OnClickListener() {
+														public void onClick(
+																DialogInterface dialog, int id) {
+														}
+													});
+									courierRateDialog.show();
+									break;
+								case 1:
+									break;
+								default:
+									throw new UnsupportedOperationException(
+											"This is a Yes/No dialog, " +
+											"you weren't supposed to be here!");
+								}
+								//Say that data changed!
+								notifyDataSetChanged();
+							}
+						});
 				}
-				
+
 				optionDialog.show();
 			}
 		};
 
 		return handler;
 	}
-	
+
 }

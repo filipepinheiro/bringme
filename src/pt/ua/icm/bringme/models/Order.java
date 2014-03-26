@@ -3,7 +3,7 @@ package pt.ua.icm.bringme.models;
 public class Order {
 	private int _id;
 	private String tag, description, specialNotes;
-	
+
 	public Order(String tag, String description, String specialNotes) {
 		this.tag = tag;
 		this.description = description;

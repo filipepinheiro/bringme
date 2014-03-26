@@ -9,20 +9,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class SQLHelper extends SQLiteOpenHelper {
-	
+
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "bringme";
-    private static final String USER_TABLE_NAME = "users";
-    public static final int INVALID_USER_AUTHENTICATION = -1;
-    private static final String USER_TABLE_CREATE =
-    		"CREATE TABLE " + USER_TABLE_NAME + " (" +
-    				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-    				"firstName TEXT, " +
-    				"lastName TEXT, " +
-    				"email TEXT, " +
-    				"password TEXT, " +
-    				"phoneNumber TEXT," +
-    				"rate REAL" + ");";
+	private static final String USER_TABLE_NAME = "users";
+	public static final int INVALID_USER_AUTHENTICATION = -1;
+	private static final String USER_TABLE_CREATE = "CREATE TABLE "
+			+ USER_TABLE_NAME + " (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ "firstName TEXT, " + "lastName TEXT, " + "email TEXT, "
+			+ "password TEXT, " + "phoneNumber TEXT," + "rate REAL" + ");";
 
 	public SQLHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,8 +32,8 @@ public class SQLHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub
 	}
-	
-	public void insertUser(User user){
+
+	public void insertUser(User user) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("firstName", user.getFirstName());
@@ -46,25 +41,27 @@ public class SQLHelper extends SQLiteOpenHelper {
 		values.put("email", user.getEmail());
 		values.put("password", user.getPassword());
 		values.put("phoneNumber", user.getPhoneNumber());
-		values.put("rate", 0); //Rate initial Value
+		values.put("rate", 0); // Rate initial Value
 		db.insert("users", null, values);
 		db.close();
 	}
-	
+
 	/**
 	 * 
 	 * @param email
 	 * @param password
 	 * @return database user ID or -1 if the user doesn't exists
 	 */
-	public int existsUser(String email, String password){
+	public int existsUser(String email, String password) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cs = db.rawQuery("SELECT count(*) FROM users WHERE email='" + email + "' AND password='" + password +"';", null);
+		Cursor cs = db.rawQuery("SELECT count(*) FROM users WHERE email='"
+				+ email + "' AND password='" + password + "';", null);
 		cs.moveToFirst();
 		int count = cs.getInt(0);
 		Log.i("BringMeLogin", count + " account matched!");
-		if(count == 1){
-			cs = db.rawQuery("SELECT id FROM users WHERE email='" + email + "' AND password='" + password +"';", null);
+		if (count == 1) {
+			cs = db.rawQuery("SELECT id FROM users WHERE email='" + email
+					+ "' AND password='" + password + "';", null);
 			cs.moveToFirst();
 			return cs.getInt(0);
 		}
@@ -72,17 +69,20 @@ public class SQLHelper extends SQLiteOpenHelper {
 		db.close();
 		return -1;
 	}
-	
+
 	/**
 	 * 
 	 * @param id
 	 * @return user with the specified id
 	 */
-	public User getUser(int id){
+	public User getUser(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cs = db.rawQuery("SELECT firstName, lastName, email, phoneNumber FROM users WHERE id="+id+";", null);
+		Cursor cs = db.rawQuery(
+				"SELECT firstName, lastName, email, phoneNumber FROM users WHERE id="
+						+ id + ";", null);
 		cs.moveToFirst();
-		User user = new User(cs.getString(0),cs.getString(1),cs.getString(2),cs.getString(3));
+		User user = new User(cs.getString(0), cs.getString(1), cs.getString(2),
+				cs.getString(3));
 		return user;
 	}
 
