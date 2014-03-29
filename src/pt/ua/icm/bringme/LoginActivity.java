@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
@@ -95,7 +96,7 @@ public class LoginActivity extends Activity {
 	 */
 	public void loginWithFacebook(View view) {
 		// TODO: remove initialization
-		boolean authorized = true;
+		boolean authorized = false;
 
 		// TODO: Account Authorization with facebook
 
@@ -105,6 +106,8 @@ public class LoginActivity extends Activity {
 		} else {
 			// TODO: Error Handling
 		}
+		Toast t = Toast.makeText(this, "Not implemented yet!", Toast.LENGTH_SHORT);
+		t.show();
 	}
 
 	/**
