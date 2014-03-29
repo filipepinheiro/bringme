@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class SQLHelper extends SQLiteOpenHelper {
-
+ 
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "bringme";
 	private static final String USER_TABLE_NAME = "users";
@@ -68,6 +68,21 @@ public class SQLHelper extends SQLiteOpenHelper {
 		cs.close();
 		db.close();
 		return -1;
+	}
+	
+	public boolean emailRegistered(String email){
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cs = db.rawQuery("SELECT count(*) FROM users WHERE email='"
+				+ email + "';", null);
+		cs.moveToFirst();
+		int count = cs.getInt(0);
+		Log.i("BringMeLogin", count + " users with " + email + " in use!");
+		if (count == 1) {
+			return true;
+		}
+		cs.close();
+		db.close();
+		return false;
 	}
 
 	/**

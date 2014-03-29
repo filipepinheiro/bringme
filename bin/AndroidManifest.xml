@@ -75,8 +75,10 @@
         
         <meta-data
     	android:name="com.google.android.maps.v2.API_KEY"
-    	android:value="AIzaSyDNqxBxlpx13zaMUrK6x7KraKWQMwb94so"/>
+    	android:value="AIzaSyD-t4HnrAcQdFc2_Qjo5egnSFjjDRgxkxg"/>
         <!-- AIzaSyBtBvj0a8FID0Qn0hnnazNIIKhWzEIIZQo | -->
+        <!-- AIzaSyDNqxBxlpx13zaMUrK6x7KraKWQMwb94so | filipe portatil -->
+        <!-- AIzaSyD-t4HnrAcQdFc2_Qjo5egnSFjjDRgxkxg | filipe desktop -->
     </application>
 
 </manifest>

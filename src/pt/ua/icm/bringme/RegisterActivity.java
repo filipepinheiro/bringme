@@ -2,8 +2,11 @@ package pt.ua.icm.bringme;
 
 import pt.ua.icm.bringme.datastorage.SQLHelper;
 import pt.ua.icm.bringme.models.User;
+import android.R.integer;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -32,16 +35,31 @@ public class RegisterActivity extends Activity {
 	 * @param view
 	 */
 	public void registerAccount(View view) {
+		
 		// TODO: Validate the fields
-
-		// TODO: Remove initialization
-		boolean emailExists = false;
+		TextView emailField = (TextView) findViewById(R.id.registerEmailField);
+		boolean emailExists = new SQLHelper(this).emailRegistered(emailField.getText().toString());
+		TextView passwordField = (TextView) findViewById(R.id.registerPasswordField);
+		TextView passwordFieldConfirmation = (TextView) findViewById(R.id.registerPasswordConfirmationField);
+		if(!passwordField.getText().toString().equals(passwordFieldConfirmation.getText().toString())){
+			passwordField.setText("");
+			passwordFieldConfirmation.setText("");
+			passwordField.setError("Password doesn't match");
+			return;
+		}
 
 		// TODO: Verify if the the email is already registered.
 		if (!emailExists) {
 			// TODO: Register account on cloud
 			SQLHelper SQLQuery = new SQLHelper(this);
-			SQLQuery.insertUser(createUserFromForm());
+			User userInstance = createUserFromForm();
+			SQLQuery.insertUser(userInstance);
+			
+			int userID = SQLQuery.existsUser(userInstance.getEmail(), userInstance.getPassword());
+			
+			SharedPreferences prefs = this.getSharedPreferences(
+					"pt.ua.icm.bringme", Context.MODE_PRIVATE);
+			prefs.edit().putInt("userID", userID).commit();
 			
 			Toast t = Toast.makeText(this, "Account created with success!",
 					Toast.LENGTH_SHORT);
@@ -49,6 +67,9 @@ public class RegisterActivity extends Activity {
 			
 			Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
 			startActivity(mainMenuIntent);
+		}
+		else{
+			emailField.setError("Email already in use!");
 		}
 	}
 
