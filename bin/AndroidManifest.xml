@@ -8,6 +8,7 @@
     <uses-sdk
         android:minSdkVersion="13"
         android:targetSdkVersion="19" />
+    <!-- Google Maps Permissions -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -17,10 +18,18 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     
+    <!-- Google Cloud Messaging Permissions -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="com.google.android.c2dm.intent.RECEIVE" />
+	<uses-permission android:name="com.google.android.c2dm.SEND" />
+	<permission android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+	<uses-permission android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE" />
+    
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true"/>
-    
 
     <application
         android:allowBackup="true"
@@ -73,6 +82,16 @@
             android:label="@string/title_activity_rate_courier" >
         </activity>
         
+        <receiver
+            android:name=".GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="pt.ua.icm.bringme" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".GcmIntentService" />
+        
         <meta-data
     	android:name="com.google.android.maps.v2.API_KEY"
     	android:value="AIzaSyD-t4HnrAcQdFc2_Qjo5egnSFjjDRgxkxg"/>
@@ -80,5 +99,5 @@
         <!-- AIzaSyDNqxBxlpx13zaMUrK6x7KraKWQMwb94so | filipe portatil -->
         <!-- AIzaSyD-t4HnrAcQdFc2_Qjo5egnSFjjDRgxkxg | filipe desktop -->
     </application>
-
+		
 </manifest>
