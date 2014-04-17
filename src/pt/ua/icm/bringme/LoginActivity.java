@@ -1,6 +1,11 @@
 package pt.ua.icm.bringme;
 
 import pt.ua.icm.bringme.datastorage.SQLHelper;
+import pt.ua.icm.bringme.models.User;
+
+import com.parse.*;
+import com.parse.codec.digest.DigestUtils;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +20,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
+	
+	private TextView emailField, passwordField;
+	private String emailValue, passwordValue;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		emailField = (TextView) findViewById(R.id.loginEmailField);
+		passwordField = (TextView) findViewById(R.id.loginPasswordField);
 	}
 
 	@Override
@@ -32,17 +43,14 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-
+/*
 		SQLHelper BringMeSQL = new SQLHelper(this);
 
 		SQLiteDatabase SQLDBRead = BringMeSQL.getReadableDatabase();
 		Cursor cs = SQLDBRead.rawQuery("SELECT count(*) FROM users", null);
 		cs.moveToFirst();
 		int count = cs.getInt(0);
-		Log.i("BringMeLogin", "Found " + count + " registered accounts!");
-
-		// GooglePlayServicesUtil.getErrorDialog(ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED,
-		// this, 0).show();
+		Log.i("BringMeLogin", "Found " + count + " registered accounts!");*/
 	}
 
 	/**
@@ -52,14 +60,37 @@ public class LoginActivity extends Activity {
 	 * @param view
 	 */
 	public void loginWithBringme(View view) {
-		String email = ((TextView) findViewById(R.id.loginEmailField))
+		//Initialize parse connection
+		Parse.initialize(this, "BAK4DQx9H7pvSsQJTRKKH4MF0souYuQ6E1l5AMa6", "qnftcNXKP2BevHACysHKbaK3lhGjQPDrINBT6cRI");
+		
+		emailValue = emailField.getText().toString();
+		passwordValue = passwordField.getText().toString();
+		String hashedPassword = DigestUtils.shaHex(passwordValue);
+		String userID = null;
+		
+		Log.i(Consts.TAG, "Trying login with email["+emailValue+"] | password["+hashedPassword+"]");
+		
+		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+		query.whereEqualTo("email", emailValue);
+		query.whereEqualTo("password", hashedPassword);
+		
+		query.getFirstInBackground(new GetCallback<ParseObject>() {
+			
+			@Override
+			public void done(ParseObject object, ParseException e) {
+				if(e == null){
+					loginSuccess(object);
+				}else{
+					Log.i(Consts.TAG, e.getMessage());
+					loginFail();
+				}
+			}
+		});
+		
+		/*String email = ((TextView) findViewById(R.id.loginEmailField))
 				.getText().toString();
 		String password = ((TextView) findViewById(R.id.loginPasswordField))
 				.getText().toString();
-
-		// Intent intent = AccountPicker.newChooseAccountIntent(null, null, new
-		// String[]{"com.google"},false, null, null, null, null);
-		// startActivityForResult(intent, 2);
 
 		int userID = new SQLHelper(this).existsUser(email, password);
 
@@ -72,19 +103,29 @@ public class LoginActivity extends Activity {
 			Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
 			startActivity(mainMenuIntent);
 		} else {
-			TextView emailField = (TextView) findViewById(R.id.loginEmailField);
-			TextView passwordField = (TextView) findViewById(R.id.loginPasswordField);
-
-			if (emailField.getText().toString().isEmpty()) {
-				emailField.setError("Empty Field");
-			} else {
-				emailField.setError("Wrong Credentials!");
-			}
-			if (passwordField.getText().toString().isEmpty()) {
-				passwordField.setError("Empty Field");
-			} else {
-				passwordField.setError("Wrong Credentials!");
-			}
+			
+		}*/
+	}
+	
+	public void loginSuccess(ParseObject parseUser){
+		SharedPreferences prefs = this.getSharedPreferences(
+				"pt.ua.icm.bringme", Context.MODE_PRIVATE);
+		prefs.edit().putString("userID", parseUser.getObjectId()).commit();
+		
+		Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
+		startActivity(mainMenuIntent);
+	}
+	
+	public void loginFail(){
+		if (emailValue.isEmpty()) {
+			emailField.setError("Empty Field");
+		} else {
+			emailField.setError("Wrong Credentials!");
+		}
+		if (passwordValue.isEmpty()) {
+			passwordField.setError("Empty Field");
+		} else {
+			passwordField.setError("Wrong Credentials!");
 		}
 	}
 

@@ -24,7 +24,8 @@
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="com.google.android.c2dm.intent.RECEIVE" />
 	<uses-permission android:name="com.google.android.c2dm.SEND" />
-	<permission android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+	<permission android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE" 
+	    android:protectionLevel="signature"/>
 	<uses-permission android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE" />
     
     <uses-feature

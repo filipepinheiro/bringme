@@ -64,6 +64,7 @@
         android:id="@+id/toggleCourier"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="changeClientMode"
         android:text="ToggleButton"
         android:textOff="@string/courier_mode_off"
         android:textOn="@string/courier_mode_on" />

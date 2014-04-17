@@ -1581,6 +1581,7 @@ containing a value of this type.
         public static final int profile_title=0x7f07004b;
         public static final int register=0x7f07002d;
         public static final int register_description=0x7f070030;
+        public static final int registration_fail=0x7f070054;
         public static final int retrieve_password=0x7f07002c;
         public static final int tab_title_delivery_courier=0x7f070040;
         public static final int tab_title_delivery_order_details=0x7f07003d;

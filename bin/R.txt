@@ -561,6 +561,7 @@ int string phone_number 0x7f070038
 int string profile_title 0x7f07004b
 int string register 0x7f07002d
 int string register_description 0x7f070030
+int string registration_fail 0x7f070054
 int string retrieve_password 0x7f07002c
 int string tab_title_delivery_courier 0x7f070040
 int string tab_title_delivery_order_details 0x7f07003d

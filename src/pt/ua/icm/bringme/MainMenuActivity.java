@@ -1,17 +1,45 @@
 package pt.ua.icm.bringme;
 
+import java.io.IOException;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class MainMenuActivity extends Activity {
-
+	
+	String SENDER_ID = "635403114002";
+	GoogleCloudMessaging gcm;
+	String registrationId;
+	
+	Context context;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
+
+		context = getApplicationContext();
+
+		gcm = GoogleCloudMessaging.getInstance(context);
+		try {
+			registrationId = gcm.register(SENDER_ID);
+		} catch (IOException e) {
+			Log.i("BringMe",e.getMessage());
+		}
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 
 	@Override
@@ -68,4 +96,17 @@ public class MainMenuActivity extends Activity {
 		Intent profileIntent = new Intent(this, ProfileActivity.class);
 		startActivity(profileIntent);
 	}
+	
+	/**
+	 * 
+	 * @param view
+	 */
+	public void changeClientMode(View view) {
+		if(registrationId != null){
+			Toast t = Toast.makeText(context, registrationId, Toast.LENGTH_SHORT);
+			t.show();
+		}
+	}
+
+	
 }

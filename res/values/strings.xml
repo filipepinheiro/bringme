@@ -46,5 +46,6 @@
     <string name="title_activity_rate_courier">RateCourierActivity</string>
     <string name="courier_mode_on">Courier Mode On</string>
     <string name="courier_mode_off">Courier Mode Off</string>
+    <string name="registration_fail">Registration Failed!</string>
 
 </resources>
