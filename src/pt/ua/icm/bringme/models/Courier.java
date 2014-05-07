@@ -1,33 +1,27 @@
 package pt.ua.icm.bringme.models;
 
-import java.math.BigInteger;
-
 public class Courier extends User {
+
 	private static final long serialVersionUID = 3433345250516086742L;
-	private double rate;
-
-	public Courier(String firstName, String lastName, String email,
-			String phoneNumber, double rate) {
-		super(firstName, lastName, email, phoneNumber);
-		this.rate = rate;
+	private double rating = 0.0;
+	
+	public Courier(String firstName, String lastName, String phoneNumber, double rating) {
+		super(firstName, lastName, phoneNumber);
+		this.setRating(rating);
 	}
 
-	public Courier(String firstName, String lastName, String email,
-			BigInteger phoneNumber, double rate) {
-		this(firstName, lastName, email, phoneNumber.toString(), rate);
+	/**
+	 * @return the rating
+	 */
+	public double getRating() {
+		return rating;
 	}
 
-	public Courier(String firstName, String lastName, String email,
-			int phoneNumber, double rate) {
-		this(firstName, lastName, email, String.valueOf(phoneNumber), rate);
-	}
-
-	public double getRate() {
-		return rate;
-	}
-
-	public void setRate(double rate) {
-		this.rate = rate;
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 }

@@ -28,9 +28,9 @@
 	    android:protectionLevel="signature"/>
 	<uses-permission android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE" />
     
-    <uses-feature
-        android:glEsVersion="0x00020000"
-        android:required="true"/>
+    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+    <uses-feature android:name="android.hardware.location" android:required="true"/>
+    <uses-feature android:name="android.hardware.location.gps" android:required="true"/>
 
     <application
         android:allowBackup="true"
@@ -83,22 +83,12 @@
             android:label="@string/title_activity_rate_courier" >
         </activity>
         
-        <receiver
-            android:name=".GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="pt.ua.icm.bringme" />
-            </intent-filter>
-        </receiver>
-        <service android:name=".GcmIntentService" />
-        
         <meta-data
     	android:name="com.google.android.maps.v2.API_KEY"
-    	android:value="AIzaSyD-t4HnrAcQdFc2_Qjo5egnSFjjDRgxkxg"/>
-        <!-- AIzaSyBtBvj0a8FID0Qn0hnnazNIIKhWzEIIZQo | -->
-        <!-- AIzaSyDNqxBxlpx13zaMUrK6x7KraKWQMwb94so | filipe portatil -->
-        <!-- AIzaSyD-t4HnrAcQdFc2_Qjo5egnSFjjDRgxkxg | filipe desktop -->
+    	android:value="AIzaSyDRHXtfAVJmUNiG6CHHqZNhIvNMdYU5AJw"/>
+        <!-- AIzaSyBtBvj0a8FID0Qn0hnnazNIIKhWzEIIZQo | hugo correia-->
+        <!-- AIzaSyBj59RbmUnjYnOiU592ph5Rp3vAP62U3u8 | filipe portatil -->
+        <!-- AIzaSyDRHXtfAVJmUNiG6CHHqZNhIvNMdYU5AJw | filipe desktop -->
     </application>
 		
 </manifest>

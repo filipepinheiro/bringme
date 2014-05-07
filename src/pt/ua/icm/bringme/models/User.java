@@ -2,11 +2,13 @@ package pt.ua.icm.bringme.models;
 
 import java.io.Serializable;
 
+import com.parse.ParseGeoPoint;
+
 public class User implements Serializable {
 	private static final long serialVersionUID = -8121361232996384115L;
-	private String firstName, lastName, email, password;
-	private String phoneNumber;
-	private int id;
+	private String id, firstName, lastName, email, password, phoneNumber;
+	private ParseGeoPoint currentLocation;
+	private boolean courier;
 
 	/**
 	 * @param firstName
@@ -126,18 +128,19 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
 	 * 
 	 * @return the User full name
 	 */
 	public String getFullName() {
 		return getFirstName().concat(" ").concat(getLastName());
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/*
@@ -150,6 +153,28 @@ public class User implements Serializable {
 		return "User [firstName=" + firstName + ", lastName=" + lastName
 				+ ", email=" + email + ", password=" + password
 				+ ", phoneNumber=" + phoneNumber + "]";
+	}
+
+	public ParseGeoPoint getCurrentLocation() {
+		return currentLocation;
+	}
+
+	public void setCurrentLocation(ParseGeoPoint currentLocation) {
+		this.currentLocation = currentLocation;
+	}
+
+	/**
+	 * @return the courier
+	 */
+	public boolean isCourier() {
+		return courier;
+	}
+
+	/**
+	 * @param courier the courier to set
+	 */
+	public void setCourier(boolean courier) {
+		this.courier = courier;
 	}
 
 }

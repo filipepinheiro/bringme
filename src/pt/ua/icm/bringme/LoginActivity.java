@@ -1,23 +1,24 @@
 package pt.ua.icm.bringme;
 
-import pt.ua.icm.bringme.datastorage.SQLHelper;
+import pt.ua.icm.bringme.datastorage.LocalData;
 import pt.ua.icm.bringme.models.User;
-
-import com.parse.*;
-import com.parse.codec.digest.DigestUtils;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.codec.digest.DigestUtils;
 
 public class LoginActivity extends Activity {
 	
@@ -29,6 +30,10 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		if(getSharedPreferences("userID", Context.MODE_PRIVATE).getString("userID", null) != null){
+			startActivity(new Intent(this, MainMenuActivity.class));
+		}
+		
 		emailField = (TextView) findViewById(R.id.loginEmailField);
 		passwordField = (TextView) findViewById(R.id.loginPasswordField);
 	}
@@ -38,19 +43,6 @@ public class LoginActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-/*
-		SQLHelper BringMeSQL = new SQLHelper(this);
-
-		SQLiteDatabase SQLDBRead = BringMeSQL.getReadableDatabase();
-		Cursor cs = SQLDBRead.rawQuery("SELECT count(*) FROM users", null);
-		cs.moveToFirst();
-		int count = cs.getInt(0);
-		Log.i("BringMeLogin", "Found " + count + " registered accounts!");*/
 	}
 
 	/**
@@ -66,7 +58,6 @@ public class LoginActivity extends Activity {
 		emailValue = emailField.getText().toString();
 		passwordValue = passwordField.getText().toString();
 		String hashedPassword = DigestUtils.shaHex(passwordValue);
-		String userID = null;
 		
 		Log.i(Consts.TAG, "Trying login with email["+emailValue+"] | password["+hashedPassword+"]");
 		
@@ -86,31 +77,26 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
-		
-		/*String email = ((TextView) findViewById(R.id.loginEmailField))
-				.getText().toString();
-		String password = ((TextView) findViewById(R.id.loginPasswordField))
-				.getText().toString();
-
-		int userID = new SQLHelper(this).existsUser(email, password);
-
-		if (userID != SQLHelper.INVALID_USER_AUTHENTICATION) {
-			// Get private SharedPreferences
-			SharedPreferences prefs = this.getSharedPreferences(
-					"pt.ua.icm.bringme", Context.MODE_PRIVATE);
-			prefs.edit().putInt("userID", userID).commit();
-
-			Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
-			startActivity(mainMenuIntent);
-		} else {
-			
-		}*/
 	}
 	
-	public void loginSuccess(ParseObject parseUser){
-		SharedPreferences prefs = this.getSharedPreferences(
-				"pt.ua.icm.bringme", Context.MODE_PRIVATE);
-		prefs.edit().putString("userID", parseUser.getObjectId()).commit();
+	public void loginSuccess(ParseObject user){
+		SharedPreferences prefs = getSharedPreferences("pt.ua.icm.bringme", Context.MODE_PRIVATE);
+		prefs.edit().putString("userID", user.getObjectId()).commit();
+		
+		String id, firstName, lastName, email, phoneNumber;
+		boolean isCourier;
+		
+		id = user.getObjectId();
+		firstName = user.getString("firstName");
+		lastName = user.getString("lastName");
+		email = user.getString("email");
+		phoneNumber = user.getString("phoneNumber");
+		isCourier = user.getBoolean("isCourier");
+		
+		LocalData.currentUser = new User(firstName, lastName, email, phoneNumber);
+		LocalData.currentUser.setId(id);
+		LocalData.currentUser.setCourier(isCourier);
+		LocalData.currentUser.setCurrentLocation(user.getParseGeoPoint("currentLocation"));
 		
 		Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
 		startActivity(mainMenuIntent);

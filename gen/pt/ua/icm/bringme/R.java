@@ -1564,6 +1564,9 @@ containing a value of this type.
         public static final int insert_email=0x7f07002e;
         public static final int insert_password=0x7f07002f;
         public static final int last_name=0x7f070032;
+        /**  Latitude, longitude format 
+         */
+        public static final int latitude_longitude=0x7f070055;
         public static final int login=0x7f07002a;
         public static final int login_with_facebook=0x7f070043;
         public static final int logo_description=0x7f07002b;

@@ -544,6 +544,7 @@ int string hello_world 0x7f07003a
 int string insert_email 0x7f07002e
 int string insert_password 0x7f07002f
 int string last_name 0x7f070032
+int string latitude_longitude 0x7f070055
 int string login 0x7f07002a
 int string login_with_facebook 0x7f070043
 int string logo_description 0x7f07002b

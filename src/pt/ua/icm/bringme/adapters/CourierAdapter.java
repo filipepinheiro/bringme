@@ -67,7 +67,7 @@ public class CourierAdapter extends BaseAdapter {
 		// Set Courier Rating
 		RatingBar courierRatingBar = (RatingBar) convertView
 				.findViewById(R.id.courierRating);
-		courierRatingBar.setRating((float) courier.getRate());
+		courierRatingBar.setRating((float) courier.getRating());
 
 		courierRatingBar.setEnabled(false);
 
@@ -83,7 +83,9 @@ public class CourierAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				if(StaticDatabase.currentOrder == null){
+				
+				
+				/*if(StaticDatabase.currentOrder == null){
 					Toast t = Toast.makeText(context, "Order details Required!", Toast.LENGTH_LONG);
 					t.show();
 				}else if(StaticDatabase.originAddress == null){
@@ -132,7 +134,7 @@ public class CourierAdapter extends BaseAdapter {
 								}
 							});
 					alertDialog.show();
-				}
+				}*/
 			}
 		};
 

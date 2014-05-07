@@ -47,5 +47,8 @@
     <string name="courier_mode_on">Courier Mode On</string>
     <string name="courier_mode_off">Courier Mode Off</string>
     <string name="registration_fail">Registration Failed!</string>
+    
+    <!-- Latitude, longitude format -->
+    <string name="latitude_longitude">%1$.8f, %2$.8f</string>
 
 </resources>

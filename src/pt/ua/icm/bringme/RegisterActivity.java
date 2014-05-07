@@ -4,6 +4,7 @@ import pt.ua.icm.bringme.models.User;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -96,6 +97,7 @@ public class RegisterActivity extends Activity {
 				ParseObject newUser = new ParseObject("User");
 				newUser.put("email", emailValue);
 				newUser.put("password", hashedPassword);
+				newUser.put("rating", 0.0);
 				newUser.saveInBackground(new SaveCallback() {
 					
 					@Override
@@ -114,16 +116,36 @@ public class RegisterActivity extends Activity {
 		}
 	}
 	
-	public void userRegisterSuccess(){
+	private void userRegisterSuccess(){
+		//Query the user
+		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+		query.whereEqualTo("email", emailValue);
+		
+		//Retrieve and add it to the private preferences
+		try {
+			ParseObject user = query.getFirst();
+			SharedPreferences prefs = this.getSharedPreferences(
+					"pt.ua.icm.bringme", Context.MODE_PRIVATE);
+			prefs.edit().putString("userID", user.getObjectId()).commit();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Launch main intent
 		Intent launchApp = new Intent(this, MainMenuActivity.class);
 		startActivity(launchApp);
 	}
 	
-	public void userRegisterFail(){
+	private void userRegisterFail(){
 		Toast.makeText(context, R.string.registration_fail, Toast.LENGTH_SHORT).show();
 	}
 
-	public User createUserFromForm() {
+	/**
+	 * 
+	 * @deprecated
+	 */
+	private User createUserFromForm() {
 		firstNameValue = firstNameField.getText().toString();
 		lastNameValue = lastNameField.getText().toString();
 		emailValue = emailField.getText().toString();

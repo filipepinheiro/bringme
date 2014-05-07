@@ -21,6 +21,7 @@ import android.widget.Toast;
 public class RequestDeliveryOrderDetailsFragment extends Fragment {
 	
 	TextView orderTagField, orderDescriptionField, orderSpecialNotesField;
+	Button saveOrderButton;
 
 	public static RequestDeliveryOrderDetailsFragment newInstance() {
 		RequestDeliveryOrderDetailsFragment fragment = new RequestDeliveryOrderDetailsFragment();
@@ -52,10 +53,9 @@ public class RequestDeliveryOrderDetailsFragment extends Fragment {
 		orderDescriptionField  = (TextView) v.findViewById(R.id.orderDescriptionField);
 		orderSpecialNotesField  = (TextView) v.findViewById(R.id.orderSpecialNotesField);
 		
-		Button saveOrderButton = (Button) v.findViewById(R.id.saveOrder);
+		saveOrderButton = (Button) v.findViewById(R.id.saveOrder);
 		
 		saveOrderButton.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				saveOrder(v);

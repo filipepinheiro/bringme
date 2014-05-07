@@ -1,8 +1,15 @@
 package pt.ua.icm.bringme;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import pt.ua.icm.bringme.datastorage.LocalData;
 import pt.ua.icm.bringme.models.Courier;
 import android.content.Intent;
 import android.net.Uri;
@@ -37,6 +44,8 @@ public class RequestDeliveryActivity extends ActionBarActivity
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	
+	LinkedList<Courier> courierList = new LinkedList<Courier>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +55,14 @@ public class RequestDeliveryActivity extends ActionBarActivity
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
-		//Enable ActionBar Home
+
+		// Enable ActionBar Home
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(
+				getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -61,7 +71,8 @@ public class RequestDeliveryActivity extends ActionBarActivity
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
-		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+		mViewPager
+				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 					@Override
 					public void onPageSelected(int position) {
 						actionBar.setSelectedNavigationItem(position);
@@ -88,27 +99,24 @@ public class RequestDeliveryActivity extends ActionBarActivity
 		return true;
 	}
 
-	/*@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}*/
-	
+	/*
+	 * @Override public boolean onOptionsItemSelected(MenuItem item) { // Handle
+	 * action bar item clicks here. The action bar will // automatically handle
+	 * clicks on the Home/Up button, so long // as you specify a parent activity
+	 * in AndroidManifest.xml. int id = item.getItemId(); if (id ==
+	 * R.id.action_settings) { return true; } return
+	 * super.onOptionsItemSelected(item); }
+	 */
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
-	    switch (menuItem.getItemId()) {
-	    case android.R.id.home:
-	      Intent homeIntent = new Intent(this, MainMenuActivity.class);
-	      homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	      startActivity(homeIntent);
-	    }
-	  return (super.onOptionsItemSelected(menuItem));
+		switch (menuItem.getItemId()) {
+		case android.R.id.home:
+			Intent homeIntent = new Intent(this, MainMenuActivity.class);
+			homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(homeIntent);
+		}
+		return (super.onOptionsItemSelected(menuItem));
 	}
 
 	@Override
@@ -120,11 +128,13 @@ public class RequestDeliveryActivity extends ActionBarActivity
 	}
 
 	@Override
-	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	public void onTabUnselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
 	}
 
 	@Override
-	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	public void onTabReselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
 	}
 
 	/**
@@ -144,29 +154,52 @@ public class RequestDeliveryActivity extends ActionBarActivity
 			// below).
 			switch (position) {
 			case 0:
-				return RequestDeliveryOrderDetailsFragment.newInstance();
+				LocalData.orderFragment = RequestDeliveryOrderDetailsFragment.newInstance();
+				return LocalData.orderFragment;
 			case 1:
-				return RequestDeliverySourceFragment.newInstance();
+				LocalData.sourceFragment = RequestDeliverySourceFragment.newInstance(); 
+				return LocalData.sourceFragment;
 			case 2:
-				return RequestDeliveryTargetFragment.newInstance();
+				LocalData.targetFragment = RequestDeliveryTargetFragment.newInstance();
+				return LocalData.targetFragment;
 			case 3:
-				LinkedList<Courier> courierList = new LinkedList<Courier>();
-				// TODO: Retrieve the couriers that are close to the package
-				// source area, from cloud
-				courierList.add(new Courier("Hermes", "Courier",
-						"hermes@fastmail.com", 911234567, 4.5));
-				courierList.add(new Courier("Roger", "Snail",
-						"i.am.slow@mail.com", 911234567, 2.0));
 				
-				RequestDeliveryCourierFragment courierFragment = RequestDeliveryCourierFragment.newInstance();
+				LocalData.courierFragment = RequestDeliveryCourierFragment.newInstance();
+				
 				Bundle args = new Bundle();
 				args.putSerializable("COURIER_LIST", courierList);
-				courierFragment.setArguments(args);
-				return courierFragment;
+				LocalData.courierFragment.setArguments(args);
+				return LocalData.courierFragment;
 			}
 
 			return null;
+		}
+		
+		public LinkedList<Courier> getAvailableCouriers(){
+			ParseQuery<ParseObject> queryCouriers = new ParseQuery<ParseObject>("User");
+			queryCouriers.whereEqualTo("isCourier", true);
+			queryCouriers.findInBackground(new FindCallback<ParseObject>() {
+				
+				@Override
+				public void done(List<ParseObject> objects, ParseException e) {
+					if(e == null){
+						processCourierList(objects);
+					}
+				}
+			});
+			return null;
+		}
 
+		protected void processCourierList(List<ParseObject> objects) {
+			for(ParseObject parseCourier : objects){				
+				Courier courier = new Courier(
+						parseCourier.getString("firstName"), 
+						parseCourier.getString("lastName"), 
+						parseCourier.getString("phoneNumber"), 
+						parseCourier.getDouble("rating"));
+				
+				courierList.add(courier);
+			}
 		}
 
 		@Override
