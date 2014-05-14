@@ -63,6 +63,16 @@
             android:onClick="loginWithBringme"
             android:text="@string/login"
             tools:ignore="ButtonStyle" />
+        
+        <Button
+            android:id="@+id/loginParse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:onClick="loginWithFacebook"
+            android:text="Facebook"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <TextView
@@ -73,12 +83,18 @@
         android:gravity="center_horizontal"
         android:text="@string/or"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Button
-        android:id="@+id/mainMenuRequestDelivery"
-        android:layout_width="match_parent"
+<!-- 
+ 	<com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
         android:onClick="loginWithFacebook"
-        android:text="@string/login_with_facebook" />
-
+        
+        />
+ -->
+ 	
+ 	
+ 	
 </LinearLayout>

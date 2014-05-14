@@ -50,5 +50,6 @@
     
     <!-- Latitude, longitude format -->
     <string name="latitude_longitude">%1$.8f, %2$.8f</string>
+    <string name="app_id">1398988890385507</string>
 
 </resources>
