@@ -1,7 +1,6 @@
 package pt.ua.icm.bringme;
 
 import pt.ua.icm.bringme.adapters.HistoricalAdapter;
-import pt.ua.icm.bringme.datastorage.StaticDatabase;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +22,7 @@ public class HistoricalActivity extends ActionBarActivity {
 
 		ListView historicalListView = (ListView) findViewById(R.id.historicalListView);
 		// TODO: Retrieve all deliveries that contain the user
-		historicalListView.setAdapter(new HistoricalAdapter(this, StaticDatabase.getFinishedRequests()));
+		//historicalListView.setAdapter(new HistoricalAdapter(this, StaticDatabase.getFinishedRequests()));
 	}
 
 	@Override

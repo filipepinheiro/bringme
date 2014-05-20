@@ -6,7 +6,6 @@ import java.util.List;
 import pt.ua.icm.bringme.BringMeNotification;
 import pt.ua.icm.bringme.R;
 import pt.ua.icm.bringme.RateCourierActivity;
-import pt.ua.icm.bringme.datastorage.StaticDatabase;
 import pt.ua.icm.bringme.models.Delivery;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -57,15 +56,15 @@ public class DeliveryRequestAdapter extends BaseAdapter {
 		
 		TextView deliveryOrderTagText = 
 				(TextView) convertView.findViewById(R.id.deliveryRequestOrderTag);
-		deliveryOrderTagText.setText(deliveryRequest.getOrder().getTag());
+		deliveryOrderTagText.setText("TODO");
 
 		TextView sourceAddressText = 
 				(TextView) convertView.findViewById(R.id.deliveryRequestSourceAddress);
-		sourceAddressText.setText(deliveryRequest.getOriginAddress());
+		sourceAddressText.setText("TODO");
 		
 		TextView targetAddressText = 
 				(TextView) convertView.findViewById(R.id.deliveryRequestTargetAddress);
-		targetAddressText.setText(deliveryRequest.getDestinationAddress());
+		targetAddressText.setText("TODO");
 
 		convertView.setOnClickListener(requestClickHandler(position));
 
@@ -124,8 +123,6 @@ public class DeliveryRequestAdapter extends BaseAdapter {
 								switch (position) {
 								case 0:
 									requestStatus.setText("Finished");
-									StaticDatabase.deliveryRequestList.remove(delivery);
-									StaticDatabase.finishedRequests.add(delivery);
 									
 									delivery.setFinished(true);
 									// TODO: Send this notification to the Requestor

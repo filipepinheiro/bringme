@@ -1,27 +1,19 @@
 package pt.ua.icm.bringme.models;
 
-public class Courier extends User {
+import java.util.LinkedList;
+import java.util.List;
 
-	private static final long serialVersionUID = 3433345250516086742L;
-	private double rating = 0.0;
+import com.parse.ParseGeoPoint;
+
+public class Courier extends User{
 	
-	public Courier(String firstName, String lastName, String phoneNumber, double rating) {
-		super(firstName, lastName, phoneNumber);
-		this.setRating(rating);
+	public ParseGeoPoint lastKnownLocation;
+	public double rating;
+	public List<Delivery> deliveryList = new LinkedList<Delivery>();
+
+	public Courier(String objectId) {
+		super(objectId);
 	}
 
-	/**
-	 * @return the rating
-	 */
-	public double getRating() {
-		return rating;
-	}
-
-	/**
-	 * @param rating the rating to set
-	 */
-	public void setRating(double rating) {
-		this.rating = rating;
-	}
-
+	
 }

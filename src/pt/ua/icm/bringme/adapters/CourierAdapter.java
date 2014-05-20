@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import pt.ua.icm.bringme.BringMeNotification;
 import pt.ua.icm.bringme.R;
 import pt.ua.icm.bringme.RequestListActivity;
-import pt.ua.icm.bringme.datastorage.SQLHelper;
-import pt.ua.icm.bringme.datastorage.StaticDatabase;
 import pt.ua.icm.bringme.models.Courier;
 import pt.ua.icm.bringme.models.Delivery;
 import pt.ua.icm.bringme.models.User;
@@ -62,12 +60,12 @@ public class CourierAdapter extends BaseAdapter {
 		// Set full name on TextView
 		TextView fullNameTextView = (TextView) convertView
 				.findViewById(R.id.deliveryRequestTargetAddress);
-		fullNameTextView.setText(courier.getFullName());
+		fullNameTextView.setText("TODO");
 
 		// Set Courier Rating
 		RatingBar courierRatingBar = (RatingBar) convertView
 				.findViewById(R.id.courierRating);
-		courierRatingBar.setRating((float) courier.getRating());
+		courierRatingBar.setRating((float) 0.0);
 
 		courierRatingBar.setEnabled(false);
 

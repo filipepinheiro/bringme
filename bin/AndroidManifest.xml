@@ -6,7 +6,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="13"
+        android:minSdkVersion="14"
         android:targetSdkVersion="19" />
     <!-- Google Maps Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -99,15 +99,20 @@
         <!-- AIzaSyBj59RbmUnjYnOiU592ph5Rp3vAP62U3u8 | filipe portatil -->
         <!-- AIzaSyDRHXtfAVJmUNiG6CHHqZNhIvNMdYU5AJw | filipe desktop -->
 
-        <activity
-            android:name="com.facebook.LoginActivity"
-            android:label="@string/app_id" />
+        <activity android:name="com.facebook.LoginActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
-        
-        
+
+        <activity
+            android:name="pt.ua.icm.bringme.CourierProfileActivity"
+            android:label="@string/title_activity_courier_profile" >
+        </activity>
+        <activity
+            android:name="pt.ua.icm.bringme.MenuActivity"
+            android:label="@string/title_activity_menu" >
+        </activity>
     </application>
 
 </manifest>

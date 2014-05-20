@@ -47,9 +47,16 @@
     <string name="courier_mode_on">Courier Mode On</string>
     <string name="courier_mode_off">Courier Mode Off</string>
     <string name="registration_fail">Registration Failed!</string>
-    
+
     <!-- Latitude, longitude format -->
     <string name="latitude_longitude">%1$.8f, %2$.8f</string>
     <string name="app_id">1398988890385507</string>
+    <string name="title_activity_courier_profile">CourierProfileActivity</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="menu_title_requests">Resquest</string>
+    <string name="menu_title_courier">Courier</string>
 
 </resources>

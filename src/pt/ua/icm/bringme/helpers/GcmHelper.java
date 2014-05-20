@@ -1,9 +1,5 @@
 package pt.ua.icm.bringme.helpers;
 
-import android.app.Activity;
-import android.content.Context;
-
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class GcmHelper {
 

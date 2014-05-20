@@ -9,7 +9,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import pt.ua.icm.bringme.datastorage.LocalData;
 import pt.ua.icm.bringme.models.Courier;
 import android.content.Intent;
 import android.net.Uri;
@@ -152,7 +151,7 @@ public class RequestDeliveryActivity extends ActionBarActivity
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a PlaceholderFragment (defined as a static inner class
 			// below).
-			switch (position) {
+			/*switch (position) {
 			case 0:
 				LocalData.orderFragment = RequestDeliveryOrderDetailsFragment.newInstance();
 				return LocalData.orderFragment;
@@ -170,7 +169,7 @@ public class RequestDeliveryActivity extends ActionBarActivity
 				args.putSerializable("COURIER_LIST", courierList);
 				LocalData.courierFragment.setArguments(args);
 				return LocalData.courierFragment;
-			}
+			}*/
 
 			return null;
 		}
@@ -192,11 +191,7 @@ public class RequestDeliveryActivity extends ActionBarActivity
 
 		protected void processCourierList(List<ParseObject> objects) {
 			for(ParseObject parseCourier : objects){				
-				Courier courier = new Courier(
-						parseCourier.getString("firstName"), 
-						parseCourier.getString("lastName"), 
-						parseCourier.getString("phoneNumber"), 
-						parseCourier.getDouble("rating"));
+				Courier courier = new Courier("TODO");
 				
 				courierList.add(courier);
 			}

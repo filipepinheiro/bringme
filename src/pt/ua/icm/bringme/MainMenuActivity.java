@@ -1,6 +1,5 @@
 package pt.ua.icm.bringme;
 
-import pt.ua.icm.bringme.datastorage.LocalData;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -56,8 +55,7 @@ public class MainMenuActivity extends Activity implements
 		preferences = getSharedPreferences("pt.ua.icm.bringme", Context.MODE_PRIVATE);
 		userID = preferences.getString("userID", null);
 		
-		toggleCourier = (ToggleButton) findViewById(R.id.toggleCourier);
-		toggleCourier.setChecked(LocalData.currentUser.isCourier());
+		//toggleCourier = (ToggleButton) findViewById(R.id.toggleCourier);
 		
 		// Create a new global location parameters object
         mLocationRequest = LocationRequest.create();

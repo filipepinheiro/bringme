@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import pt.ua.icm.bringme.adapters.DeliveryRequestAdapter;
-import pt.ua.icm.bringme.datastorage.StaticDatabase;
 import pt.ua.icm.bringme.models.Delivery;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -28,7 +27,7 @@ public class RequestListActivity extends ActionBarActivity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		requestList = StaticDatabase.deliveryRequestList;
+		//requestList = StaticDatabase.deliveryRequestList;
 
 		ListView requestsListView = (ListView) findViewById(R.id.deliveryRequestListView);
 		requestsListView.setAdapter(new DeliveryRequestAdapter(this, requestList));

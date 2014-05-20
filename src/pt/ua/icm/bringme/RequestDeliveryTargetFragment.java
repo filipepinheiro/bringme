@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ua.icm.bringme.datastorage.StaticDatabase;
 import pt.ua.icm.bringme.helpers.AddressHelper;
 
 import android.app.Activity;
@@ -102,7 +101,7 @@ public class RequestDeliveryTargetFragment extends Fragment {
 						.icon(BitmapDescriptorFactory
 								.fromResource(R.drawable.pin_origin)));
 				
-				StaticDatabase.setDestinationCoordinates(coordinates);
+				//StaticDatabase.setDestinationCoordinates(coordinates);
 				
 				try {
 					Address address = coder.getFromLocation(coordinates.latitude, 
@@ -127,8 +126,8 @@ public class RequestDeliveryTargetFragment extends Fragment {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if (s.length() < 3){
-					StaticDatabase.destinationAddress = null;
-					StaticDatabase.destinationCoordinates = null;
+					//StaticDatabase.destinationAddress = null;
+					//StaticDatabase.destinationCoordinates = null;
 					targetMap.clear();
 					return;
 				}
@@ -153,7 +152,7 @@ public class RequestDeliveryTargetFragment extends Fragment {
 								new LatLng(addressList.get(0).getLatitude(), 
 										addressList.get(0).getLongitude());
 						
-						StaticDatabase.setDestinationCoordinates(address);
+						//StaticDatabase.setDestinationCoordinates(address);
 						
 						targetMap.clear();
 						targetMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory
@@ -170,7 +169,7 @@ public class RequestDeliveryTargetFragment extends Fragment {
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				StaticDatabase.setDestinationAddress(s.toString());
+				//StaticDatabase.setDestinationAddress(s.toString());
 			}
 		});
 		return v;

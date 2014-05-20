@@ -1,6 +1,5 @@
 package pt.ua.icm.bringme;
 
-import pt.ua.icm.bringme.datastorage.LocalData;
 import pt.ua.icm.bringme.models.User;
 import android.app.ActionBar;
 import android.content.Intent;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 public class ProfileActivity extends ActionBarActivity {
 
 	TextView fullNameField, emailField, phoneNumberField;
-	User currentUser = LocalData.currentUser;
+	User currentUser;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,6 @@ public class ProfileActivity extends ActionBarActivity {
 
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
 
 		fullNameField.setText(currentUser.getFullName());

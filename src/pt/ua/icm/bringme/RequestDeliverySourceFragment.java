@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ua.icm.bringme.datastorage.StaticDatabase;
 import pt.ua.icm.bringme.helpers.AddressHelper;
 
 import android.app.Activity;
@@ -102,8 +101,6 @@ public class RequestDeliverySourceFragment extends Fragment {
 				sourceMap.addMarker(new MarkerOptions().position(coordinates)
 						.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_origin)));
 				
-				StaticDatabase.setOriginCoordinates(coordinates);
-				
 				try {
 					Address address = coder.getFromLocation(coordinates.latitude, 
 							coordinates.longitude, 1).get(0);
@@ -111,8 +108,6 @@ public class RequestDeliverySourceFragment extends Fragment {
 					String prettyAddress = AddressHelper.getPrettyAddress(address); 
 
 					sourceLocationAutoComplete.setText(prettyAddress);
-					
-					StaticDatabase.setOriginAddress(prettyAddress);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -127,8 +122,6 @@ public class RequestDeliverySourceFragment extends Fragment {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if (s.length() < 3){
-					StaticDatabase.originAddress = null;
-					StaticDatabase.originCoordinates = null;
 					sourceMap.clear();
 					return;
 				}
@@ -154,7 +147,6 @@ public class RequestDeliverySourceFragment extends Fragment {
 								.getLatitude(), addressList.get(0)
 								.getLongitude());
 						
-						StaticDatabase.setOriginCoordinates(address);
 						
 						sourceMap.clear();
 
@@ -172,7 +164,7 @@ public class RequestDeliverySourceFragment extends Fragment {
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				StaticDatabase.setOriginAddress(s.toString());
+				//StaticDatabase.setOriginAddress(s.toString());
 			}
 		});
 		return v;

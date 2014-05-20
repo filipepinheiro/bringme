@@ -47,15 +47,15 @@ public class HistoricalAdapter extends BaseAdapter {
 		Delivery deliveryRequest = getItem(position);
 		
 		TextView orderTagText = (TextView) convertView.findViewById(R.id.deliveryRequestOrderTag);
-			orderTagText.setText(deliveryRequest.getOrder().getTag());
+			orderTagText.setText("TODO");
 
 		TextView sourceAddressText = (TextView) convertView
 				.findViewById(R.id.deliveryRequestSourceAddress);
-		sourceAddressText.setText(deliveryRequest.getOriginAddress());
+		sourceAddressText.setText("TODO");
 		
 		TextView targetAddressText = (TextView) convertView
 				.findViewById(R.id.deliveryRequestTargetAddress);
-		targetAddressText.setText(deliveryRequest.getDestinationAddress());
+		targetAddressText.setText("TODO");
 		
 		TextView deliveryStatusText = (TextView) convertView.
 				findViewById(R.id.deliveryRequestStatus);

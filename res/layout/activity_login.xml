@@ -44,6 +44,15 @@
         android:gravity="center_vertical|center_horizontal" >
 
         <Button
+            android:id="@+id/loginLoginButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="loginWithBringme"
+            android:text="@string/login"
+            tools:ignore="ButtonStyle" />
+
+        <Button
             android:id="@+id/loginRegisterButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -53,36 +62,22 @@
             android:onClick="registerAccount"
             android:text="@string/register"
             tools:ignore="ButtonStyle" />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/loginLoginButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:onClick="loginWithBringme"
-            android:text="@string/login"
-            tools:ignore="ButtonStyle" />
-        
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
         <Button
             android:id="@+id/loginParse"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:onClick="loginWithFacebook"
             android:text="Facebook"
             tools:ignore="ButtonStyle" />
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/deliveryRequestTargetAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:gravity="center_horizontal"
-        android:text="@string/or"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
 <!-- 
  	<com.facebook.widget.LoginButton
         android:id="@+id/authButton"

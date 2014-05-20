@@ -1,7 +1,5 @@
 package pt.ua.icm.bringme;
 
-import pt.ua.icm.bringme.datastorage.StaticDatabase;
-import pt.ua.icm.bringme.models.Order;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -71,11 +69,10 @@ public class RequestDeliveryOrderDetailsFragment extends Fragment {
 		}else if(orderDescriptionField.getText().toString().isEmpty()){
 			orderDescriptionField.setError("Required Field");
 		}else{
-			Order order = new Order(orderTagField.getText().toString(),orderDescriptionField.getText().toString());
+			/*Order order = new Order(orderTagField.getText().toString(),orderDescriptionField.getText().toString());
 			if(!orderSpecialNotesField.getText().toString().isEmpty()){
 				order.setSpecialNotes(orderSpecialNotesField.getText().toString());
-			}
-			StaticDatabase.setCurrentOrder(order);
+			}*/
 			
 			Toast t = Toast.makeText(getActivity(), "Saved with success!", Toast.LENGTH_SHORT);
 			t.show();
