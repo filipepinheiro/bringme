@@ -1,5 +1,6 @@
 package pt.ua.icm.bringme.models;
 
+import com.facebook.Session;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -12,6 +13,7 @@ public class User extends ParseUser{
 	private String lastName;
 	private String phoneNumber;
 
+	
 	public User(String objectId) {
 		this.objectId = objectId;
 		

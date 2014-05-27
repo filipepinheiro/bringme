@@ -1,5 +1,7 @@
 package pt.ua.icm.bringme;
 
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +15,8 @@ import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseFacebookUtils.Permissions;
 import com.parse.ParseUser;
-
-import com.facebook.*;
-import com.facebook.model.*;
 
 public class LoginActivity extends Activity {
 
@@ -31,7 +31,7 @@ public class LoginActivity extends Activity {
 		emailField = (TextView) findViewById(R.id.loginEmailField);
 		passwordField = (TextView) findViewById(R.id.loginPasswordField);
 
-		Parse.initialize(this, "BAK4DQx9H7pvSsQJTRKKH4MF0souYuQ6E1l5AMa6", "qnftcNXKP2BevHACysHKbaK3lhGjQPDrINBT6cRI");
+		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ", "91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
 
 		// Check if there is a currently logged in user
 		// and they are linked to a Facebook account.
@@ -56,7 +56,7 @@ public class LoginActivity extends Activity {
 	 * @param view
 	 */
 	public void loginWithBringme(View view) {
-		Parse.initialize(this, "BAK4DQx9H7pvSsQJTRKKH4MF0souYuQ6E1l5AMa6", "qnftcNXKP2BevHACysHKbaK3lhGjQPDrINBT6cRI");
+		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ", "91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
 		emailValue = emailField.getText().toString();
 		passwordValue = passwordField.getText().toString();
 		
@@ -113,8 +113,8 @@ public class LoginActivity extends Activity {
 	 * @param view
 	 */
 	public void loginWithFacebook(View view) {
-		Parse.initialize(this, "BAK4DQx9H7pvSsQJTRKKH4MF0souYuQ6E1l5AMa6", "qnftcNXKP2BevHACysHKbaK3lhGjQPDrINBT6cRI");
-		
+		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ", "91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
+
 		// Check if there is a currently logged in user
 		// and they are linked to a Facebook account.
 		ParseUser currentUser = ParseUser.getCurrentUser();
@@ -129,11 +129,13 @@ public class LoginActivity extends Activity {
 
 		//List<String> facebookPermissions = Arrays.asList("public_profile", "user_friends");
 		ParseUser.logOut();
-		ParseFacebookUtils.logIn(this, new LogInCallback() {
-			@Override
+		//ParseFacebookUtils.logIn(this, new LogInCallback() {
+		ParseFacebookUtils.logIn(Arrays.asList(Permissions.User.EMAIL, Permissions.User.PHOTOS,
+			     Permissions.User.HOMETOWN,Permissions.User.LOCATION,Permissions.User.BIRTHDAY),this, new LogInCallback() {
+			 @Override
 			public void done(ParseUser user, ParseException e) {
 				if (user == null) {
-					Log.i(Consts.TAG, "Oops, something wen't wrong!");
+					Log.i(Consts.TAG, "Oops, something wen't wrong!" + e);
 				} else if (user.isNew()) {
 					Log.i(Consts.TAG, "Register and Login with facebook Success!");
 					loginSuccess();

@@ -1,8 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:nudorm="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profileContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_dark"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -11,11 +13,14 @@
     tools:context="pt.ua.icm.bringme.ProfileActivity"
     tools:ignore="MergeRootFrame" >
 
-    <ImageView
-        android:id="@+id/profilePhoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/profile_icon" />
+    <pt.ua.icm.bringme.helpers.RoundedImageView
+        android:id="@+id/userImage"
+        android:layout_width="200dip"
+        android:layout_height="200dip"
+        android:layout_gravity="center"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:scaleType="centerInside" />
 
     <TextView
         android:id="@+id/profileFullName"
@@ -24,6 +29,7 @@
         android:gravity="center_horizontal"
         android:text="John Doe"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/green_letter"
         android:textSize="25sp" />
 
     <TextView
@@ -33,6 +39,7 @@
         android:paddingTop="10dp"
         android:text="Contacts"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/green_letter"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -53,6 +60,7 @@
                 android:layout_gravity="right"
                 android:text="E-mail"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_letter"
                 android:textStyle="bold" />
 
             <TextView
@@ -62,8 +70,8 @@
                 android:layout_gravity="right"
                 android:text="Phone"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_letter"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -77,17 +85,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="jonh.doe@gmail.com"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_letter" />
 
             <TextView
                 android:id="@+id/profilePhoneField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="912345678"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_letter" />
         </LinearLayout>
-
     </LinearLayout>
 
     <TextView
@@ -97,6 +105,7 @@
         android:paddingTop="10dp"
         android:text="Personal Achievments"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/green_letter"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -117,6 +126,7 @@
                 android:layout_gravity="right"
                 android:text="Requests"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_letter"
                 android:textStyle="bold" />
 
             <TextView
@@ -126,6 +136,7 @@
                 android:layout_gravity="right"
                 android:text="Deliveries"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_letter"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -140,16 +151,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="138"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_letter" />
 
             <TextView
                 android:id="@+id/deliveryStatusCourierNameField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="87"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_letter" />
         </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
-

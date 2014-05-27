@@ -1,7 +1,6 @@
 package pt.ua.icm.bringme;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -104,7 +104,8 @@ public class MainMenuActivity extends Activity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+
+		getMenuInflater().inflate(R.menu.icon_bar_layout, menu);
 		return true;
 	}
 

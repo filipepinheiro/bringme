@@ -47,7 +47,13 @@
     <string name="courier_mode_on">Courier Mode On</string>
     <string name="courier_mode_off">Courier Mode Off</string>
     <string name="registration_fail">Registration Failed!</string>
-
+    <string name="using_maps_icon">Maps</string>
+    
+    <!-- Perfil -->
+    <string name="no_email">Do not has email.</string>
+    <string name="no_phone_number">Do not has phone.</string>
+    
+    
     <!-- Latitude, longitude format -->
     <string name="latitude_longitude">%1$.8f, %2$.8f</string>
     <string name="app_id">1398988890385507</string>
