@@ -1,7 +1,8 @@
 package pt.ua.icm.bringme.models;
 
-import com.facebook.Session;
+import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -12,8 +13,8 @@ public class User extends ParseUser{
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
+	private ParseGeoPoint lastLocation;
 
-	
 	public User(String objectId) {
 		this.objectId = objectId;
 		
@@ -59,6 +60,18 @@ public class User extends ParseUser{
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public ParseGeoPoint getLastLocation() {
+		return lastLocation;
+	}
+
+	private void setLastLocation(ParseGeoPoint lastLocation) {
+		this.lastLocation = lastLocation;
+	}
+	
+	public LatLng getLastLocationLatLng(){
+		return new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
 	}
 
 }

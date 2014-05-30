@@ -1,17 +1,15 @@
 package pt.ua.icm.bringme;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import pt.ua.icm.bringme.models.Courier;
-import android.content.Intent;
-import android.net.Uri;
+import pt.ua.icm.bringme.helpers.FacebookImageLoader;
+import pt.ua.icm.bringme.helpers.MapHelper;
+import pt.ua.icm.bringme.models.Delivery;
+import pt.ua.icm.bringme.models.User;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,28 +21,30 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class RequestDeliveryActivity extends ActionBarActivity
-		implements
-		ActionBar.TabListener,
-		pt.ua.icm.bringme.RequestDeliveryCourierFragment.OnFragmentInteractionListener,
-		pt.ua.icm.bringme.RequestDeliverySourceFragment.OnFragmentInteractionListener,
-		pt.ua.icm.bringme.RequestDeliveryTargetFragment.OnFragmentInteractionListener {
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a {@link FragmentPagerAdapter}
-	 * derivative, which will keep every loaded fragment in memory. If this
-	 * becomes too memory intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
+public class RequestDeliveryActivity extends ActionBarActivity implements 
+	ActionBar.TabListener, DeliveryOriginFragment.OnDeliveryListener,
+	DeliveryCourierFragment.OnDeliveryListener{
+
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
 	ViewPager mViewPager;
 	
-	LinkedList<Courier> courierList = new LinkedList<Courier>();
+	Delivery delivery = new Delivery();
+
+	public Delivery getDelivery() {
+		return delivery;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +55,10 @@ public class RequestDeliveryActivity extends ActionBarActivity
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		// Enable ActionBar Home
-		actionBar.setDisplayHomeAsUpEnabled(true);
-
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager = (ViewPager) findViewById(R.id.requestDeliveryPager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
 		// When swiping between different sections, select the corresponding
@@ -92,30 +86,21 @@ public class RequestDeliveryActivity extends ActionBarActivity
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.request_delivery, menu);
 		return true;
 	}
 
-	/*
-	 * @Override public boolean onOptionsItemSelected(MenuItem item) { // Handle
-	 * action bar item clicks here. The action bar will // automatically handle
-	 * clicks on the Home/Up button, so long // as you specify a parent activity
-	 * in AndroidManifest.xml. int id = item.getItemId(); if (id ==
-	 * R.id.action_settings) { return true; } return
-	 * super.onOptionsItemSelected(item); }
-	 */
-
 	@Override
-	public boolean onOptionsItemSelected(MenuItem menuItem) {
-		switch (menuItem.getItemId()) {
-		case android.R.id.home:
-			Intent homeIntent = new Intent(this, MainMenuActivity.class);
-			homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(homeIntent);
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
 		}
-		return (super.onOptionsItemSelected(menuItem));
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -148,59 +133,19 @@ public class RequestDeliveryActivity extends ActionBarActivity
 
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a PlaceholderFragment (defined as a static inner class
-			// below).
-			/*switch (position) {
+			switch (position) {
 			case 0:
-				LocalData.orderFragment = RequestDeliveryOrderDetailsFragment.newInstance();
-				return LocalData.orderFragment;
+				return DeliveryOriginFragment.newInstance();
 			case 1:
-				LocalData.sourceFragment = RequestDeliverySourceFragment.newInstance(); 
-				return LocalData.sourceFragment;
-			case 2:
-				LocalData.targetFragment = RequestDeliveryTargetFragment.newInstance();
-				return LocalData.targetFragment;
-			case 3:
-				
-				LocalData.courierFragment = RequestDeliveryCourierFragment.newInstance();
-				
-				Bundle args = new Bundle();
-				args.putSerializable("COURIER_LIST", courierList);
-				LocalData.courierFragment.setArguments(args);
-				return LocalData.courierFragment;
-			}*/
-
-			return null;
-		}
-		
-		public LinkedList<Courier> getAvailableCouriers(){
-			ParseQuery<ParseObject> queryCouriers = new ParseQuery<ParseObject>("User");
-			queryCouriers.whereEqualTo("isCourier", true);
-			queryCouriers.findInBackground(new FindCallback<ParseObject>() {
-				
-				@Override
-				public void done(List<ParseObject> objects, ParseException e) {
-					if(e == null){
-						processCourierList(objects);
-					}
-				}
-			});
-			return null;
-		}
-
-		protected void processCourierList(List<ParseObject> objects) {
-			for(ParseObject parseCourier : objects){				
-				Courier courier = new Courier("TODO");
-				
-				courierList.add(courier);
+				return DeliveryCourierFragment.newInstance(delivery.origin);
 			}
+			return null;
 		}
 
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 4;
+			return 2;
 		}
 
 		@Override
@@ -208,25 +153,74 @@ public class RequestDeliveryActivity extends ActionBarActivity
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.tab_title_delivery_order_details)
-						.toUpperCase(l);
+				return getString(R.string.title_request_delivery_origin).toUpperCase(l);
 			case 1:
-				return getString(R.string.tab_title_delivery_source)
-						.toUpperCase(l);
-			case 2:
-				return getString(R.string.tab_title_delivery_target)
-						.toUpperCase(l);
-			case 3:
-				return getString(R.string.tab_title_delivery_courier)
-						.toUpperCase(l);
+				return getString(R.string.title_request_delivery_courier).toUpperCase(l);
 			}
 			return null;
 		}
 	}
 
 	@Override
-	public void onFragmentInteraction(Uri uri) {
-		// TODO Auto-generated method stub
+	public void setCourier(User courier) {
+		delivery.courierId = courier.getObjectId();
+	}
+
+	@Override
+	public void setOrigin(ParseGeoPoint geoLocation, String addressName) {
+		delivery.origin = geoLocation;
+		delivery.originAddress = addressName;
+		
+		FragmentManager manager = getSupportFragmentManager();
+		final SupportMapFragment mapFragment = (SupportMapFragment) manager.findFragmentById(R.id.courierMapFragment);
+		
+		final GoogleMap map = (GoogleMap) mapFragment.getMap();
+		
+		if(delivery.origin != null){
+			 double latitude = delivery.origin.getLatitude();
+			 double longitude = delivery.origin.getLongitude();
+			 LatLng target = new LatLng(latitude, longitude);
+			 
+			 MapHelper.updateMapCamera(map, target);
+			 
+			 ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+				query.whereNear("lastLocation", delivery.origin).findInBackground(new FindCallback<ParseObject>() {
+					
+					@Override
+					public void done(List<ParseObject> objects, ParseException e) {
+						if(e != null){
+							List<User> courierList = new ArrayList<User>();
+							for(ParseObject obj : objects){
+								courierList.add((User) obj);
+							}
+							
+							
+							
+							for(User courier : courierList){
+								if(courier.has("facebookId")){
+									//Retrieve user facebookId
+									
+									FacebookImageLoader imageLoader = new FacebookImageLoader();
+									Bitmap profilePic = null;
+									try {
+										profilePic = imageLoader.execute(courier.getString("facebookId")).get();
+									} catch (InterruptedException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									} catch (ExecutionException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									
+									map.addMarker(new MarkerOptions().position(
+											courier.getLastLocationLatLng())
+											.icon(BitmapDescriptorFactory.fromBitmap(profilePic)));
+								}
+							}
+						}
+					}
+				});
+		}
 	}
 
 }

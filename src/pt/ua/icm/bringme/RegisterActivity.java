@@ -1,11 +1,11 @@
 package pt.ua.icm.bringme;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +14,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class RegisterActivity extends Activity {	
+public class RegisterActivity extends ActionBarActivity {	
 	//GUI components
 	private TextView firstNameField, lastNameField, emailField, passwordField, passwordConfirmationField, phoneNumberField;
 	private String firstNameValue, lastNameValue, emailValue, passwordValue, passwordConfirmationValue, phoneNumberValue;
@@ -22,10 +22,13 @@ public class RegisterActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_register);
+		
+		getSupportActionBar().hide();
 		
 		//Initialize parse connection
-		Parse.initialize(this, "BAK4DQx9H7pvSsQJTRKKH4MF0souYuQ6E1l5AMa6", "qnftcNXKP2BevHACysHKbaK3lhGjQPDrINBT6cRI");
+		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ", "91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
+		
+		setContentView(R.layout.activity_register);
 		
 		//Bind GUI components
 		firstNameField = (TextView) findViewById(R.id.registerFirstNameField);
@@ -34,13 +37,19 @@ public class RegisterActivity extends Activity {
 		passwordField = (TextView) findViewById(R.id.registerPasswordField);
 		passwordConfirmationField = (TextView) findViewById(R.id.registerPasswordConfirmationField);
 		phoneNumberField = (TextView) findViewById(R.id.registerPhoneNumberField);
+		
+		Button btRegister = (Button) findViewById(R.id.registerRegisterButton);
+		btRegister.setOnClickListener(registerClick());
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.register, menu);
-		return true;
+	private OnClickListener registerClick() {
+		return new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				registerAccount();
+			}
+		};
 	}
 
 	/**
@@ -49,15 +58,13 @@ public class RegisterActivity extends Activity {
 	 * 
 	 * @param view
 	 */
-	public void registerAccount(View view) {
+	public void registerAccount() {
 		emailValue = emailField.getText().toString();
 		passwordValue = passwordField.getText().toString();
 		passwordConfirmationValue = passwordConfirmationField.getText().toString();
 		phoneNumberValue = phoneNumberField.getText().toString();
 		firstNameValue = firstNameField.getText().toString();
 		lastNameValue = lastNameField.getText().toString();
-		
-		Log.i(Consts.TAG, passwordValue + " == " + passwordConfirmationValue);
 		
 		if(passwordValue.equals(passwordConfirmationValue)){
 			ParseUser user = new ParseUser();
@@ -88,7 +95,7 @@ public class RegisterActivity extends Activity {
 	}
 	
 	private void userRegisterSuccess(){
-		Intent menuIntent = new Intent(this, MenuActivity.class);
+		Intent menuIntent = new Intent(this, MainActivity.class);
 		startActivity(menuIntent);
 	}
 

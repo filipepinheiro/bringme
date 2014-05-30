@@ -1,14 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loginContainer"
+    style="@style/paddingStyles"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_background"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pt.ua.icm.bringme.LoginActivity" >
 
     <ImageView
@@ -16,80 +14,123 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:contentDescription="@string/logo_description"
+        android:padding="40dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/bring_me_lettering" />
-
-    <EditText
-        android:id="@+id/loginEmailField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/insert_email"
-        android:inputType="textEmailAddress" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/loginPasswordField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/insert_password"
-        android:inputType="textPassword" />
+        android:src="@drawable/logo_shadow" />
 
     <LinearLayout
+        android:id="@+id/loginFieldsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal" >
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/loginLoginButton"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/loginEmailField"
+            style="@style/editTextStyle"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="loginWithBringme"
-            android:text="@string/login"
-            tools:ignore="ButtonStyle" />
+            android:layout_margin="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:hint="@string/email"
+            android:inputType="text|textEmailAddress"
+            android:textColor="@color/white" >
 
-        <Button
-            android:id="@+id/loginRegisterButton"
-            android:layout_width="0dp"
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/loginPasswordField"
+            style="@style/editTextStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:contentDescription="@string/register_description"
-            android:onClick="registerAccount"
-            android:text="@string/register"
-            tools:ignore="ButtonStyle" />
+            android:ellipsize="end"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:typeface="normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal" >
+
+            <Button
+                android:id="@+id/loginLoginButton"
+                style="@style/buttonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:minHeight="38dip"
+                android:onClick="loginWithBringme"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/loginRegisterButton"
+                style="@style/buttonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:enabled="true"
+                android:minHeight="38dip"
+                android:onClick="registerAccount"
+                android:text="@string/register"
+                android:textColor="@color/white"
+                tools:ignore="ButtonStyle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <com.facebook.widget.LoginButton
+                android:id="@+id/loginFacebookButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.59"
+                android:minHeight="38dip"
+                android:onClick="loginWithFacebook"
+                android:textColor="@color/white"
+                tools:ignore="ButtonStyle" />
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/loginLoaderContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/loginParse"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="loginWithFacebook"
-            android:text="Facebook"
-            tools:ignore="ButtonStyle" />
-
-    </LinearLayout>
-<!-- 
- 	<com.facebook.widget.LoginButton
-        android:id="@+id/authButton"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:onClick="loginWithFacebook"
-        
-        />
- -->
- 	
- 	
- 	
+        android:layout_gravity="center_vertical|center_horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" >
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="@string/login_message"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
 </LinearLayout>

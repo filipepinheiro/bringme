@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pt.ua.icm.bringme"
-    android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+    android:theme="@style/Theme.Bringme"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="9"
         android:targetSdkVersion="19" />
     <!-- Google Maps Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -25,12 +25,6 @@
     <uses-permission android:name="com.google.android.c2dm.intent.RECEIVE" />
     <uses-permission android:name="com.google.android.c2dm.SEND" />
 
-    <permission
-        android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE" />
-
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -41,77 +35,83 @@
         android:name="android.hardware.location.gps"
         android:required="true" />
 
+    <!-- Parse required permissions -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <permission
+        android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="pt.ua.icm.bringme.permission.C2D_MESSAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:logo="@drawable/logo_lettering"
+        android:theme="@style/Theme.Bringme" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBj59RbmUnjYnOiU592ph5Rp3vAP62U3u8" />
+        <!-- AIzaSyBtBvj0a8FID0Qn0hnnazNIIKhWzEIIZQo | hugo correia -->
+        <!-- AIzaSyBj59RbmUnjYnOiU592ph5Rp3vAP62U3u8 | filipe portatil -->
+        <!-- AIzaSyDRHXtfAVJmUNiG6CHHqZNhIvNMdYU5AJw | filipe desktop -->
 
         <activity
             android:name="pt.ua.icm.bringme.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.Bringme" >
+        </activity>
+        <activity
+            android:name="pt.ua.icm.bringme.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:theme="@style/Theme.Bringme" >
+        </activity>
+        <activity android:name="com.facebook.LoginActivity" />
+        <activity
+            android:name="pt.ua.icm.bringme.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.Bringme" >
+        </activity>
+        <activity
+            android:name="pt.ua.icm.bringme.SplashActivity"
+            android:theme="@style/Theme.Bringme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="pt.ua.icm.bringme.RegisterActivity"
-            android:label="@string/title_activity_register" >
-        </activity>
-        <activity
-            android:name="pt.ua.icm.bringme.MainMenuActivity"
-            android:label="@string/title_activity_main" >
-        </activity>
+
+        <service android:name="com.parse.PushService" />
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="pt.ua.icm.bringme" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name="pt.ua.icm.bringme.RequestDeliveryActivity"
             android:label="@string/title_activity_request_delivery" >
-        </activity>
-        <activity
-            android:name="pt.ua.icm.bringme.RequestListActivity"
-            android:label="@string/title_activity_request_list" >
-        </activity>
-        <activity
-            android:name="pt.ua.icm.bringme.ProfileActivity"
-            android:label="@string/title_activity_profile" >
-        </activity>
-        <activity
-            android:name="pt.ua.icm.bringme.DeliveryStatusActivity"
-            android:label="@string/title_activity_delivery_status" >
-        </activity>
-        <activity
-            android:name="pt.ua.icm.bringme.HistoricalActivity"
-            android:label="@string/title_activity_historical" >
-        </activity>
-        <activity
-            android:name="pt.ua.icm.bringme.RateCourierActivity"
-            android:label="@string/title_activity_rate_courier" >
-        </activity>
-
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDRHXtfAVJmUNiG6CHHqZNhIvNMdYU5AJw" />
-        <!-- AIzaSyBtBvj0a8FID0Qn0hnnazNIIKhWzEIIZQo | hugo correia -->
-        <!-- AIzaSyBj59RbmUnjYnOiU592ph5Rp3vAP62U3u8 | filipe portatil -->
-        <!-- AIzaSyDRHXtfAVJmUNiG6CHHqZNhIvNMdYU5AJw | filipe desktop -->
-
-        <activity android:name="com.facebook.LoginActivity" />
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/app_id" />
-
-        <activity
-            android:name="pt.ua.icm.bringme.CourierProfileActivity"
-            android:label="@string/title_activity_courier_profile" >
-        </activity>
-        <activity
-            android:name="pt.ua.icm.bringme.MenuActivity"
-            android:label="@string/title_activity_menu" >
         </activity>
     </application>
 

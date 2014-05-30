@@ -7,12 +7,14 @@ public class Delivery {
 	public String id;
 	
 	public ParseGeoPoint origin;
+	public String originAddress;
 	public String detailedOrigin;
 	
 	public ParseGeoPoint destination;
+	public String destinationAddress;
 	public String detailedDestination;
 	
-	public String name, description, notes;
+	public String name, description, notes, courierId, requesterId;
 	
 	private boolean accepted, finished;
 
@@ -33,6 +35,22 @@ public class Delivery {
 
 	public void setFinished(boolean finished) {
 		this.finished = finished;
+	}
+	
+	private void setCourierId(String courierId){
+		this.courierId = id;
+	}
+	
+	public String getCourierId(){
+		return courierId;
+	}
+	
+	private void setRequestId(String requesterId){
+		this.requesterId = requesterId;
+	}
+	
+	private String getRequestId(){
+		return requesterId;
 	}
 
 }

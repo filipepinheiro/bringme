@@ -1,68 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Bring Me</string>
-    <string name="title_activity_login">Login to Bring Me</string>
-    <string name="action_settings">Settings</string>
-    <string name="login">Login</string>
+    <string name="app_name">BringMe</string>
     <string name="logo_description">BringMe Logo</string>
-    <string name="retrieve_password">Retrieve Password</string>
+    <string name="app_id">635266799888180</string>
+
+    <!-- Activity Titles -->
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_splash">Welcome to BringMe</string>
+    <string name="title_activity_main"></string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
     <string name="register">Register</string>
-    <string name="insert_email">Insert E-mail</string>
-    <string name="insert_password">Insert Password</string>
-    <string name="register_description">Register button to regist a new user account</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="phone">Phone</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="email">Email</string>
-    <string name="account_info">Account information</string>
-    <string name="personal_information">Personal information</string>
-    <string name="password_confirmation">Password Confirmation</string>
-    <string name="password">Password</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="title_activity_register">Register</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="contact">Contact</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="tab_title_delivery_order_details">Order details</string>
-    <string name="tab_title_delivery_source">Origin</string>
-    <string name="tab_title_delivery_target">Destination</string>
-    <string name="tab_title_delivery_courier">Courier</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="or">Or</string>
-    <string name="login_with_facebook">Login with facebook</string>
-    <string name="title_activity_request_delivery">RequestDeliveryActivity</string>
-    <string name="package_location">Package Origin</string>
-    <string name="address">Address</string>
-    <string name="package_delivery_location">Package Destination</string>
-    <string name="main_menu_view_requests">View requests</string>
-    <string name="title_activity_request_list">RequestListActivity</string>
-    <string name="title_activity_profile">ProfileActivity</string>
-    <string name="profile_title">Profile</string>
-    <string name="title_activity_delivery_status">DeliveryStatusActivity</string>
-    <string name="title_activity_historical">HistoricalActivity</string>
-    <string name="order_tag">Order Tag</string>
-    <string name="order_description">Order Description</string>
-    <string name="order_special_notes">Order Special Notes (Optional)</string>
-    <string name="title_activity_rate_courier">RateCourierActivity</string>
-    <string name="courier_mode_on">Courier Mode On</string>
-    <string name="courier_mode_off">Courier Mode Off</string>
-    <string name="registration_fail">Registration Failed!</string>
-    <string name="using_maps_icon">Maps</string>
-    
-    <!-- Perfil -->
-    <string name="no_email">Do not has email.</string>
-    <string name="no_phone_number">Do not has phone.</string>
-    
-    
-    <!-- Latitude, longitude format -->
-    <string name="latitude_longitude">%1$.8f, %2$.8f</string>
-    <string name="app_id">1398988890385507</string>
-    <string name="title_activity_courier_profile">CourierProfileActivity</string>
-    <string name="title_activity_menu">MenuActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="menu_title_requests">Resquest</string>
-    <string name="menu_title_courier">Courier</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+    <string name="title_section_request_menu">Request</string>
+    <string name="title_section_courier_menu">Courier</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_message">Login to BringMe</string>
+    <string name="request_delivery">Request Delivery</string>
+    <string name="delivery_status">Delivery Status</string>
+    <string name="title_activity_request_delivery">Request Delivery</string>
+    <string name="title_request_delivery_origin">Origin</string>
+    <string name="title_request_delivery_courier">Courier</string>
+    <string name="package_address">Package Address</string>
+    <string name="map_mode">Map</string>
 
 </resources>
