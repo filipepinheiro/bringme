@@ -1,28 +1,13 @@
 package pt.ua.icm.bringme;
 
-<<<<<<< HEAD
-import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
-import pt.ua.icm.bringme.helpers.*;
-=======
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
-
+import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import android.content.Intent;
 import android.graphics.Bitmap;
-<<<<<<< HEAD
-=======
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -34,28 +19,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-=======
 import com.facebook.FacebookRequestError;
 import com.facebook.Request;
 import com.facebook.Response;
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
+import com.facebook.Session;
 import com.facebook.model.GraphUser;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
-import com.parse.SaveCallback;
 import com.parse.ParseFacebookUtils.Permissions;
-<<<<<<< HEAD
 import com.parse.ParseFile;
-=======
-import com.parse.ParseQuery;
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -75,7 +51,6 @@ public class LoginActivity extends ActionBarActivity {
 
 		emailField = (TextView) findViewById(R.id.loginEmailField);
 		passwordField = (TextView) findViewById(R.id.loginPasswordField);
-<<<<<<< HEAD
 		
 		Button btLogin = (Button) findViewById(R.id.loginLoginButton);
 		btLogin.setOnClickListener(loginClick());
@@ -85,12 +60,9 @@ public class LoginActivity extends ActionBarActivity {
 		
 		fieldsContainer = (LinearLayout) findViewById(R.id.loginFieldsContainer);
 		loaderContainer = (FrameLayout) findViewById(R.id.loginLoaderContainer);
-=======
 
 		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ",
 				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
-
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 
 		// Check if there is a currently logged in user
 		// and they are linked to a Facebook account.
@@ -152,7 +124,7 @@ public class LoginActivity extends ActionBarActivity {
 
 	public void loginFail() {
 		if (emailValue.isEmpty()) {
-			
+			emailField.setError("Empty Field");
 		} else {
 			emailField.setError("Wrong Credentials!");
 		}
@@ -170,7 +142,6 @@ public class LoginActivity extends ActionBarActivity {
 	 * 
 	 * @param view
 	 */
-<<<<<<< HEAD
 	public void loginWithBringme() {
 		emailValue = emailField.getText().toString();
 		passwordValue = passwordField.getText().toString();
@@ -201,10 +172,13 @@ public class LoginActivity extends ActionBarActivity {
 					}
 					else{
 						Toast.makeText(getApplicationContext(), "Error Ocurred!", Toast.LENGTH_SHORT).show();
-=======
+					}
+				}
+			}
+		});
+	}
+			
 	public void loginWithBringme(View view) {
-		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ",
-				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
 		emailValue = emailField.getText().toString();
 		passwordValue = passwordField.getText().toString();
 
@@ -236,47 +210,20 @@ public class LoginActivity extends ActionBarActivity {
 										.show();
 							}
 						}
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 					}
 				});
 	}
 
-<<<<<<< HEAD
-=======
-	public void loginSuccess() {
-		Intent menuIntent = new Intent(this, MenuActivity.class);
-		startActivity(menuIntent);
-	}
-
-	public void loginFail() {
-		if (emailValue.isEmpty()) {
-
-		} else {
-			emailField.setError("Wrong Credentials!");
-		}
-
-		if (passwordValue.isEmpty()) {
-			passwordField.setError("Empty Field");
-		} else {
-			passwordField.setError("Wrong Credentials!");
-		}
-	}
-
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 	/**
 	 * Attempts to login trying to authenticate into the system through the
 	 * Facebook authentication system
 	 * 
 	 * @param view
 	 */
-<<<<<<< HEAD
-	public void loginWithFacebook(View view) {		
-=======
+
 	public void loginWithFacebook(View view) {
 		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ",
 				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
-
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 		// Check if there is a currently logged in user
 		// and they are linked to a Facebook account.
 		ParseUser currentUser = ParseUser.getCurrentUser();
@@ -287,7 +234,6 @@ public class LoginActivity extends ActionBarActivity {
 
 		// Facebook app id for initialization
 		ParseFacebookUtils.initialize(getString(R.string.app_id));
-<<<<<<< HEAD
 		
 		ParseUser.logOut();
 		
@@ -296,21 +242,13 @@ public class LoginActivity extends ActionBarActivity {
 			     Permissions.User.HOMETOWN,Permissions.User.LOCATION,
 			     Permissions.User.BIRTHDAY);
 		
+		
+
+		ParseUser.logOut();
+		// ParseFacebookUtils.logIn(this, new LogInCallback() {
 		ParseFacebookUtils.logIn(facebookPermissions, this, new LogInCallback() {
 			@Override
 			public void done(final ParseUser user, ParseException e) {
-=======
-
-		// List<String> facebookPermissions = Arrays.asList("public_profile",
-		// "user_friends");
-		ParseUser.logOut();
-		// ParseFacebookUtils.logIn(this, new LogInCallback() {
-		ParseFacebookUtils.logIn(Arrays.asList(Permissions.User.EMAIL,
-				Permissions.User.PHOTOS, Permissions.User.HOMETOWN,
-				Permissions.User.LOCATION), this, new LogInCallback() {
-			@Override
-			public void done(ParseUser user, ParseException e) {
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 				if (user == null) {
 					hideLoader();
 					switch(e.getCode()){
@@ -329,7 +267,6 @@ public class LoginActivity extends ActionBarActivity {
 					}
 					Log.i(Consts.TAG, "Oops, something wen't wrong!");
 				} else if (user.isNew()) {
-<<<<<<< HEAD
 					final Session session = ParseFacebookUtils.getSession();
 					
 					Log.i(Consts.TAG, "Register and Login with facebook Success!");
@@ -354,14 +291,7 @@ public class LoginActivity extends ActionBarActivity {
 				    request.executeAsync();
 				    
 				    loginSuccess();
-				}
-				else {
-=======
-					Log.i(Consts.TAG,
-							"Register and Login with facebook Success!");
-					loginFacebookSuccess();
 				} else {
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 					Log.i(Consts.TAG, "Login with facebook Success!");
 					loginFacebookSuccess();
 				}
@@ -369,24 +299,16 @@ public class LoginActivity extends ActionBarActivity {
 		});
 	}
 
-<<<<<<< HEAD
-=======
 	private void loginFacebookSuccess() {
-		Log.d("PARSE", "PARSE");
-		
 		ParseFacebookUtils.initialize(getString(R.string.app_id));
 
 		Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
 				new Request.GraphUserCallback() {
-
 					String email, firstName, lastName;
 
 					@Override
 					public void onCompleted(GraphUser user, Response response) {
 						if (user != null) {
-
-
-							
 							if (user.getProperty("email") != null) {
 								this.email = user.getProperty("email")
 										.toString();
@@ -398,13 +320,11 @@ public class LoginActivity extends ActionBarActivity {
 								this.lastName = user.getLastName().toString();
 							}
 
-							
-							ParseUser.getCurrentUser().put("email", this.email);
-							ParseUser.getCurrentUser().put("firstName", this.firstName);
-							ParseUser.getCurrentUser().put("lastName", this.lastName);
-
-							
-							ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+							ParseUser parseUser = ParseUser.getCurrentUser();
+							parseUser.put("email", this.email);
+							parseUser.put("firstName", this.firstName);
+							parseUser.put("lastName", this.lastName);
+							parseUser.saveInBackground(new SaveCallback() {
 								
 								@Override
 								public void done(ParseException e) {
@@ -438,7 +358,7 @@ public class LoginActivity extends ActionBarActivity {
 		request.executeAsync();
 
 		// init menu activity
-		Intent menuIntent = new Intent(this, MenuActivity.class);
+		Intent menuIntent = new Intent(this, MainActivity.class);
 		startActivity(menuIntent);
 	}
 
@@ -452,7 +372,6 @@ public class LoginActivity extends ActionBarActivity {
 		startActivity(registerAccountIntent);
 	}
 
->>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 	@Override
 	public void onResume() {
 		super.onResume();

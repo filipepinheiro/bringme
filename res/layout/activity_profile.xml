@@ -31,7 +31,7 @@
         android:gravity="center_horizontal"
         android:text="John Doe"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/green_letter"
+        android:textColor="@color/green_peas"
         android:textSize="25sp" />
 
     <TextView
@@ -41,7 +41,7 @@
         android:paddingTop="10dp"
         android:text="Contacts"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/green_letter"
+        android:textColor="@color/green_peas"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -62,7 +62,7 @@
                 android:layout_gravity="right"
                 android:text="E-mail"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/green_letter"
+                android:textColor="@color/green_peas"
                 android:textStyle="bold" />
 
             <TextView
@@ -72,7 +72,7 @@
                 android:layout_gravity="right"
                 android:text="Phone"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/green_letter"
+                android:textColor="@color/green_peas"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:text="jonh.doe@gmail.com"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/green_letter" />
+                android:textColor="@color/green_peas" />
 
             <TextView
                 android:id="@+id/profilePhoneField"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="912345678"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/green_letter" />
+                android:textColor="@color/green_peas" />
         </LinearLayout>
     </LinearLayout>
 
@@ -107,7 +107,7 @@
         android:paddingTop="10dp"
         android:text="Personal Achievments"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/green_letter"
+        android:textColor="@color/green_peas"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -128,7 +128,7 @@
                 android:layout_gravity="right"
                 android:text="Requests"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/green_letter"
+                android:textColor="@color/green_peas"
                 android:textStyle="bold" />
 
             <TextView
@@ -138,7 +138,7 @@
                 android:layout_gravity="right"
                 android:text="Deliveries"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/green_letter"
+                android:textColor="@color/green_peas"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:text="138"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/green_letter" />
+                android:textColor="@color/green_peas" />
 
             <TextView
                 android:id="@+id/deliveryStatusCourierNameField"
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:text="87"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/green_letter" />
+                android:textColor="@color/green_peas" />
         </LinearLayout>
     </LinearLayout>
 

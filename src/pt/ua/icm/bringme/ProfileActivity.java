@@ -2,8 +2,6 @@ package pt.ua.icm.bringme;
 
 import java.util.concurrent.ExecutionException;
 
-import pt.ua.icm.bringme.helpers.FacebookPhotoHelper;
-import pt.ua.icm.bringme.helpers.RoundedImageView;
 import pt.ua.icm.bringme.models.User;
 import android.app.ActionBar;
 import android.content.Intent;
@@ -25,7 +23,7 @@ import com.parse.ParseUser;
 
 public class ProfileActivity extends ActionBarActivity {
 
-	TextView fullNameField, emailField, phoneNumberField;
+	/*TextView fullNameField, emailField, phoneNumberField;
 	User currentUser;
 
 	@Override
@@ -136,5 +134,5 @@ public class ProfileActivity extends ActionBarActivity {
 		request.executeAsync();
 
 	}
-
+*/
 }
