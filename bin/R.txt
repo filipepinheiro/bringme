@@ -52,7 +52,7 @@ int attr cameraTargetLng 0x7f010006
 int attr cameraTilt 0x7f010007
 int attr cameraZoom 0x7f010008
 int attr circularImageViewStyle 0x7f010093
-int attr closeOnTapEnabled 0x7f010096
+int attr closeOnTapEnabled 0x7f010094
 int attr confirm_logout 0x7f01001d
 int attr customNavigationLayout 0x7f010051
 int attr disableChildrenWhenDisabled 0x7f010073
@@ -67,7 +67,6 @@ int attr dropDownListViewStyle 0x7f010040
 int attr dropdownListPreferredItemHeight 0x7f010067
 int attr expandActivityOverflowButtonDrawable 0x7f01008a
 int attr extra_fields 0x7f010012
-int attr fadeEnabled 0x7f01009b
 int attr fetch_user_info 0x7f01001e
 int attr height 0x7f010045
 int attr homeAsUpIndicator 0x7f010032
@@ -92,10 +91,10 @@ int attr logout_text 0x7f010020
 int attr mapType 0x7f010003
 int attr multi_select 0x7f010018
 int attr navigationMode 0x7f010046
-int attr offsetWidth 0x7f010098
-int attr openOnTapEnabled 0x7f010097
-int attr outlineColor 0x7f01009d
-int attr outlineEnabled 0x7f01009c
+int attr offsetWidth 0x7f010096
+int attr openOnTapEnabled 0x7f010095
+int attr outlineColor 0x7f01009a
+int attr outlineEnabled 0x7f010099
 int attr paddingEnd 0x7f010058
 int attr paddingStart 0x7f010057
 int attr panelMenuListTheme 0x7f01006a
@@ -123,8 +122,6 @@ int attr searchViewVoiceIcon 0x7f01007f
 int attr search_text 0x7f01001b
 int attr selectableItemBackground 0x7f010038
 int attr shadow 0x7f010092
-int attr shadowDrawable 0x7f010094
-int attr shadowWidth 0x7f010095
 int attr showAsAction 0x7f01006c
 int attr showDividers 0x7f010074
 int attr show_pictures 0x7f010011
@@ -133,8 +130,8 @@ int attr show_title_bar 0x7f010013
 int attr spinnerDropDownItemStyle 0x7f010077
 int attr spinnerMode 0x7f010071
 int attr spinnerStyle 0x7f010076
-int attr stickTo 0x7f010099
-int attr style 0x7f01009a
+int attr stickTo 0x7f010097
+int attr style 0x7f010098
 int attr subtitle 0x7f010048
 int attr subtitleTextStyle 0x7f01004a
 int attr textAllCaps 0x7f01008c
@@ -172,7 +169,7 @@ int color abc_search_url_text_holo 0x7f050016
 int color abc_search_url_text_normal 0x7f050011
 int color abc_search_url_text_pressed 0x7f050013
 int color abc_search_url_text_selected 0x7f050012
-int color black 0x7f050015
+int color black_background 0x7f050015
 int color com_facebook_blue 0x7f05000c
 int color com_facebook_loginview_text_color 0x7f050010
 int color com_facebook_picker_search_bar_background 0x7f05000a
@@ -1022,13 +1019,11 @@ int styleable SearchView_android_inputType 1
 int styleable SearchView_android_maxWidth 0
 int styleable SearchView_iconifiedByDefault 3
 int styleable SearchView_queryHint 4
-int[] styleable SlidingPaneLayout { 0x7f010094, 0x7f010095, 0x7f010096, 0x7f010097, 0x7f010098, 0x7f010099 }
-int styleable SlidingPaneLayout_closeOnTapEnabled 2
-int styleable SlidingPaneLayout_offsetWidth 4
-int styleable SlidingPaneLayout_openOnTapEnabled 3
-int styleable SlidingPaneLayout_shadowDrawable 0
-int styleable SlidingPaneLayout_shadowWidth 1
-int styleable SlidingPaneLayout_stickTo 5
+int[] styleable SlidingPaneLayout { 0x7f010094, 0x7f010095, 0x7f010096, 0x7f010097 }
+int styleable SlidingPaneLayout_closeOnTapEnabled 0
+int styleable SlidingPaneLayout_offsetWidth 2
+int styleable SlidingPaneLayout_openOnTapEnabled 1
+int styleable SlidingPaneLayout_stickTo 3
 int[] styleable Spinner { 0x010100af, 0x01010175, 0x01010176, 0x01010262, 0x010102ac, 0x010102ad, 0x7f010070, 0x7f010071, 0x7f010072, 0x7f010073 }
 int styleable Spinner_android_dropDownHorizontalOffset 4
 int styleable Spinner_android_dropDownSelector 1
@@ -1048,10 +1043,9 @@ int styleable Theme_listChoiceBackgroundIndicator 5
 int styleable Theme_panelMenuListTheme 4
 int styleable Theme_panelMenuListWidth 3
 int styleable Theme_popupMenuStyle 2
-int[] styleable TransitionViewPager { 0x7f01009a, 0x7f01009b, 0x7f01009c, 0x7f01009d }
-int styleable TransitionViewPager_fadeEnabled 1
-int styleable TransitionViewPager_outlineColor 3
-int styleable TransitionViewPager_outlineEnabled 2
+int[] styleable TransitionViewPager { 0x7f010098, 0x7f010099, 0x7f01009a }
+int styleable TransitionViewPager_outlineColor 2
+int styleable TransitionViewPager_outlineEnabled 1
 int styleable TransitionViewPager_style 0
 int[] styleable View { 0x010100da, 0x7f010057, 0x7f010058 }
 int styleable View_android_focusable 0

@@ -341,14 +341,16 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static final int circularImageViewStyle=0x7f010093;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+        /**   <attr name="shadowDrawable" format="boolean"/>
+        <attr name="shadowWidth" format="dimension"/>
+         <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int closeOnTapEnabled=0x7f010096;
+        public static final int closeOnTapEnabled=0x7f010094;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -460,14 +462,6 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int extra_fields=0x7f010012;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int fadeEnabled=0x7f01009b;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -683,7 +677,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int offsetWidth=0x7f010098;
+        public static final int offsetWidth=0x7f010096;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -691,21 +685,22 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int openOnTapEnabled=0x7f010097;
+        public static final int openOnTapEnabled=0x7f010095;
         /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
-        public static final int outlineColor=0x7f01009d;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+        public static final int outlineColor=0x7f01009a;
+        /**  	<attr name="fadeEnabled" format="boolean" />
+         <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int outlineEnabled=0x7f01009c;
+        public static final int outlineEnabled=0x7f010099;
         /**  Sets the padding, in pixels, of the end edge; see {@link android.R.attr#padding}. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -898,24 +893,6 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int shadow=0x7f010092;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int shadowDrawable=0x7f010094;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int shadowWidth=0x7f010095;
         /**  How this item should display in the Action Bar, if present. 
          <p>Must be one or more (separated by '|') of the following constant values.</p>
 <table>
@@ -1015,7 +992,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <tr><td><code>bottom</code></td><td>-5</td><td></td></tr>
 </table>
          */
-        public static final int stickTo=0x7f010099;
+        public static final int stickTo=0x7f010097;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -1036,7 +1013,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <tr><td><code>accordion</code></td><td>11</td><td></td></tr>
 </table>
          */
-        public static final int style=0x7f01009a;
+        public static final int style=0x7f010098;
         /**  Specifies subtitle text used for navigationMode="normal" 
          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
@@ -1245,7 +1222,7 @@ containing a value of this type.
         public static final int abc_search_url_text_normal=0x7f050011;
         public static final int abc_search_url_text_pressed=0x7f050013;
         public static final int abc_search_url_text_selected=0x7f050012;
-        public static final int black=0x7f050015;
+        public static final int black_background=0x7f050015;
         public static final int com_facebook_blue=0x7f05000c;
         public static final int com_facebook_loginview_text_color=0x7f050010;
         public static final int com_facebook_picker_search_bar_background=0x7f05000a;
@@ -3880,27 +3857,25 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SlidingPaneLayout_closeOnTapEnabled pt.ua.icm.bringme:closeOnTapEnabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SlidingPaneLayout_closeOnTapEnabled pt.ua.icm.bringme:closeOnTapEnabled}</code></td><td>  <attr name="shadowDrawable" format="boolean"/>
+        <attr name="shadowWidth" format="dimension"/></td></tr>
            <tr><td><code>{@link #SlidingPaneLayout_offsetWidth pt.ua.icm.bringme:offsetWidth}</code></td><td></td></tr>
            <tr><td><code>{@link #SlidingPaneLayout_openOnTapEnabled pt.ua.icm.bringme:openOnTapEnabled}</code></td><td></td></tr>
-           <tr><td><code>{@link #SlidingPaneLayout_shadowDrawable pt.ua.icm.bringme:shadowDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #SlidingPaneLayout_shadowWidth pt.ua.icm.bringme:shadowWidth}</code></td><td></td></tr>
            <tr><td><code>{@link #SlidingPaneLayout_stickTo pt.ua.icm.bringme:stickTo}</code></td><td></td></tr>
            </table>
            @see #SlidingPaneLayout_closeOnTapEnabled
            @see #SlidingPaneLayout_offsetWidth
            @see #SlidingPaneLayout_openOnTapEnabled
-           @see #SlidingPaneLayout_shadowDrawable
-           @see #SlidingPaneLayout_shadowWidth
            @see #SlidingPaneLayout_stickTo
          */
         public static final int[] SlidingPaneLayout = {
-            0x7f010094, 0x7f010095, 0x7f010096, 0x7f010097,
-            0x7f010098, 0x7f010099
+            0x7f010094, 0x7f010095, 0x7f010096, 0x7f010097
         };
         /**
-          <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#closeOnTapEnabled}
-          attribute's value can be found in the {@link #SlidingPaneLayout} array.
+          <p>
+          @attr description
+            <attr name="shadowDrawable" format="boolean"/>
+        <attr name="shadowWidth" format="dimension"/>
 
 
           <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
@@ -3909,9 +3884,10 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
+          <p>This is a private symbol.
           @attr name pt.ua.icm.bringme:closeOnTapEnabled
         */
-        public static final int SlidingPaneLayout_closeOnTapEnabled = 2;
+        public static final int SlidingPaneLayout_closeOnTapEnabled = 0;
         /**
           <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#offsetWidth}
           attribute's value can be found in the {@link #SlidingPaneLayout} array.
@@ -3927,7 +3903,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name pt.ua.icm.bringme:offsetWidth
         */
-        public static final int SlidingPaneLayout_offsetWidth = 4;
+        public static final int SlidingPaneLayout_offsetWidth = 2;
         /**
           <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#openOnTapEnabled}
           attribute's value can be found in the {@link #SlidingPaneLayout} array.
@@ -3941,37 +3917,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name pt.ua.icm.bringme:openOnTapEnabled
         */
-        public static final int SlidingPaneLayout_openOnTapEnabled = 3;
-        /**
-          <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#shadowDrawable}
-          attribute's value can be found in the {@link #SlidingPaneLayout} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name pt.ua.icm.bringme:shadowDrawable
-        */
-        public static final int SlidingPaneLayout_shadowDrawable = 0;
-        /**
-          <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#shadowWidth}
-          attribute's value can be found in the {@link #SlidingPaneLayout} array.
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name pt.ua.icm.bringme:shadowWidth
-        */
-        public static final int SlidingPaneLayout_shadowWidth = 1;
+        public static final int SlidingPaneLayout_openOnTapEnabled = 1;
         /**
           <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#stickTo}
           attribute's value can be found in the {@link #SlidingPaneLayout} array.
@@ -3992,7 +3938,7 @@ containing a value of this type.
 </table>
           @attr name pt.ua.icm.bringme:stickTo
         */
-        public static final int SlidingPaneLayout_stickTo = 5;
+        public static final int SlidingPaneLayout_stickTo = 3;
         /** Attributes that can be used with a Spinner.
            <p>Includes the following attributes:</p>
            <table>
@@ -4275,33 +4221,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #TransitionViewPager_fadeEnabled pt.ua.icm.bringme:fadeEnabled}</code></td><td></td></tr>
            <tr><td><code>{@link #TransitionViewPager_outlineColor pt.ua.icm.bringme:outlineColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #TransitionViewPager_outlineEnabled pt.ua.icm.bringme:outlineEnabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #TransitionViewPager_outlineEnabled pt.ua.icm.bringme:outlineEnabled}</code></td><td> 	<attr name="fadeEnabled" format="boolean" /></td></tr>
            <tr><td><code>{@link #TransitionViewPager_style pt.ua.icm.bringme:style}</code></td><td></td></tr>
            </table>
-           @see #TransitionViewPager_fadeEnabled
            @see #TransitionViewPager_outlineColor
            @see #TransitionViewPager_outlineEnabled
            @see #TransitionViewPager_style
          */
         public static final int[] TransitionViewPager = {
-            0x7f01009a, 0x7f01009b, 0x7f01009c, 0x7f01009d
+            0x7f010098, 0x7f010099, 0x7f01009a
         };
-        /**
-          <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#fadeEnabled}
-          attribute's value can be found in the {@link #TransitionViewPager} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name pt.ua.icm.bringme:fadeEnabled
-        */
-        public static final int TransitionViewPager_fadeEnabled = 1;
         /**
           <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#outlineColor}
           attribute's value can be found in the {@link #TransitionViewPager} array.
@@ -4313,10 +4243,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           @attr name pt.ua.icm.bringme:outlineColor
         */
-        public static final int TransitionViewPager_outlineColor = 3;
+        public static final int TransitionViewPager_outlineColor = 2;
         /**
-          <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#outlineEnabled}
-          attribute's value can be found in the {@link #TransitionViewPager} array.
+          <p>
+          @attr description
+           	<attr name="fadeEnabled" format="boolean" />
 
 
           <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
@@ -4325,9 +4256,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
+          <p>This is a private symbol.
           @attr name pt.ua.icm.bringme:outlineEnabled
         */
-        public static final int TransitionViewPager_outlineEnabled = 2;
+        public static final int TransitionViewPager_outlineEnabled = 1;
         /**
           <p>This symbol is the offset where the {@link pt.ua.icm.bringme.R.attr#style}
           attribute's value can be found in the {@link #TransitionViewPager} array.

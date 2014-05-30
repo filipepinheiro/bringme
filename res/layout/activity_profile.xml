@@ -13,6 +13,8 @@
     tools:context="pt.ua.icm.bringme.ProfileActivity"
     tools:ignore="MergeRootFrame" >
 
+ 
+
     <pt.ua.icm.bringme.helpers.RoundedImageView
         android:id="@+id/userImage"
         android:layout_width="200dip"

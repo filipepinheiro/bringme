@@ -25,8 +25,8 @@ public class RegisterActivity extends Activity {
 		setContentView(R.layout.activity_register);
 		
 		//Initialize parse connection
-		Parse.initialize(this, "BAK4DQx9H7pvSsQJTRKKH4MF0souYuQ6E1l5AMa6", "qnftcNXKP2BevHACysHKbaK3lhGjQPDrINBT6cRI");
-		
+		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ", "91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
+
 		//Bind GUI components
 		firstNameField = (TextView) findViewById(R.id.registerFirstNameField);
 		lastNameField = (TextView) findViewById(R.id.registerLastNameField);
