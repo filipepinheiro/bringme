@@ -27,9 +27,13 @@ public class RegisterActivity extends ActionBarActivity {
 		
 		//Initialize parse connection
 		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ", "91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
+<<<<<<< HEAD
 		
 		setContentView(R.layout.activity_register);
 		
+=======
+
+>>>>>>> 873d7131cf19353f6e7c8298cd2e6bbcc1bd693f
 		//Bind GUI components
 		firstNameField = (TextView) findViewById(R.id.registerFirstNameField);
 		lastNameField = (TextView) findViewById(R.id.registerLastNameField);
