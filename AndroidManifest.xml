@@ -64,6 +64,11 @@
         <!-- AIzaSyBj59RbmUnjYnOiU592ph5Rp3vAP62U3u8 | filipe portatil -->
         <!-- AIzaSyDRHXtfAVJmUNiG6CHHqZNhIvNMdYU5AJw | filipe desktop -->
 
+		<activity
+            android:name="pt.ua.icm.bringme.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/Theme.Bringme" >
+        </activity>
         <activity
             android:name="pt.ua.icm.bringme.LoginActivity"
             android:label="@string/title_activity_login"

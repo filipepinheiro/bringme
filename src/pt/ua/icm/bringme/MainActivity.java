@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutionException;
 
 import pt.ua.icm.bringme.helpers.BitmapHelper;
 import pt.ua.icm.bringme.helpers.FacebookImageLoader;
+import pt.ua.icm.bringme.helpers.RoundedImageView;
+import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -35,12 +37,13 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
-	
+public class MainActivity extends ActionBarActivity implements
+		ActionBar.TabListener {
+
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mDrawerList;
-    private String[] mPlanetTitles = {"Teste","ola"};
+	private ListView mDrawerList;
+	private String[] mPlanetTitles = { "Teste", "ola" };
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -72,20 +75,27 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		
 		ParseUser user = ParseUser.getCurrentUser();
 		
-		final ImageView drawerProfilePicture = (ImageView) findViewById(R.id.drawerProfilePicture);
+		final RoundedImageView drawerProfilePicture = (RoundedImageView) findViewById(R.id.userImageDrawer);
 		byte[] profilePictureBytes = ParseUser.getCurrentUser().getBytes("pic").clone();
 		if (profilePictureBytes != null) {
-			Bitmap roundedPicture = BitmapHelper
-					.getRoundedCornerBitmap(BitmapHelper
+			//Bitmap roundedPicture = BitmapHelper
+				//	.getRoundedCornerBitmap(BitmapHelper
+					//		.byteArrayToBitmap(profilePictureBytes));
+			drawerProfilePicture.setImageBitmap(BitmapHelper
 							.byteArrayToBitmap(profilePictureBytes));
-			drawerProfilePicture.setImageBitmap(roundedPicture);
+			drawerProfilePicture.setBorderColor(Color.parseColor(getString(R.color.green_peas)));
+			
+			
 		} else {
 
 			Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
 					R.drawable.default_profile_picture, this);
-			Bitmap roundedPicture = BitmapHelper
-					.getRoundedCornerBitmap(defaultPicture);
-			drawerProfilePicture.setImageBitmap(roundedPicture);
+			//Bitmap roundedPicture = BitmapHelper
+			//		.getRoundedCornerBitmap(defaultPicture);
+			//drawerProfilePicture.setImageBitmap(roundedPicture);
+		
+			drawerProfilePicture.setImageBitmap(defaultPicture);
+			drawerProfilePicture.setBorderColor(Color.parseColor(getString(R.color.green_peas)));
 		}
 		
 		
@@ -127,6 +137,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		}
 	}
 
+	public void openProfileActivity(View view) {
+		Intent profIntent = new Intent(getApplicationContext(),
+				ProfileActivity.class);
+		startActivity(profIntent);
+	}
+
+	public void userLogout(View view){
+		/*ParseUser.getCurrentUser().logOut();
+		
+		Intent profIntent = new Intent(this,
+				SplashActivity.class);
+		startActivity(profIntent);
+		finish();*/
+	}
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -144,12 +170,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 			return true;
 		}
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
-          return true;
-        }
-		
+			return true;
+		}
+
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
@@ -157,18 +183,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 	}
 
 	@Override
-	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	public void onTabSelected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
 
 	@Override
-	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	public void onTabUnselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
 	}
 
 	@Override
-	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	public void onTabReselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
 	}
 
 	/**
@@ -202,16 +231,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.title_section_request_menu).toUpperCase(l);
+				return getString(R.string.title_section_request_menu)
+						.toUpperCase(l);
 			case 1:
-				return getString(R.string.title_section_courier_menu).toUpperCase(l);
+				return getString(R.string.title_section_courier_menu)
+						.toUpperCase(l);
 			}
 			return null;
 		}
 	}
-	
-	public void onRequestDeliveryClick(View v){
-		Intent requestDeliveryIntent = new Intent(this, RequestDeliveryActivity.class);
+
+	public void onRequestDeliveryClick(View v) {
+		Intent requestDeliveryIntent = new Intent(this,
+				RequestDeliveryActivity.class);
 		startActivity(requestDeliveryIntent);
 	}
+	
+	
 }

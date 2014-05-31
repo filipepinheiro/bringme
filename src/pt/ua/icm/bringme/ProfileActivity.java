@@ -2,16 +2,18 @@ package pt.ua.icm.bringme;
 
 import java.util.concurrent.ExecutionException;
 
+import pt.ua.icm.bringme.helpers.BitmapHelper;
+import pt.ua.icm.bringme.helpers.FacebookImageLoader;
+import pt.ua.icm.bringme.helpers.RoundedImageView;
 import pt.ua.icm.bringme.models.User;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.facebook.FacebookRequestError;
@@ -23,9 +25,10 @@ import com.parse.ParseUser;
 
 public class ProfileActivity extends ActionBarActivity {
 
-	/*TextView fullNameField, emailField, phoneNumberField;
+	TextView fullNameField, emailField, phoneNumberField;
 	User currentUser;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class ProfileActivity extends ActionBarActivity {
 		
 
 	}
-
+	/*
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -60,7 +63,7 @@ public class ProfileActivity extends ActionBarActivity {
 		}
 		return (super.onOptionsItemSelected(menuItem));
 	}
-
+*/
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -79,6 +82,11 @@ public class ProfileActivity extends ActionBarActivity {
 		else
 			phoneNumberField.setText("Do not has phone.");
 		
+		byte[] profilePictureBytes = ParseUser.getCurrentUser().getBytes("pic").clone();
+		RoundedImageView imageProfile = (RoundedImageView) findViewById(R.id.userImage);
+		imageProfile.setImageBitmap(BitmapHelper.byteArrayToBitmap(profilePictureBytes));
+		imageProfile.setBorderColor(Color.parseColor(getString(R.color.green_peas)));
+		
 		
 		//TODO: GET INFO ABOUT REQUESTS AND DELIVERIES
 
@@ -86,53 +94,8 @@ public class ProfileActivity extends ActionBarActivity {
 		//.............................................
 		
 		
-		ParseFacebookUtils.initialize(getString(R.string.app_id));
-
-		Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
-				new Request.GraphUserCallback() {
-					@Override
-					public void onCompleted(GraphUser user, Response response) {
-						if (user != null) {
-
-							// Profile Picture AssyncTask
-							try {
-								FacebookPhotoHelper photoHelper = new FacebookPhotoHelper(
-										user.getId().toString(),
-										getString(R.string.app_id));
-								photoHelper.execute();
-
-								Bitmap bmp = photoHelper.get();
-								
-								RoundedImageView riv = (RoundedImageView) findViewById(R.id.userImage);
-								riv.setImageBitmap(bmp);
-								riv.setBorderColor(Color.parseColor(getString(R.color.green_letter)));
-								
-								
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (ExecutionException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-						} else if (response.getError() != null) {
-							if ((response.getError().getCategory() == FacebookRequestError.Category.AUTHENTICATION_RETRY)
-									|| (response.getError().getCategory() == FacebookRequestError.Category.AUTHENTICATION_REOPEN_SESSION)) {
-								Log.e("Facebook parsing data",
-										"The facebook session was invalidated.");
-								// onLogoutButtonClicked();
-							} else {
-								Log.e("Facebook parsing data",
-										"Some other error: "
-												+ response.getError()
-														.getErrorMessage());
-							}
-						}
-					}
-				});
-		request.executeAsync();
+	
 
 	}
-*/
+
 }

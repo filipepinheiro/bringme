@@ -69,7 +69,7 @@ public class LoginActivity extends ActionBarActivity {
 		// Check if there is a currently logged in user
 		// and they are linked to a Facebook account.
 
-		 ParseUser.getCurrentUser().logOut();
+		 //ParseUser.getCurrentUser().logOut();
 
 		ParseUser currentUser = ParseUser.getCurrentUser();
 
@@ -134,6 +134,7 @@ public class LoginActivity extends ActionBarActivity {
 
 		Intent menuIntent = new Intent(this, MainActivity.class);
 		startActivity(menuIntent);
+		
 	}
 
 	public void loginFail() {

@@ -6,6 +6,7 @@
     <string name="app_id">635266799888180</string>
 
     <!-- Activity Titles -->
+    <string name="title_activity_profile">Profile</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_splash">Welcome to BringMe</string>
