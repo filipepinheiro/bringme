@@ -34,6 +34,13 @@
         android:textColor="@color/white"
         android:textSize="25sp" />
 
+    <RatingBar
+        android:id="@+id/starRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+         />
+
     <TextView
         android:id="@+id/profileContactsLabel"
         android:layout_width="match_parent"
