@@ -1,19 +1,13 @@
 package pt.ua.icm.bringme;
 
 import java.util.Locale;
-import pt.ua.icm.bringme.helpers.*;
-import pt.ua.icm.bringme.models.*;
+import java.util.concurrent.ExecutionException;
 
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
-
+import pt.ua.icm.bringme.helpers.BitmapHelper;
+import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -24,15 +18,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.facebook.FacebookRequestError;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.model.GraphUser;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 	
@@ -72,16 +73,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		ParseUser user = ParseUser.getCurrentUser();
 		
 		final ImageView drawerProfilePicture = (ImageView) findViewById(R.id.drawerProfilePicture);
-		byte[] profilePictureBytes = ParseUser.getCurrentUser().getBytes("pic");
-		if(profilePictureBytes != null){
+		byte[] profilePictureBytes = ParseUser.getCurrentUser().getBytes("pic").clone();
+		if (profilePictureBytes != null) {
 			Bitmap roundedPicture = BitmapHelper
-					.getRoundedCornerBitmap(BitmapHelper.byteArrayToBitmap(profilePictureBytes));
+					.getRoundedCornerBitmap(BitmapHelper
+							.byteArrayToBitmap(profilePictureBytes));
 			drawerProfilePicture.setImageBitmap(roundedPicture);
-		}else{
-			Bitmap defaultPicture = BitmapHelper.drawableToBitmap(R.drawable.default_profile_picture, this);
-			Bitmap roundedPicture = BitmapHelper.getRoundedCornerBitmap(defaultPicture);
+		} else {
+
+			Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
+					R.drawable.default_profile_picture, this);
+			Bitmap roundedPicture = BitmapHelper
+					.getRoundedCornerBitmap(defaultPicture);
 			drawerProfilePicture.setImageBitmap(roundedPicture);
 		}
+		
 		
 		TextView profileName = (TextView) findViewById(R.id.drawerProfileName);
 		profileName.setText(user.getString("firstName")+" "+user.getString("lastName"));

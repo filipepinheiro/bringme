@@ -101,6 +101,22 @@
                 android:onClick="loginWithFacebook"
                 android:textColor="@color/white"
                 tools:ignore="ButtonStyle" />
+            
+            <Button
+                android:id="@+id/loginRegisterButtonaa"
+                style="@style/buttonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:enabled="true"
+                android:minHeight="38dip"
+                android:onClick="loginWithFacebook"
+                android:text="@string/login_facebook"
+                android:textColor="@color/white"
+                tools:ignore="ButtonStyle" />
+            
         </LinearLayout>
     </LinearLayout>
 

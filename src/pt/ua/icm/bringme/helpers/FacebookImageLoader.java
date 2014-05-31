@@ -7,6 +7,7 @@ import java.net.URL;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.parse.ParseFacebookUtils;
 
@@ -17,6 +18,8 @@ public class FacebookImageLoader extends AsyncTask<String, Void, Bitmap> {
 		Bitmap bitmap = null;
 		
 		ParseFacebookUtils.initialize("635266799888180");
+		
+		Log.d("FKKK", params[0].toString());
 		
 		URL imageURL;
 		try {

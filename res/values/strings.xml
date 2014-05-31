@@ -34,5 +34,6 @@
     <string name="title_request_delivery_courier">Courier</string>
     <string name="package_address">Package Address</string>
     <string name="map_mode">Map</string>
-
+    <string name="login_facebook">Login Facebook</string>
+    
 </resources>
