@@ -1,0 +1,122 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registerContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="pt.ua.icm.bringme.RegisterActivity" >
+
+    <TextView
+        android:id="@+id/registerPersonalInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_background"
+        android:padding="5dp"
+        android:text="@string/personal_info"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/green_peas"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        style="@style/paddingStyles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
+
+        <EditText
+            android:id="@+id/registerFirstNameField"
+            style="@style/editTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="start"
+            android:hint="@string/first_name"
+            android:inputType="text|textPersonName" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/registerLastNameField"
+            style="@style/editTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="start"
+            android:ems="10"
+            android:hint="@string/last_name"
+            android:inputType="text|textPersonName" />
+
+        <EditText
+            android:id="@+id/registerPhoneNumberField"
+            style="@style/editTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="start"
+            android:ems="10"
+            android:hint="@string/phone"
+            android:inputType="number|phone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/registerAccountInformation"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/title_background"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        style="@style/paddingStyles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
+
+        <EditText
+            android:id="@+id/registerEmailField"
+            style="@style/editTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="start"
+            android:ems="10"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" >
+            
+        </EditText>
+
+        <EditText
+            android:id="@+id/registerPasswordField"
+            style="@style/editTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="start"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:typeface="sans" />
+
+        <EditText
+            android:id="@+id/registerPasswordConfirmationField"
+            style="@style/editTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="start"
+            android:ems="10"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            android:typeface="sans" />
+
+        <Button
+            android:id="@+id/registerRegisterButton"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/register" />
+
+    </LinearLayout>
+
+</LinearLayout>

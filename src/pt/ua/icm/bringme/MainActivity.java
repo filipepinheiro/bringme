@@ -144,12 +144,14 @@ public class MainActivity extends ActionBarActivity implements
 	}
 
 	public void userLogout(View view){
-		/*ParseUser.getCurrentUser().logOut();
 		
-		Intent profIntent = new Intent(this,
+		/*Intent profIntent = new Intent(this,
 				SplashActivity.class);
 		startActivity(profIntent);
-		finish();*/
+		*/
+		finish();
+		ParseUser.getCurrentUser().logOut();
+
 	}
 	
 	

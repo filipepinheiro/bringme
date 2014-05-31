@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    tools:context="pt.ua.icm.bringme.RequestMenuFragment" >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/requestDeliveryButton"
+        style="@style/menuIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:onClick="onRequestDeliveryClick"
+        android:padding="5dp"
+        android:text="@string/request_delivery" />
+
+    <Button
+        android:id="@+id/deliveryStatusButton"
+        style="@style/menuIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:drawableTop="@drawable/delivery_status_icon"
+        android:padding="5dp"
+        android:text="@string/delivery_status" />
+
+</LinearLayout>

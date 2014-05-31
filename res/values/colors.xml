@@ -3,4 +3,9 @@
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="green_peas">#0faf67</color>
+    <color name="green_hard">#0dad63</color>
+    <color name="green_medium">#1edd82</color>
+    <color name="green_soft">#3bfda6</color>
+    
+    
 </resources>

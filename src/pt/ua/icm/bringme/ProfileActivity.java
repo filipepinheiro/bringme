@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.facebook.FacebookRequestError;
@@ -88,7 +89,15 @@ public class ProfileActivity extends ActionBarActivity {
 		imageProfile.setBorderColor(Color.parseColor(getString(R.color.green_peas)));
 		
 		
-		//TODO: GET INFO ABOUT REQUESTS AND DELIVERIES
+		
+		//Static rate
+		RatingBar rbar = (RatingBar) findViewById(R.id.starRatingBar);
+		float rate = Float.parseFloat("3.8");
+		rbar.setRating(rate);
+		rbar.setEnabled(false);
+				
+		
+		//TODO: GET INFO ABOUT REQUESTS, DELIVERIES AND RATING
 
 		
 		//.............................................
