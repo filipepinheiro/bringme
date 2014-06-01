@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import pt.ua.icm.bringme.Consts;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -19,7 +21,7 @@ public class FacebookImageLoader extends AsyncTask<String, Void, Bitmap> {
 		
 		ParseFacebookUtils.initialize("635266799888180");
 		
-		Log.d("FKKK", params[0].toString());
+		Log.d(Consts.TAG, params[0].toString());
 		
 		URL imageURL;
 		try {
@@ -34,21 +36,6 @@ public class FacebookImageLoader extends AsyncTask<String, Void, Bitmap> {
 			e.printStackTrace();
 		}
 		return bitmap;
-		
-		/*try{
-			URL url = new URL(params[0]);
-	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	        connection.setDoInput(true);
-	        connection.connect();
-	        InputStream input = connection.getInputStream();
-	        myBitmap = BitmapFactory.decodeStream(input);
-		}catch(IOException e){
-			//TODO: Handle error
-			e.printStackTrace();
-		}
-		
-		return myBitmap;
-		*/
         
 	}
 

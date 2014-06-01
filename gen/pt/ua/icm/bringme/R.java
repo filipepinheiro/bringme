@@ -1659,7 +1659,6 @@ containing a value of this type.
         public static final int listMode=0x7f050007;
         public static final int listViewTaskList=0x7f05009d;
         public static final int list_item=0x7f05003f;
-        public static final int locationDetails=0x7f0500aa;
         public static final int loginBringMeLogo=0x7f050053;
         public static final int loginContainer=0x7f050052;
         public static final int loginEmailField=0x7f050055;
@@ -1680,6 +1679,7 @@ containing a value of this type.
         public static final int packageDetailsButton=0x7f0500a9;
         public static final int packageDetailsEditText=0x7f0500a8;
         public static final int packageDetailsTitle=0x7f0500a7;
+        public static final int packageLocationDetails=0x7f0500aa;
         public static final int packageLocationDetailsButton=0x7f0500af;
         public static final int packageNameEditText=0x7f0500a4;
         public static final int packageNameTitle=0x7f0500a3;

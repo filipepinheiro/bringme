@@ -10,6 +10,8 @@ import pt.ua.icm.bringme.helpers.MapHelper;
 import pt.ua.icm.bringme.models.Delivery;
 import pt.ua.icm.bringme.models.User;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +22,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -34,7 +40,8 @@ import com.parse.ParseQuery;
 
 public class RequestDeliveryActivity extends ActionBarActivity implements 
 	ActionBar.TabListener, DeliveryOriginFragment.OnDeliveryListener,
-	DeliveryCourierFragment.OnDeliveryListener, DeliveryDestinationFragment.OnDeliveryListener{
+	DeliveryCourierFragment.OnDeliveryListener, DeliveryDestinationFragment.OnDeliveryListener,
+	DeliveryDetailsFragment.OnDeliveryListener{
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -202,25 +209,31 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 								courierList.add((User) obj);
 							}
 							
-							for(User courier : courierList){
+							for(final User courier : courierList){
 								if(courier.has("facebookId")){
-									//Retrieve user facebookId
-									
-									FacebookImageLoader imageLoader = new FacebookImageLoader();
 									Bitmap profilePic = null;
-									try {
-										profilePic = imageLoader.execute(courier.getString("facebookId")).get();
-									} catch (InterruptedException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									} catch (ExecutionException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
 									
-									map.addMarker(new MarkerOptions().position(
-											courier.getLastLocationLatLng())
-											.icon(BitmapDescriptorFactory.fromBitmap(profilePic)));
+									AsyncTask<String, Void, Bitmap> pinImage = new AsyncTask<String, Void, Bitmap>() {
+										@Override
+										protected Bitmap doInBackground(
+												String... params) {
+											FacebookImageLoader loader = new FacebookImageLoader();
+											try {
+												return loader.execute(courier.getString("facebookId")).get();
+											} catch (InterruptedException e) {
+												e.printStackTrace();
+											} catch (ExecutionException e) {
+												e.printStackTrace();
+											}
+											return null;
+										}
+										
+										protected void onPostExecute(Bitmap result) {
+											map.addMarker(new MarkerOptions().position(
+													courier.getLastLocationLatLng())
+													.icon(BitmapDescriptorFactory.fromBitmap(result)));
+										};
+									};
 								}
 							}
 						}
@@ -233,6 +246,21 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 	public void setDestination(ParseGeoPoint geoPoint, String addressName) {
 		delivery.destination = geoPoint;
 		delivery.destinationAddress = addressName;
+	}
+
+	@Override
+	public void setPackageLocationDetails(String detailedPackageLocation,
+			String detailedDestinationLocation) {
+		delivery.detailedOrigin = detailedPackageLocation;
+		delivery.detailedDestination = detailedDestinationLocation;
+	}
+
+	@Override
+	public void setPackageDetails(String packageName,
+			String packageDescription, String packageDetails) {
+		delivery.name = packageName;
+		delivery.description = packageDescription;
+		delivery.notes = packageDetails;
 	}
 
 }

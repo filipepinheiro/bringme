@@ -11,7 +11,8 @@
         android:id="@+id/packageDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:weightSum="3" >
 
         <TextView
             android:id="@+id/packageNameTitle"
@@ -22,7 +23,13 @@
         <EditText
             android:id="@+id/packageNameEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/field_background"
+            android:minHeight="48dp"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/packageDescriptionTitle"
@@ -33,7 +40,13 @@
         <EditText
             android:id="@+id/packageDescriptionEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/field_background"
+            android:minHeight="48dp"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/packageDetailsTitle"
@@ -44,7 +57,13 @@
         <EditText
             android:id="@+id/packageDetailsEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/field_background"
+            android:minHeight="48dp"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/packageDetailsButton"
@@ -54,12 +73,13 @@
             android:layout_gravity="center_horizontal"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:onClick="submitPackageDetails"
             android:text="@string/ok" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/locationDetails"
+        android:id="@+id/packageLocationDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -89,7 +109,8 @@
             android:background="@drawable/field_background"
             android:ems="10"
             android:gravity="start"
-            android:inputType="textMultiLine" >
+            android:inputType="textMultiLine"
+            android:textColor="@color/white" >
 
             <requestFocus />
         </EditText>
@@ -111,7 +132,8 @@
             android:background="@drawable/field_background"
             android:ems="10"
             android:gravity="start"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/packageLocationDetailsButton"

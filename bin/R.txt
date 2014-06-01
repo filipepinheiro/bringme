@@ -525,7 +525,6 @@ int id left_drawer 0x7f05005f
 int id listMode 0x7f050007
 int id listViewTaskList 0x7f05009d
 int id list_item 0x7f05003f
-int id locationDetails 0x7f0500aa
 int id loginBringMeLogo 0x7f050053
 int id loginContainer 0x7f050052
 int id loginEmailField 0x7f050055
@@ -546,6 +545,7 @@ int id packageDetails 0x7f0500a2
 int id packageDetailsButton 0x7f0500a9
 int id packageDetailsEditText 0x7f0500a8
 int id packageDetailsTitle 0x7f0500a7
+int id packageLocationDetails 0x7f0500aa
 int id packageLocationDetailsButton 0x7f0500af
 int id packageNameEditText 0x7f0500a4
 int id packageNameTitle 0x7f0500a3
