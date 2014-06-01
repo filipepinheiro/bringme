@@ -59,7 +59,7 @@
             android:value="@string/app_id" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBj59RbmUnjYnOiU592ph5Rp3vAP62U3u8" />
+            android:value="AIzaSyBtBvj0a8FID0Qn0hnnazNIIKhWzEIIZQo" />
         <!-- AIzaSyBtBvj0a8FID0Qn0hnnazNIIKhWzEIIZQo | hugo correia -->
         <!-- AIzaSyBj59RbmUnjYnOiU592ph5Rp3vAP62U3u8 | filipe portatil -->
         <!-- AIzaSyDRHXtfAVJmUNiG6CHHqZNhIvNMdYU5AJw | filipe desktop -->
@@ -67,6 +67,11 @@
         <activity
             android:name="pt.ua.icm.bringme.ProfileActivity"
             android:label="@string/title_activity_profile"
+            android:theme="@style/Theme.Bringme" >
+        </activity>
+        <activity
+            android:name="pt.ua.icm.bringme.HistoryActivity"
+            android:label="@string/title_activity_historry"
             android:theme="@style/Theme.Bringme" >
         </activity>
         <activity

@@ -30,6 +30,7 @@
     <string name="login_message">Login to BringMe</string>
     <string name="request_delivery">Request Delivery</string>
     <string name="delivery_status">Delivery Status</string>
+    <string name="title_activity_historry">History</string>
     <string name="title_activity_request_delivery">Request Delivery</string>
     <string name="title_request_delivery_origin">Origin</string>
     <string name="title_request_delivery_courier">Courier</string>

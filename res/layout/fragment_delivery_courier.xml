@@ -12,4 +12,13 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
+    <Button
+        android:id="@+id/buttonMap"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:text="View List"
+        android:onClick="mapToList"
+        android:textColor="@color/green_medium" />
+
 </FrameLayout>

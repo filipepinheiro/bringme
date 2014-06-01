@@ -143,16 +143,17 @@ public class MainActivity extends ActionBarActivity implements
 		startActivity(profIntent);
 	}
 
+	public void openHistoryActivity(View view) {
+		Intent histIntent = new Intent(getApplicationContext(),
+				HistoryActivity.class);
+		startActivity(histIntent);
+	}
+
 	public void userLogout(View view){
-		
-		/*Intent profIntent = new Intent(this,
-				SplashActivity.class);
-		startActivity(profIntent);
-		*/
 		finish();
 		ParseUser.getCurrentUser().logOut();
-
 	}
+
 	
 	
 	@Override

@@ -25,13 +25,13 @@ public class DeliveryCourierFragment extends Fragment {
 
 	private Double originLat = 0.0;
 	private Double originLng = 0.0;
-	
+
 	private OnDeliveryListener mListener;
 
 	public static DeliveryCourierFragment newInstance(ParseGeoPoint origin) {
 		DeliveryCourierFragment fragment = new DeliveryCourierFragment();
 		Bundle args = new Bundle();
-		if(origin != null){
+		if (origin != null) {
 			args.putDouble(ARG_ORIGIN_LAT, origin.getLatitude());
 			args.putDouble(ARG_ORIGIN_LNG, origin.getLongitude());
 		}
@@ -56,21 +56,24 @@ public class DeliveryCourierFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View view =  inflater.inflate(R.layout.fragment_delivery_courier, container, false);
-		
-		/*final SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
-				.findFragmentById(R.id.courierMapFragment);
-		
-		final GoogleMap map = (GoogleMap) mapFragment.getMap();*/
-		
+		View view = inflater.inflate(R.layout.fragment_delivery_courier,
+				container, false);
+
+		/*
+		 * final SupportMapFragment mapFragment = (SupportMapFragment)
+		 * getFragmentManager() .findFragmentById(R.id.courierMapFragment);
+		 * 
+		 * final GoogleMap map = (GoogleMap) mapFragment.getMap();
+		 */
+
 		return view;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
@@ -80,7 +83,7 @@ public class DeliveryCourierFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		
+
 		try {
 			mListener = (OnDeliveryListener) activity;
 		} catch (ClassCastException e) {
@@ -94,18 +97,24 @@ public class DeliveryCourierFragment extends Fragment {
 		super.onDetach();
 		mListener = null;
 	}
-	
+
 	@Override
 	public void onDestroyView() {
-	    super.onDestroyView();
-	    SupportMapFragment f = (SupportMapFragment) getFragmentManager()
-	                                         .findFragmentById(R.id.courierMapFragment);
-	    if (f != null) 
-	        getFragmentManager().beginTransaction().remove(f).commit();
+		super.onDestroyView();
+		SupportMapFragment f = (SupportMapFragment) getFragmentManager()
+				.findFragmentById(R.id.courierMapFragment);
+		if (f != null)
+			getFragmentManager().beginTransaction().remove(f).commit();
 	}
 
 	public interface OnDeliveryListener {
 		public void setCourier(User courier);
 	}
+
+	/*public void mapToList(View view) {
+		Toast.makeText(getActivity(), "IT WORKS!", 200).show();
+
+		// DeliveryCourierListFragment.newInstance(delivery.origin);
+	}*/
 
 }

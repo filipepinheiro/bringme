@@ -55,6 +55,7 @@
                 android:id="@+id/drawerHistoryButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:onClick="openHistoryActivity"
                 android:text="History"
                 android:background="@color/green_medium" />
 
