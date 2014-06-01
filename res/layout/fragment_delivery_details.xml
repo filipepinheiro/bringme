@@ -16,8 +16,9 @@
 
         <TextView
             android:id="@+id/packageNameTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/package_name_title"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -29,12 +30,14 @@
             android:layout_weight="1"
             android:background="@drawable/field_background"
             android:minHeight="48dp"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/packageDescriptionTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/package_description_title"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -46,12 +49,14 @@
             android:layout_weight="1"
             android:background="@drawable/field_background"
             android:minHeight="48dp"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/packageDetailsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/package_details_title"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -63,7 +68,8 @@
             android:layout_weight="1"
             android:background="@drawable/field_background"
             android:minHeight="48dp"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/packageDetailsButton"
@@ -110,7 +116,8 @@
             android:ems="10"
             android:gravity="start"
             android:inputType="textMultiLine"
-            android:textColor="@color/white" >
+            android:textColor="@color/white"
+            android:textSize="14sp" >
 
             <requestFocus />
         </EditText>
@@ -133,7 +140,8 @@
             android:ems="10"
             android:gravity="start"
             android:inputType="textMultiLine"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/packageLocationDetailsButton"

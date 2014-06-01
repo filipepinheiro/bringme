@@ -64,7 +64,7 @@
         <!-- AIzaSyBj59RbmUnjYnOiU592ph5Rp3vAP62U3u8 | filipe portatil -->
         <!-- AIzaSyDRHXtfAVJmUNiG6CHHqZNhIvNMdYU5AJw | filipe desktop -->
 
-		<activity
+        <activity
             android:name="pt.ua.icm.bringme.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/Theme.Bringme" >
@@ -117,6 +117,10 @@
         <activity
             android:name="pt.ua.icm.bringme.RequestDeliveryActivity"
             android:label="@string/title_activity_request_delivery" >
+        </activity>
+        <activity
+            android:name="pt.ua.icm.bringme.FinishRequestDeliveryActivity"
+            android:label="@string/title_activity_finish_request_delivery" >
         </activity>
     </application>
 

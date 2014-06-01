@@ -263,4 +263,44 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		delivery.notes = packageDetails;
 	}
 
+	@Override
+	public void validateDelivery() {
+		boolean valid = true;
+		
+		if(delivery.origin == null){
+			mViewPager.setCurrentItem(0);
+			Toast.makeText(this, "Specify Origin!", Toast.LENGTH_SHORT).show();
+			valid = false;
+		}
+		if(delivery.courierId.isEmpty()){
+			mViewPager.setCurrentItem(1);
+			Toast.makeText(this, "Specify Courier!", Toast.LENGTH_SHORT).show();
+			valid = false;
+		}
+		if(delivery.destination == null){
+			mViewPager.setCurrentItem(2);
+			Toast.makeText(this, "Specify Destination!", Toast.LENGTH_SHORT).show();
+			valid = false;
+		}
+		if(delivery.detailedOrigin.isEmpty()){
+			mViewPager.setCurrentItem(3);
+			Toast.makeText(this, "Specify Detailed Origin!", Toast.LENGTH_SHORT).show();
+			valid = false;
+		}
+		if(delivery.detailedDestination.isEmpty()){
+			mViewPager.setCurrentItem(3);
+			Toast.makeText(this, "Specify Detailed Destination!", Toast.LENGTH_SHORT).show();
+			valid = false;
+		}
+		if(delivery.name.isEmpty()){
+			mViewPager.setCurrentItem(3);
+			Toast.makeText(this, "Specify Package Name!", Toast.LENGTH_SHORT).show();
+			valid = false;
+		}
+		
+		if(valid){
+			//TODO: Start again from here
+		}
+	}
+
 }

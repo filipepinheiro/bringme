@@ -1,23 +1,22 @@
 package pt.ua.icm.bringme;
 
 import android.app.Activity;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class DeliveryDetailsFragment extends Fragment{
 	private OnDeliveryListener mListener;
-	private LinearLayout packageLocation;
-	private LinearLayout packageDetails;
+	private LinearLayout packageLocationLayout, packageDetailsLayout;
+	private EditText detailedDestinationLocation, detailedPackageLocation, packageName,
+		packageDescription, packageDetails;
 	
 	public static DeliveryDetailsFragment newInstance() {
 		return new DeliveryDetailsFragment();
@@ -39,11 +38,22 @@ public class DeliveryDetailsFragment extends Fragment{
 		View view = inflater.inflate(R.layout.fragment_delivery_details, container,
 				false);
 		
-		packageLocation = 
+		packageLocationLayout = 
 				(LinearLayout) view.findViewById(R.id.packageLocationDetails);
-		
-		packageDetails = 
+		packageDetailsLayout = 
 				(LinearLayout) view.findViewById(R.id.packageDetails);
+		
+		detailedPackageLocation = 
+				(EditText) view.findViewById(R.id.detailedPackageLocationEditText);
+		detailedDestinationLocation = 
+				(EditText) view.findViewById(R.id.detailedDestinationLocationEditText);
+		
+		packageName = 
+				(EditText) view.findViewById(R.id.packageNameEditText);
+		packageDescription = 
+				(EditText) view.findViewById(R.id.packageDescriptionEditText);
+		packageDetails = 
+				(EditText) view.findViewById(R.id.packageDetailsEditText);
 		
 		packageDetails.setVisibility(View.GONE);
 		
@@ -63,22 +73,22 @@ public class DeliveryDetailsFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				EditText packageName = 
-						(EditText) v.findViewById(R.id.packageNameEditText);
-				EditText packageDescription = 
-						(EditText) v.findViewById(R.id.packageDescriptionEditText);
-				EditText packageDetails = 
-						(EditText) v.findViewById(R.id.packageDetailsEditText);
-				
 				String packageNameValue = 
 						packageName.getText().toString();
 				String packageDescriptionValue = 
 						packageDescription.getText().toString();
-				String dpackageDetailsValue = 
+				String packageDetailsValue = 
 						packageDetails.getText().toString();
 				
+				if(packageNameValue.isEmpty()){
+					packageDetails.setError("Required!");
+					return;
+				}
+				
 				mListener.setPackageDetails(packageNameValue,packageDescriptionValue,
-						dpackageDetailsValue);
+						packageDetailsValue);
+				
+				mListener.validateDelivery();
 			}
 		};
 	}
@@ -88,10 +98,6 @@ public class DeliveryDetailsFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				EditText detailedPackageLocation = 
-						(EditText) v.findViewById(R.id.detailedPackageLocationEditText);
-				EditText detailedDestinationLocation = 
-						(EditText) v.findViewById(R.id.detailedDestinationLocationEditText);
 				
 				String detailedPackageLocationValue = 
 						detailedPackageLocation.getText().toString();
@@ -110,20 +116,19 @@ public class DeliveryDetailsFragment extends Fragment{
 				mListener.setPackageLocationDetails(detailedPackageLocationValue, 
 						detailedDestinationLocationValue);
 				
-				packageLocation.setVisibility(View.INVISIBLE);
-				packageDetails.setVisibility(View.VISIBLE);
+				
 			}
 		};
 	}
 
 	protected void showLocationDetails() {
-		// TODO Auto-generated method stub
-		
+		packageLocationLayout.setVisibility(View.VISIBLE);
+		packageDetailsLayout.setVisibility(View.INVISIBLE);
 	}
 
 	protected void showPackageDetails() {
-		// TODO Auto-generated method stub
-		
+		packageLocationLayout.setVisibility(View.INVISIBLE);
+		packageDetailsLayout.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -146,6 +151,8 @@ public class DeliveryDetailsFragment extends Fragment{
 	public interface OnDeliveryListener {
 		public void setPackageLocationDetails(String detailedPackageLocation, 
 				String detailedDestinationLocation);
+
+		public void validateDelivery();
 
 		public void setPackageDetails(String packageName,
 				String packageDescription, String packageDetails);

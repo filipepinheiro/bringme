@@ -43,5 +43,10 @@
     <string name="detailed_package_location_example">e.g. (Nearest coffee shop, on top of table 5, bartender)</string>
     <string name="detailed_destination_location">Detailed Destination Location</string>
     <string name="ok">OK</string>
+    <string name="package_name_title">Package Name</string>
+    <string name="package_description_title">Package Description</string>
+    <string name="package_details_title">Package Details</string>
+    <string name="title_activity_finish_request_delivery">FinishRequestDeliveryActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

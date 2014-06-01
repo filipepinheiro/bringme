@@ -127,21 +127,21 @@ public final class R {
 		public static final int small = 0x7f050000;
 	}
 	public static final class layout {
-		public static final int com_facebook_friendpickerfragment = 0x7f03001d;
-		public static final int com_facebook_login_activity_layout = 0x7f03001e;
-		public static final int com_facebook_picker_activity_circle_row = 0x7f03001f;
-		public static final int com_facebook_picker_checkbox = 0x7f030020;
-		public static final int com_facebook_picker_image = 0x7f030021;
-		public static final int com_facebook_picker_list_row = 0x7f030022;
-		public static final int com_facebook_picker_list_section_header = 0x7f030023;
-		public static final int com_facebook_picker_search_box = 0x7f030024;
-		public static final int com_facebook_picker_title_bar = 0x7f030025;
-		public static final int com_facebook_picker_title_bar_stub = 0x7f030026;
-		public static final int com_facebook_placepickerfragment = 0x7f030027;
-		public static final int com_facebook_placepickerfragment_list_row = 0x7f030028;
-		public static final int com_facebook_search_bar_layout = 0x7f030029;
-		public static final int com_facebook_tooltip_bubble = 0x7f03002a;
-		public static final int com_facebook_usersettingsfragment = 0x7f03002b;
+		public static final int com_facebook_friendpickerfragment = 0x7f03001e;
+		public static final int com_facebook_login_activity_layout = 0x7f03001f;
+		public static final int com_facebook_picker_activity_circle_row = 0x7f030020;
+		public static final int com_facebook_picker_checkbox = 0x7f030021;
+		public static final int com_facebook_picker_image = 0x7f030022;
+		public static final int com_facebook_picker_list_row = 0x7f030023;
+		public static final int com_facebook_picker_list_section_header = 0x7f030024;
+		public static final int com_facebook_picker_search_box = 0x7f030025;
+		public static final int com_facebook_picker_title_bar = 0x7f030026;
+		public static final int com_facebook_picker_title_bar_stub = 0x7f030027;
+		public static final int com_facebook_placepickerfragment = 0x7f030028;
+		public static final int com_facebook_placepickerfragment_list_row = 0x7f030029;
+		public static final int com_facebook_search_bar_layout = 0x7f03002a;
+		public static final int com_facebook_tooltip_bubble = 0x7f03002b;
+		public static final int com_facebook_usersettingsfragment = 0x7f03002c;
 	}
 	public static final class string {
 		public static final int com_facebook_choose_friends = 0x7f08000f;
