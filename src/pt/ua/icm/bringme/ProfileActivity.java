@@ -1,27 +1,16 @@
 package pt.ua.icm.bringme;
 
-import java.util.concurrent.ExecutionException;
-
 import pt.ua.icm.bringme.helpers.BitmapHelper;
-import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import pt.ua.icm.bringme.helpers.RoundedImageView;
 import pt.ua.icm.bringme.models.User;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.facebook.FacebookRequestError;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.model.GraphUser;
-import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
 public class ProfileActivity extends ActionBarActivity {
@@ -29,22 +18,20 @@ public class ProfileActivity extends ActionBarActivity {
 	TextView fullNameField, emailField, phoneNumberField;
 	User currentUser;
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 
 		// Enable ActionBar Home
-		ActionBar actionBar = getActionBar();
+		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		fullNameField = (TextView) findViewById(R.id.profileFullName);
 		emailField = (TextView) findViewById(R.id.profileEmailField);
 		phoneNumberField = (TextView) findViewById(R.id.profilePhoneField);
-		
-
 	}
+	
 	/*
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,21 +56,22 @@ public class ProfileActivity extends ActionBarActivity {
 	protected void onStart() {
 		super.onStart();
 		String fullName ="";
-		if(ParseUser.getCurrentUser().get("firstName") != null)
-			fullName = ParseUser.getCurrentUser().get("firstName").toString();
-		if(ParseUser.getCurrentUser().get("lastName") != null)
-			fullName += " "+ ParseUser.getCurrentUser().get("lastName").toString();
+		ParseUser user = ParseUser.getCurrentUser();
+		if(user.get("firstName") != null)
+			fullName = user.get("firstName").toString();
+		if(user.get("lastName") != null)
+			fullName += " "+ user.get("lastName").toString();
 		
 		fullNameField.setText(fullName);
 		
-		if(ParseUser.getCurrentUser().get("email") != null)
-			emailField.setText(ParseUser.getCurrentUser().get("email").toString());
-		if(ParseUser.getCurrentUser().get("phoneNumebr") != null)
-			phoneNumberField.setText(ParseUser.getCurrentUser().get("phoneNumber").toString());
+		if(user.get("email") != null)
+			emailField.setText(user.get("email").toString());
+		if(user.get("phoneNumebr") != null)
+			phoneNumberField.setText(user.get("phoneNumber").toString());
 		else
 			phoneNumberField.setText("Do not has phone.");
 		
-		byte[] profilePictureBytes = ParseUser.getCurrentUser().getBytes("pic").clone();
+		byte[] profilePictureBytes = user.getBytes("pic").clone();
 		RoundedImageView imageProfile = (RoundedImageView) findViewById(R.id.userImage);
 		imageProfile.setImageBitmap(BitmapHelper.byteArrayToBitmap(profilePictureBytes));
 		imageProfile.setBorderColor(Color.parseColor(getString(R.color.green_peas)));

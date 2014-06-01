@@ -55,9 +55,9 @@ public class DeliveryOriginFragment extends Fragment{
 				false);
 		
 		final SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
-				.findFragmentById(R.id.deliveryOriginFragment);
+				.findFragmentById(R.id.originMapFragment);
 		
-		final AutoCompleteTextView originAddress = (AutoCompleteTextView) view.findViewById(R.id.deliveryOriginAddress);
+		final AutoCompleteTextView originAddress = (AutoCompleteTextView) view.findViewById(R.id.deliveryDestinationAddress);
 		
 		final GoogleMap map = (GoogleMap) mapFragment.getMap();
 		
@@ -170,6 +170,15 @@ public class DeliveryOriginFragment extends Fragment{
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnDeliveryListener");
 		}
+	}
+	
+	@Override
+	public void onDestroyView() {
+	    super.onDestroyView();
+	    SupportMapFragment f = (SupportMapFragment) getFragmentManager()
+	                                         .findFragmentById(R.id.originMapFragment);
+	    if (f != null) 
+	        getFragmentManager().beginTransaction().remove(f).commit();
 	}
 
 	@Override

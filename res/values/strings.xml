@@ -33,8 +33,15 @@
     <string name="title_activity_request_delivery">Request Delivery</string>
     <string name="title_request_delivery_origin">Origin</string>
     <string name="title_request_delivery_courier">Courier</string>
+    <string name="title_request_delivery_destination">Destination</string>
+    <string name="title_request_delivery_details">Details</string>
     <string name="package_address">Package Address</string>
     <string name="map_mode">Map</string>
     <string name="login_facebook">Login Facebook</string>
-    
+    <string name="destination_address">Destination Address</string>
+    <string name="detailed_package_location">Detailed Package Location</string>
+    <string name="detailed_package_location_example">e.g. (Nearest coffee shop, on top of table 5, bartender)</string>
+    <string name="detailed_destination_location">Detailed Destination Location</string>
+    <string name="ok">OK</string>
+
 </resources>

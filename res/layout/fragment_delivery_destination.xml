@@ -4,6 +4,31 @@
     android:layout_height="match_parent"
     tools:context="pt.ua.icm.bringme.DeliveryDestinationFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <fragment
+            android:id="@+id/destinationMapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <AutoCompleteTextView
+            android:id="@+id/deliveryDestinationAddress"
+            style="@style/mapSearchFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/destination_address" >
+
+            <requestFocus />
+        </AutoCompleteTextView>
+    </FrameLayout>
 
 </FrameLayout>

@@ -10,7 +10,7 @@
         android:layout_height="match_parent" >
 
         <fragment
-            android:id="@+id/deliveryOriginFragment"
+            android:id="@+id/originMapFragment"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content" >
 
         <AutoCompleteTextView
-            android:id="@+id/deliveryOriginAddress"
+            android:id="@+id/deliveryDestinationAddress"
             style="@style/mapSearchFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

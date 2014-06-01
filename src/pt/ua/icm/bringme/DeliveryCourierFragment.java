@@ -94,6 +94,15 @@ public class DeliveryCourierFragment extends Fragment {
 		super.onDetach();
 		mListener = null;
 	}
+	
+	@Override
+	public void onDestroyView() {
+	    super.onDestroyView();
+	    SupportMapFragment f = (SupportMapFragment) getFragmentManager()
+	                                         .findFragmentById(R.id.courierMapFragment);
+	    if (f != null) 
+	        getFragmentManager().beginTransaction().remove(f).commit();
+	}
 
 	public interface OnDeliveryListener {
 		public void setCourier(User courier);

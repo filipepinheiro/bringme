@@ -34,7 +34,7 @@ import com.parse.ParseQuery;
 
 public class RequestDeliveryActivity extends ActionBarActivity implements 
 	ActionBar.TabListener, DeliveryOriginFragment.OnDeliveryListener,
-	DeliveryCourierFragment.OnDeliveryListener{
+	DeliveryCourierFragment.OnDeliveryListener, DeliveryDestinationFragment.OnDeliveryListener{
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -138,6 +138,10 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 				return DeliveryOriginFragment.newInstance();
 			case 1:
 				return DeliveryCourierFragment.newInstance(delivery.origin);
+			case 2:
+				return DeliveryDestinationFragment.newInstance();
+			case 3:
+				return DeliveryDetailsFragment.newInstance();
 			}
 			return null;
 		}
@@ -145,7 +149,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 2;
+			return 4;
 		}
 
 		@Override
@@ -156,6 +160,10 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 				return getString(R.string.title_request_delivery_origin).toUpperCase(l);
 			case 1:
 				return getString(R.string.title_request_delivery_courier).toUpperCase(l);
+			case 2:
+				return getString(R.string.title_request_delivery_destination).toUpperCase(l);
+			case 3:
+				return getString(R.string.title_request_delivery_details).toUpperCase(l);
 			}
 			return null;
 		}
@@ -194,8 +202,6 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 								courierList.add((User) obj);
 							}
 							
-							
-							
 							for(User courier : courierList){
 								if(courier.has("facebookId")){
 									//Retrieve user facebookId
@@ -221,6 +227,12 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 					}
 				});
 		}
+	}
+
+	@Override
+	public void setDestination(ParseGeoPoint geoPoint, String addressName) {
+		delivery.destination = geoPoint;
+		delivery.destinationAddress = addressName;
 	}
 
 }
