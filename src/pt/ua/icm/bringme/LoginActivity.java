@@ -1,7 +1,6 @@
 package pt.ua.icm.bringme;
 
 import java.io.ByteArrayOutputStream;
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
@@ -30,7 +29,6 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseFacebookUtils.Permissions;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -40,6 +38,7 @@ public class LoginActivity extends ActionBarActivity {
 	private FrameLayout loaderContainer;
 	private TextView emailField, passwordField;
 	private String emailValue, passwordValue;
+	private ParseUser user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,19 +62,14 @@ public class LoginActivity extends ActionBarActivity {
 		fieldsContainer = (LinearLayout) findViewById(R.id.loginFieldsContainer);
 		loaderContainer = (FrameLayout) findViewById(R.id.loginLoaderContainer);
 
-		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ",
-				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
-
 		// Check if there is a currently logged in user
 		// and they are linked to a Facebook account.
 
 		 //ParseUser.getCurrentUser().logOut();
 
-		ParseUser currentUser = ParseUser.getCurrentUser();
-
+		user = ParseUser.getCurrentUser();
 		
-		
-		if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
+		if ((user != null) && ParseFacebookUtils.isLinked(user)) {
 			loginSuccess();
 		}
 
@@ -83,7 +77,6 @@ public class LoginActivity extends ActionBarActivity {
 
 	private OnClickListener registerClick() {
 		return new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				Intent registerAccountIntent = new Intent(
@@ -104,11 +97,9 @@ public class LoginActivity extends ActionBarActivity {
 	}
 
 	public void loginSuccess() {
-		ParseUser user = ParseUser.getCurrentUser();
-		if (user.has("facebookId")) {
-			
-			
-			
+		user = ParseUser.getCurrentUser();
+		/*if (user.has("facebookId")) {
+
 			FacebookImageLoader loader = new FacebookImageLoader();
 			Bitmap profilePic;
 			loader.execute(user.getString("facebookId"));
@@ -130,7 +121,7 @@ public class LoginActivity extends ActionBarActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 
 		Intent menuIntent = new Intent(this, MainActivity.class);
 		startActivity(menuIntent);
@@ -240,12 +231,7 @@ public class LoginActivity extends ActionBarActivity {
 	 */
 
 	public void loginWithFacebook(View view) {
-
-		Parse.initialize(getApplicationContext(),
-				"99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ",
-				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
-
-		// Parse.initialize(context, applicationId, clientKey)
+		showLoader();
 
 		// Check if there is a currently logged in user
 		// and they are linked to a Facebook account.
@@ -365,11 +351,10 @@ public class LoginActivity extends ActionBarActivity {
 
 								@Override
 								public void done(ParseException e) {
-									// TODO Auto-generated method stub
 									if (e == null) {
-										Log.e("EDIT_DATA", "Ok.");
+										Log.i(Consts.TAG, "Facebook Account registered!");
 									} else {
-										Log.e("EDIT_DATA", "NOT Ok." + e);
+										Log.e(Consts.TAG, e.getMessage());
 									}
 								}
 							});
@@ -417,7 +402,9 @@ public class LoginActivity extends ActionBarActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
-		showLoader();
+		if(resultCode == RESULT_OK){
+			showLoader();
+		}
 	}
 
 	public void hideLoader() {

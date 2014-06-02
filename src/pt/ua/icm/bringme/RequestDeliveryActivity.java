@@ -9,6 +9,7 @@ import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import pt.ua.icm.bringme.helpers.MapHelper;
 import pt.ua.icm.bringme.models.Delivery;
 import pt.ua.icm.bringme.models.User;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,15 +42,16 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		DeliveryCourierFragment.OnDeliveryListener,
 		DeliveryCourierListFragment.OnDeliveryListener,
 		DeliveryDestinationFragment.OnDeliveryListener,
-		DeliveryDetailsFragment.OnDeliveryListener {
+		DeliveryDetailsFragment.OnDeliveryListener,
+		DeliveryCourierMapFragment.OnDeliveryListener{
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
 	ViewPager mViewPager;
 
 	Delivery delivery = new Delivery();
-
-	private Bundle myBundle = null;
+	
+	private MenuItem listActionButton, mapActionButton;
 	
 	public Delivery getDelivery() {
 		return delivery;
@@ -59,13 +61,11 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_request_delivery);
-		myBundle = savedInstanceState;
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager(), viewListFlag);
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.requestDeliveryPager);
@@ -79,7 +79,6 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 					@Override
 					public void onPageSelected(int position) {
 						actionBar.setSelectedNavigationItem(position);
-					
 					}
 				});
 
@@ -99,6 +98,8 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.request_delivery, menu);
+		mapActionButton = menu.findItem(R.id.mapViewActionIcon);
+		listActionButton = menu.findItem(R.id.listViewActionIcon);
 		return true;
 	}
 
@@ -111,7 +112,37 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if(id == R.id.mapViewActionIcon){
+			showActionListButton();
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			Fragment f = new DeliveryCourierMapFragment().newInstance(delivery.origin);
+			ft.replace(R.id.courierMapContainer, f);
+			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			ft.addToBackStack(null);
+			ft.commit();
+			return true;
+		}
+		if(id == R.id.listViewActionIcon){
+			showActionMapButton();
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			Fragment f = new DeliveryCourierListFragment().newInstance(delivery.origin);
+			ft.replace(R.id.courierMapContainer, f);
+			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			ft.addToBackStack(null);
+			ft.commit();
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void showActionMapButton() {
+		listActionButton.setVisible(false);
+		mapActionButton.setVisible(true);
+	}
+	
+	private void showActionListButton() {
+		listActionButton.setVisible(true);
+		mapActionButton.setVisible(false);
 	}
 
 	@Override
@@ -121,15 +152,24 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		// the ViewPager.
 		mViewPager.setCurrentItem(tab.getPosition());
 		
-		if(tab.getPosition()==1 && viewListFlag){
-			fragmentTransaction.setTransition(R.layout.fragment_delivery_courier_list).commit();
+		if(tab.getPosition() == 1){
+			showActionListButton();
+			Fragment f = new DeliveryCourierMapFragment().newInstance(delivery.origin);
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			ft.replace(R.id.courierMapContainer, f);
+			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			ft.addToBackStack(null);
+			ft.commit();
 		}
-			
 	}
 
 	@Override
 	public void onTabUnselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
+		if(tab.getPosition() == 1){
+			listActionButton.setVisible(false);
+			mapActionButton.setVisible(false);
+		}
 	}
 
 	@Override
@@ -137,7 +177,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
-	public static boolean viewListFlag = false;
+	/*public static boolean viewListFlag = false;
 
 	public void mapToList(View view) {
 
@@ -146,11 +186,8 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		else
 			viewListFlag = true;
 
-		Log.d("PRESPA", "" + viewListFlag);
-		
-		
-		
-	}
+		Log.d("PRESPA", "" + viewListFlag);		
+	}*/
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -158,11 +195,8 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-		private boolean listFlagins;
-
-		public SectionsPagerAdapter(FragmentManager fm, boolean listFlag) {
+		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
-			listFlagins = listFlag;
 		}
 
 		@Override
@@ -170,16 +204,8 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			switch (position) {
 			case 0:
 				return DeliveryOriginFragment.newInstance();
-			case 1: {
-				Log.d("SPA", "" + listFlagins);
-
-				if (!RequestDeliveryActivity.viewListFlag)
-					return DeliveryCourierFragment.newInstance(delivery.origin);
-				else
-					return DeliveryCourierListFragment
-							.newInstance(delivery.origin);
-
-			}
+			case 1:
+				return DeliveryCourierFragment.newInstance();
 			case 2:
 				return DeliveryDestinationFragment.newInstance();
 			case 3:
@@ -319,40 +345,50 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			mViewPager.setCurrentItem(0);
 			Toast.makeText(this, "Specify Origin!", Toast.LENGTH_SHORT).show();
 			valid = false;
+			return;
 		}
-		if (delivery.courierId.isEmpty()) {
+		if (delivery.courierId == null || delivery.courierId.isEmpty()) {
 			mViewPager.setCurrentItem(1);
 			Toast.makeText(this, "Specify Courier!", Toast.LENGTH_SHORT).show();
 			valid = false;
+			return;
 		}
 		if (delivery.destination == null) {
 			mViewPager.setCurrentItem(2);
 			Toast.makeText(this, "Specify Destination!", Toast.LENGTH_SHORT)
 					.show();
 			valid = false;
+			return;
 		}
 		if (delivery.detailedOrigin.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Detailed Origin!", Toast.LENGTH_SHORT)
 					.show();
 			valid = false;
+			return;
 		}
 		if (delivery.detailedDestination.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Detailed Destination!",
 					Toast.LENGTH_SHORT).show();
 			valid = false;
+			return;
 		}
 		if (delivery.name.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Package Name!", Toast.LENGTH_SHORT)
 					.show();
 			valid = false;
+			return;
 		}
 
 		if (valid) {
-			// TODO: Start again from here
+			Intent finishDeliveryRequest = 
+					new Intent(this, FinishRequestDeliveryActivity.class);
+			Bundle deliveryBundle = new Bundle();
+			deliveryBundle.putSerializable("delivery", delivery);
+			finishDeliveryRequest.putExtra("delivery", deliveryBundle);
+			startActivity(finishDeliveryRequest);
 		}
 	}
-
 }

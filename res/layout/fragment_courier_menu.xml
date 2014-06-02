@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="4"
+    android:weightSum="6"
     tools:context="pt.ua.icm.bringme.CourierMenuFragment" >
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,17 +12,18 @@
     <ListView
         android:id="@+id/listViewTaskList"
         android:layout_width="match_parent"
-        android:layout_height="380dp"
-        android:layout_weight="3" >
+        android:layout_height="0dp"
+        android:layout_weight="5" >
 
     </ListView>
 
     <ToggleButton
         android:id="@+id/toggleCourierModeButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
+        android:minHeight="48dp"
         android:text="ToggleButton" />
 
 </LinearLayout>

@@ -2,23 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/courierMapContainer"
     tools:context="pt.ua.icm.bringme.DeliveryCourierFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <fragment
-        android:id="@+id/courierMapFragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
-    <Button
+    <!--Button
         android:id="@+id/buttonMap"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:text="View List"
         android:onClick="mapToList"
-        android:textColor="@color/green_medium" />
+        android:textColor="@color/green_medium" /-->
 
 </FrameLayout>

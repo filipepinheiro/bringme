@@ -11,28 +11,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.parse.ParseGeoPoint;
 
 @SuppressLint("NewApi")
 public class DeliveryCourierListFragment extends Fragment{
-	private static final String ARG_ORIGIN_LAT = "originLat";
-	private static final String ARG_ORIGIN_LNG = "originLng";
-
-	private Double originLat = 0.0;
-	private Double originLng = 0.0;
-	
 	private OnDeliveryListener mListener;
 
 	public static Fragment newInstance(ParseGeoPoint origin) {
-		DeliveryCourierListFragment fragment = new DeliveryCourierListFragment();
-		Bundle args = new Bundle();
-		/*if(origin != null){
-			args.putDouble(ARG_ORIGIN_LAT, origin.getLatitude());
-			args.putDouble(ARG_ORIGIN_LNG, origin.getLongitude());
-		}
-		fragment.setArguments(args);
-		*/return fragment;
+		return new DeliveryCourierListFragment();
 	}
 
 	public DeliveryCourierListFragment() {
@@ -42,10 +30,6 @@ public class DeliveryCourierListFragment extends Fragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		/*if (getArguments() != null) {
-			originLat = getArguments().getDouble(ARG_ORIGIN_LAT);
-			originLng = getArguments().getDouble(ARG_ORIGIN_LNG);
-		}*/
 	}
 
 	@Override
@@ -94,15 +78,15 @@ public class DeliveryCourierListFragment extends Fragment{
 	@Override
 	public void onDestroyView() {
 	    super.onDestroyView();
-	   /* DeliveryCourierListFragment f = (DeliveryCourierListFragment) getFragmentManager()
-	                                         .findFragmentById(R.id.);
-	    if (f != null) 
-	        getFragmentManager().beginTransaction().remove(f).commit();*/
+	    /*DeliveryCourierListFragment f = 
+	    		(DeliveryCourierListFragment) getFragmentManager()
+	    		.findFragmentById(R.id.courierMapFragment);
+	    if (f != null) {
+	        getFragmentManager().beginTransaction().remove(f).commit();
+	    }*/
 	}
 
 	public interface OnDeliveryListener {
 		public void setCourier(User courier);
 	}
-
-
 }

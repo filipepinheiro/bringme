@@ -1,25 +1,30 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/courierListContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_background"
     tools:context="pt.ua.icm.bringme.DeliveryCourierFragment" >
-
-    <!-- TODO: Update blank fragment layout -->
 	
-    <ListView
-        android:id="@+android:id/listViewCourier"
-        android:layout_width="230dp"
-        android:layout_height="330dp" >
-    </ListView>
+    <!--ListView
+        android:id="@+id/listViewCourier"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView-->
     
-    <Button
+    <!--Button
         android:id="@+id/buttonMapuuuu"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:text="View List"
         android:onClick="mapToList"
-        android:textColor="@color/green_medium" />
+        android:textColor="@color/green_medium" /-->
+
+    <ListView
+        android:id="@+id/deliveryCourierList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
 
 </FrameLayout>

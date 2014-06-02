@@ -47,6 +47,7 @@
                 android:id="@+id/drawerProfileButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="28dp"
                 android:onClick="openProfileActivity"
                 android:text="Profile"
                 android:background="@color/green_soft" />
@@ -55,6 +56,7 @@
                 android:id="@+id/drawerHistoryButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="28dp"
                 android:onClick="openHistoryActivity"
                 android:text="History"
                 android:background="@color/green_medium" />
@@ -63,6 +65,7 @@
                 android:id="@+id/drawerLogoutButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="28dp"
                 android:onClick="userLogout"
                 android:text="Logout"
                 android:background="@color/green_hard" />

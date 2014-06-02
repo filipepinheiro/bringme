@@ -1,8 +1,6 @@
 package pt.ua.icm.bringme;
 
-import pt.ua.icm.bringme.models.Delivery;
 import pt.ua.icm.bringme.models.User;
-import pt.ua.icm.bringme.helpers.*;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,32 +9,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.parse.ParseGeoPoint;
 
 public class DeliveryCourierFragment extends Fragment {
-	private static final String ARG_ORIGIN_LAT = "originLat";
-	private static final String ARG_ORIGIN_LNG = "originLng";
-
-	private Double originLat = 0.0;
-	private Double originLng = 0.0;
 
 	private OnDeliveryListener mListener;
-
-	public static DeliveryCourierFragment newInstance(ParseGeoPoint origin) {
-		DeliveryCourierFragment fragment = new DeliveryCourierFragment();
-		Bundle args = new Bundle();
-		if (origin != null) {
-			args.putDouble(ARG_ORIGIN_LAT, origin.getLatitude());
-			args.putDouble(ARG_ORIGIN_LNG, origin.getLongitude());
-		}
-		fragment.setArguments(args);
-		return fragment;
+	
+	public static DeliveryCourierFragment newInstance() {
+		return new DeliveryCourierFragment();
 	}
 
 	public DeliveryCourierFragment() {
@@ -46,10 +27,6 @@ public class DeliveryCourierFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			originLat = getArguments().getDouble(ARG_ORIGIN_LAT);
-			originLng = getArguments().getDouble(ARG_ORIGIN_LNG);
-		}
 	}
 
 	@Override
@@ -103,18 +80,13 @@ public class DeliveryCourierFragment extends Fragment {
 		super.onDestroyView();
 		SupportMapFragment f = (SupportMapFragment) getFragmentManager()
 				.findFragmentById(R.id.courierMapFragment);
-		if (f != null)
+		if (f != null){
 			getFragmentManager().beginTransaction().remove(f).commit();
+		}
 	}
 
 	public interface OnDeliveryListener {
 		public void setCourier(User courier);
 	}
-
-	/*public void mapToList(View view) {
-		Toast.makeText(getActivity(), "IT WORKS!", 200).show();
-
-		// DeliveryCourierListFragment.newInstance(delivery.origin);
-	}*/
 
 }

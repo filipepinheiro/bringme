@@ -37,7 +37,8 @@
     <string name="title_request_delivery_destination">Destination</string>
     <string name="title_request_delivery_details">Details</string>
     <string name="package_address">Package Address</string>
-    <string name="map_mode">Map</string>
+    <string name="action_map">Map</string>
+    <string name="action_list">List</string>
     <string name="login_facebook">Login Facebook</string>
     <string name="destination_address">Destination Address</string>
     <string name="detailed_package_location">Detailed Package Location</string>
@@ -49,5 +50,13 @@
     <string name="package_details_title">Package Details</string>
     <string name="title_activity_finish_request_delivery">FinishRequestDeliveryActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="finish_delivery_package_name_label">Package Name</string>
+    <string name="finish_delivery_package_description_label">Package Description</string>
+    <string name="finish_delivery_package_special_notes_label">Package Special Notes</string>
+    <string name="finish_delivery_package_detailed_origin_label">Package Detailed Origin</string>
+    <string name="finish_delivery_package_detailed_destination_label">Package Detailed Destination</string>
+    <string name="courier">courier</string>
+    <string name="request">Request</string>
 
 </resources>

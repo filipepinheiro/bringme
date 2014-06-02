@@ -55,7 +55,7 @@ public class DeliveryDetailsFragment extends Fragment{
 		packageDetails = 
 				(EditText) view.findViewById(R.id.packageDetailsEditText);
 		
-		packageDetails.setVisibility(View.GONE);
+		showLocationDetails();
 		
 		Button detailedLocationButton = 
 				(Button) view.findViewById(R.id.packageLocationDetailsButton);
@@ -113,10 +113,10 @@ public class DeliveryDetailsFragment extends Fragment{
 					return;
 				}
 				
+				showPackageDetails();
+				
 				mListener.setPackageLocationDetails(detailedPackageLocationValue, 
 						detailedDestinationLocationValue);
-				
-				
 			}
 		};
 	}

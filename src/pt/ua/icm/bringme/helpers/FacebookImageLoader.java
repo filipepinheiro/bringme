@@ -26,7 +26,7 @@ public class FacebookImageLoader extends AsyncTask<String, Void, Bitmap> {
 		URL imageURL;
 		try {
 			imageURL = new URL("https://graph.facebook.com/" + params[0]
-					+ "/picture?type=large");
+					+ "/picture?type=normal");
 			bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

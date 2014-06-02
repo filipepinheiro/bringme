@@ -1,9 +1,12 @@
 package pt.ua.icm.bringme.models;
 
+import java.io.Serializable;
+
 import com.parse.ParseGeoPoint;
 
-public class Delivery {
-	
+public class Delivery implements Serializable{
+	private static final long serialVersionUID = -5653952413868651761L;
+
 	public String id;
 	
 	public ParseGeoPoint origin;

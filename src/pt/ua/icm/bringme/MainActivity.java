@@ -6,10 +6,10 @@ import java.util.concurrent.ExecutionException;
 import pt.ua.icm.bringme.helpers.BitmapHelper;
 import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import pt.ua.icm.bringme.helpers.RoundedImageView;
-import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -24,26 +24,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.facebook.FacebookRequestError;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.model.GraphUser;
+import com.google.android.gms.location.LocationListener;
+import com.parse.LocationCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class MainActivity extends ActionBarActivity implements
-		ActionBar.TabListener {
+		ActionBar.TabListener, LocationListener, 
+		CourierMenuFragment.OnLocationListener {
 
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private ListView mDrawerList;
-	private String[] mPlanetTitles = { "Teste", "ola" };
+	private ParseUser user;
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -56,6 +54,9 @@ public class MainActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ",
+				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
@@ -73,21 +74,32 @@ public class MainActivity extends ActionBarActivity implements
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 		
-		ParseUser user = ParseUser.getCurrentUser();
+		user = ParseUser.getCurrentUser();
 		
-		final RoundedImageView drawerProfilePicture = (RoundedImageView) findViewById(R.id.userImageDrawer);
-		byte[] profilePictureBytes = ParseUser.getCurrentUser().getBytes("pic").clone();
-		if (profilePictureBytes != null) {
-			//Bitmap roundedPicture = BitmapHelper
-				//	.getRoundedCornerBitmap(BitmapHelper
-					//		.byteArrayToBitmap(profilePictureBytes));
-			drawerProfilePicture.setImageBitmap(BitmapHelper
-							.byteArrayToBitmap(profilePictureBytes));
-			drawerProfilePicture.setBorderColor(Color.parseColor(getString(R.color.green_peas)));
-			
-			
+		Log.i(Consts.TAG, "Last location on Parse: " + user.getParseGeoPoint("lastLocation"));
+		
+		final RoundedImageView drawerProfilePicture = 
+				(RoundedImageView) findViewById(R.id.userImageDrawer);
+		
+		FacebookImageLoader profilePictureLoader = new FacebookImageLoader();
+		
+		Bitmap profilePicture = null;
+		 
+		try {
+			profilePicture = profilePictureLoader.execute(user.getString("facebookId")).get();
+		} catch (InterruptedException e) {
+			Log.e(Consts.TAG, "Load profile picture was cancelled!");
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			Log.e(Consts.TAG, "Execution Error!");
+			e.printStackTrace();
+		}
+		 
+		if (profilePicture != null) {
+			drawerProfilePicture.setImageBitmap(profilePicture);
+			drawerProfilePicture.setBorderColor(
+					Color.parseColor(getString(R.color.green_peas)));
 		} else {
-
 			Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
 					R.drawable.default_profile_picture, this);
 			//Bitmap roundedPicture = BitmapHelper
@@ -98,14 +110,8 @@ public class MainActivity extends ActionBarActivity implements
 			drawerProfilePicture.setBorderColor(Color.parseColor(getString(R.color.green_peas)));
 		}
 		
-		
 		TextView profileName = (TextView) findViewById(R.id.drawerProfileName);
 		profileName.setText(user.getString("firstName")+" "+user.getString("lastName"));
-		
-        /*mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mPlanetTitles));*/
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
@@ -119,11 +125,11 @@ public class MainActivity extends ActionBarActivity implements
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
 		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-					@Override
-					public void onPageSelected(int position) {
-						actionBar.setSelectedNavigationItem(position);
-					}
-				});
+			@Override
+			public void onPageSelected(int position) {
+				actionBar.setSelectedNavigationItem(position);
+			}
+		});
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -150,11 +156,9 @@ public class MainActivity extends ActionBarActivity implements
 	}
 
 	public void userLogout(View view){
-		finish();
-		ParseUser.getCurrentUser().logOut();
+		
+		ParseUser.logOut();
 	}
-
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -203,10 +207,6 @@ public class MainActivity extends ActionBarActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		public SectionsPagerAdapter(FragmentManager fm) {
@@ -249,6 +249,53 @@ public class MainActivity extends ActionBarActivity implements
 				RequestDeliveryActivity.class);
 		startActivity(requestDeliveryIntent);
 	}
+
+	@Override
+	public void onLocationChanged(Location newLocation) {
+		ParseGeoPoint.getCurrentLocationInBackground(5000, new LocationCallback() {
+			@Override
+			public void done(ParseGeoPoint geoPoint, ParseException e) {
+				updateLastLocation(geoPoint);
+			}
+		});
+	}
 	
-	
+	public void updateLastLocation(ParseGeoPoint geoPoint){
+		if(geoPoint != null){
+			Log.i(Consts.TAG, "My location is: " + geoPoint.getLatitude() + "," 
+				+ geoPoint.getLongitude());
+			
+			user.put("lastLocation", geoPoint);
+			user.put("courier", true);
+			user.saveInBackground(new SaveCallback() {
+				
+				@Override
+				public void done(ParseException e) {
+					if(e == null){
+						Log.i(Consts.TAG, "Location saved successfully!");
+						Toast.makeText(getApplicationContext(), "Courier mode ON", Toast.LENGTH_SHORT).show();
+					}
+				}
+			});
+		}else{
+			Log.e(Consts.TAG, "Location is null!");
+		}
+	}
+
+	@Override
+	public void changeLastLocation(ParseGeoPoint geoPoint) {
+		updateLastLocation(geoPoint);
+	}
+
+	@Override
+	public void setCourierMode(boolean state) {
+		user.put("courier", false);
+		user.saveInBackground(new SaveCallback() {
+			@Override
+			public void done(ParseException e) {
+				Log.i(Consts.TAG, "Courier mode set to false.");
+				Toast.makeText(getApplicationContext(), "Courier mode OFF", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
 }
