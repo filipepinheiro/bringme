@@ -5,22 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/splash_background"
     tools:context="pt.ua.icm.bringme.DeliveryCourierFragment" >
-	
-    <!--ListView
-        android:id="@+id/listViewCourier"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </ListView-->
     
-    <!--Button
-        android:id="@+id/buttonMapuuuu"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:text="View List"
-        android:onClick="mapToList"
-        android:textColor="@color/green_medium" /-->
-
     <ListView
         android:id="@+id/deliveryCourierList"
         android:layout_width="match_parent"

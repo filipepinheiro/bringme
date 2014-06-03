@@ -4,5 +4,12 @@
     android:id="@+id/requestDeliveryPager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pt.ua.icm.bringme.RequestDeliveryActivity" />
+    tools:context="pt.ua.icm.bringme.RequestDeliveryActivity" >
+    
+    <!-- hack to fix ugly black artefact with maps v2 -->
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:background="@android:color/transparent" />
+</android.support.v4.view.ViewPager>
 

@@ -8,7 +8,7 @@
     tools:context="${packageName}.${activityClass}" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/courierListItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/finish_delivery_package_name_label"

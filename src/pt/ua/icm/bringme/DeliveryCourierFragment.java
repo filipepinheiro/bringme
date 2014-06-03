@@ -1,5 +1,7 @@
 package pt.ua.icm.bringme;
 
+import java.util.LinkedList;
+
 import pt.ua.icm.bringme.models.User;
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,11 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.parse.ParseUser;
 
 public class DeliveryCourierFragment extends Fragment {
 
 	private OnDeliveryListener mListener;
+	LinkedList<ParseUser> courierList = new LinkedList<ParseUser>();
 	
+	public LinkedList<ParseUser> getCourierList() {
+		return courierList;
+	}
+
+	public void setCourierList(LinkedList<ParseUser> courierList) {
+		this.courierList = courierList;
+	}
+
 	public static DeliveryCourierFragment newInstance() {
 		return new DeliveryCourierFragment();
 	}

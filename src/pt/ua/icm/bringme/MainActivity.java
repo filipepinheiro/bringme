@@ -1,11 +1,13 @@
 package pt.ua.icm.bringme;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import pt.ua.icm.bringme.helpers.BitmapHelper;
 import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import pt.ua.icm.bringme.helpers.RoundedImageView;
+import pt.ua.icm.bringme.models.Delivery;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -86,7 +88,9 @@ public class MainActivity extends ActionBarActivity implements
 		Bitmap profilePicture = null;
 		 
 		try {
-			profilePicture = profilePictureLoader.execute(user.getString("facebookId")).get();
+			if(user.has("facebookId")){
+				profilePicture = profilePictureLoader.execute(user.getString("facebookId"),"small").get();
+			}
 		} catch (InterruptedException e) {
 			Log.e(Consts.TAG, "Load profile picture was cancelled!");
 			e.printStackTrace();

@@ -21,12 +21,13 @@ public class FacebookImageLoader extends AsyncTask<String, Void, Bitmap> {
 		
 		ParseFacebookUtils.initialize("635266799888180");
 		
-		Log.d(Consts.TAG, params[0].toString());
+		Log.d(Consts.TAG, params[0]);
+		Log.d(Consts.TAG, params[1]);
 		
 		URL imageURL;
 		try {
 			imageURL = new URL("https://graph.facebook.com/" + params[0]
-					+ "/picture?type=normal");
+					+ "/picture?type="+params[1]);
 			bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
