@@ -154,6 +154,12 @@ public class MainActivity extends ActionBarActivity implements
 				HistoryActivity.class);
 		startActivity(histIntent);
 	}
+	
+	public void onListDeliveriesActivity(View view){
+		Intent requestListDeliveriesIntent = new Intent(this, DeliveryStatusActivity.class);
+		startActivity(requestListDeliveriesIntent);
+		
+	}
 
 	public void userLogout(View view){
 		

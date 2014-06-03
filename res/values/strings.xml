@@ -58,5 +58,7 @@
     <string name="finish_delivery_package_detailed_destination_label">Package Detailed Destination</string>
     <string name="courier">courier</string>
     <string name="request">Request</string>
-
+	<string name="title_activity_details_list">List</string>
+	<string name="title_activity_details">Details</string>
+	
 </resources>

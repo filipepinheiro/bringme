@@ -127,6 +127,14 @@
             android:name="pt.ua.icm.bringme.FinishRequestDeliveryActivity"
             android:label="@string/title_activity_finish_request_delivery" >
         </activity>
+         <activity
+            android:name="pt.ua.icm.bringme.DeliveryStatusActivity"
+            android:label="@string/title_activity_details_list" >
+        </activity>
+        <activity
+            android:name="pt.ua.icm.bringme.DetailsActivity"
+            android:label="@string/title_activity_details" >
+        </activity>
     </application>
 
 </manifest>
