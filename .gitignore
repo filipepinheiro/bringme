@@ -1,2 +1,15 @@
 bin/classes/pt/ua/icm/adapters/DeliveryCourierListAdapter.class
 bin/classes/pt/ua/icm/bringme/DeliveryOriginFragment$1$1.class
+bin/classes/pt/ua/icm/bringme/DeliveryStatusActivity$PlaceholderFragment.class
+bin/classes/pt/ua/icm/bringme/DeliveryStatusActivity.class
+bin/classes/pt/ua/icm/bringme/DetailsActivity$DownloadTask.class
+bin/classes/pt/ua/icm/bringme/DetailsActivity$ParserTask.class
+bin/classes/pt/ua/icm/bringme/DetailsActivity.class
+bin/classes/pt/ua/icm/bringme/helpers/DirectionsJSONParser.class
+bin/dexedLibs/Parse-1.5.0-235ad39844d98994de98931cb596cd44.jar
+bin/dexedLibs/android-support-v4-973c475c2079b36c9dd47c37fcbffdb1.jar
+bin/dexedLibs/android-support-v7-appcompat-541b3264bd9393831051bfdaf30a8492.jar
+bin/dexedLibs/appcompat_v7-e693d7693248294adc7bf448ff03f161.jar
+bin/dexedLibs/facebooksdk-3cc1ad108835f7b721453c0776d84dd9.jar
+bin/dexedLibs/google-play-services-fdd4710b5b2e00f7367e4c9c96195733.jar
+bin/dexedLibs/google-play-services_lib-4125281ce40afbf92e0e70e400363220.jar

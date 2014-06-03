@@ -29,6 +29,7 @@
         android:layout_margin="20dp"
         android:drawableTop="@drawable/delivery_status_icon"
         android:padding="5dp"
-        android:text="@string/delivery_status" />
+        android:text="@string/delivery_status"
+        android:onClick="onListDeliveriesActivity" />
 
 </LinearLayout>
