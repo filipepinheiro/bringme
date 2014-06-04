@@ -146,6 +146,10 @@
             android:name="pt.ua.icm.bringme.AcceptDeliveryActivity"
             android:label="@string/title_activity_accept_delivery" >
         </activity>
+        <activity
+            android:name="pt.ua.icm.bringme.CreditsActivity"
+            android:label="@string/title_activity_credits" >
+        </activity>
     </application>
 
 </manifest>

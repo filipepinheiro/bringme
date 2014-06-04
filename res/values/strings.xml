@@ -65,5 +65,13 @@
     <string name="deliveries">Deliveries</string>
     <string name="pick_courier">Pick courier</string>
     <string name="title_activity_accept_delivery">AcceptDeliveryActivity</string>
+    <string name="credits">Trabalho Desenvolvido no contexto das unidades curriculares de Projecto em Design III e Introdução à Computação Móvel, 2013-2014</string>
+    <string name="designers">Designers:</string>
+    <string name="catarina">Catarina Ribeiro</string>
+    <string name="laura">Laura Gouveia</string>
+    <string name="developers">Developers:</string>
+    <string name="filipe">Filipe Pinheiro</string>
+    <string name="hugo">Hugo Correia</string>
+    <string name="title_activity_credits">CreditsActivity</string>
 
 </resources>
