@@ -125,11 +125,3 @@ bin/dexedLibs/facebooksdk-b256e8cb18d36d3bf58e34ce01cc9716.jar
 bin/dexedLibs/google-play-services-c74220f583840cb9455685adf0b2d2a5.jar
 bin/dexedLibs/google-play-services_lib-e6834d99dcbe72153fc915a296060be8.jar
 project.properties
-bin/classes/pt/ua/icm/bringme/CourierMenuFragment$1$1.class
-bin/classes/pt/ua/icm/bringme/CourierMenuFragment$1.class
-bin/classes/pt/ua/icm/bringme/CourierMenuFragment$deliveryAdapter$1.class
-bin/classes/pt/ua/icm/bringme/CourierMenuFragment$deliveryAdapter.class
-bin/classes/pt/ua/icm/bringme/DeliveryCourierListFragment$DeliveryCourierListAdapter$1.class
-bin/classes/pt/ua/icm/bringme/DeliveryCourierListFragment$DeliveryCourierListAdapter.class
-bin/classes/pt/ua/icm/bringme/DeliveryCourierListFragment$OnDeliveryListener.class
-bin/classes/pt/ua/icm/bringme/DeliveryFinishFragment$1$1.class
