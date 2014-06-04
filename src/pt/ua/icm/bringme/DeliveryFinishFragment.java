@@ -111,7 +111,8 @@ public class DeliveryFinishFragment extends Fragment {
 					pushQuery.whereMatchesQuery("user", userQuery);
 					
 					ParsePush push = new ParsePush();
-					push.setQuery(pushQuery);
+					//push.setQuery(pushQuery);
+					push.setChannel(courierId);
 					push.setMessage("Hey! Can you BringMe?");
 					push.sendInBackground(new SendCallback() {
 						
