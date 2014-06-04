@@ -8,6 +8,7 @@ import pt.ua.icm.adapters.MyArrayAdapter;
 import pt.ua.icm.bringme.models.Delivery;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -39,27 +40,17 @@ public class HistoryActivity extends ListActivity{
 		listview.setAdapter(adapter);
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*final ArrayList<String> list = new ArrayList<String>();
-	    for (int i = 0; i < deliveries.length; ++i) {
-	      list.add(deliveries[i]);
-	    }
-		
 
-		final StableArrayAdapter adapter = new StableArrayAdapter(this,
-				R.id.tvTitulo, list);
-		listview.setAdapter(adapter);*/
-
+	}
+	
+	
+	@Override
+	protected void onListItemClick(ListView l, android.view.View v, int position, long id){
+		super.onListItemClick(l, v, position, id);
 		
-
+		Intent detailedInt = new Intent(this, DetailsActivity.class);
+		detailedInt.putExtra("asd", "dsa");
+		startActivityForResult(detailedInt, position);
 	}
 
 	private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -74,7 +65,7 @@ public class HistoryActivity extends ListActivity{
 			}
 		}
 
-		/*@Override
+/*		@Override
 		public long getItemId(int position) {
 			Delivery item = getItem(position);
 			return mIdMap.get(item);
