@@ -93,7 +93,7 @@ public class DeliveryCourierProfileFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				mListener.setCourier(userId);
+				mListener.setCourierFromMap(userId);
 			}
 		});
 		
@@ -119,7 +119,7 @@ public class DeliveryCourierProfileFragment extends Fragment {
 
 	public interface OnDeliveryListener {
 
-		void setCourier(String objectId);
+		void setCourierFromMap(String objectId);
 	}
 
 }

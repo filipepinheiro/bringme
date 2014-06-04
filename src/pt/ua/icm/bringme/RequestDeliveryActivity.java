@@ -29,7 +29,6 @@ import com.parse.ParseUser;
 
 public class RequestDeliveryActivity extends ActionBarActivity implements
 		ActionBar.TabListener, DeliveryOriginFragment.OnDeliveryListener,
-		DeliveryCourierFragment.OnDeliveryListener,
 		DeliveryCourierListFragment.OnDeliveryListener,
 		DeliveryDestinationFragment.OnDeliveryListener,
 		DeliveryDetailsFragment.OnDeliveryListener,
@@ -250,11 +249,6 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 	}
 
 	@Override
-	public void setCourier(User courier) {
-		delivery.courierId = courier.getObjectId();
-	}
-
-	@Override
 	public void setOrigin(ParseGeoPoint geoLocation, String addressName) {
 		
 		delivery.origin = AddressHelper.parseGeoPointToLatLng(geoLocation);
@@ -357,7 +351,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 	}
 
 	@Override
-	public void setCourier(String objectId) {
+	public void setCourierFromMap(String objectId) {
 		delivery.courierId = objectId;
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		Fragment f = new DeliveryCourierMapFragment().newInstance(courierList, origin);
@@ -365,6 +359,12 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		ft.addToBackStack(null);
 		ft.commit();
 		
-		mSectionsPagerAdapter.getItem(3);
+		mViewPager.setCurrentItem(3);
+	}
+
+	@Override
+	public void setCourierFromList(String objectId) {
+		delivery.courierId = objectId;
+		mViewPager.setCurrentItem(3);
 	}
 }

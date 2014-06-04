@@ -17,17 +17,6 @@ import com.parse.ParseUser;
 
 public class DeliveryCourierFragment extends Fragment {
 
-	private OnDeliveryListener mListener;
-	LinkedList<ParseUser> courierList = new LinkedList<ParseUser>();
-	
-	public LinkedList<ParseUser> getCourierList() {
-		return courierList;
-	}
-
-	public void setCourierList(LinkedList<ParseUser> courierList) {
-		this.courierList = courierList;
-	}
-
 	public static DeliveryCourierFragment newInstance() {
 		return new DeliveryCourierFragment();
 	}
@@ -72,19 +61,11 @@ public class DeliveryCourierFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-
-		try {
-			mListener = (OnDeliveryListener) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement OnDeliveryListener");
-		}
 	}
 
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		mListener = null;
 	}
 
 	@Override
@@ -96,9 +77,4 @@ public class DeliveryCourierFragment extends Fragment {
 			getFragmentManager().beginTransaction().remove(f).commit();
 		}
 	}
-
-	public interface OnDeliveryListener {
-		public void setCourier(User courier);
-	}
-
 }

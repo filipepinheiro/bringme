@@ -1,5 +1,8 @@
 package pt.ua.icm.bringme;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
@@ -89,11 +92,11 @@ public class DeliveryFinishFragment extends Fragment {
 	
 	private void fillFields() {
 		if(delivery != null){
-			packageName.setText(delivery.name);
-			packageDescription.setText(delivery.description);
-			packageNotes.setText(delivery.notes);
-			packageDetailedOrigin.setText(delivery.detailedOrigin);
-			packageDetailedDestination.setText(delivery.detailedDestination);
+			packageName.setText(delivery.name.toString());
+			packageDescription.setText(delivery.description.toString());
+			packageNotes.setText(delivery.notes.toString());
+			packageDetailedOrigin.setText(delivery.detailedOrigin.toString());
+			packageDetailedDestination.setText(delivery.detailedDestination.toString());
 		}
 	}
 
@@ -101,33 +104,39 @@ public class DeliveryFinishFragment extends Fragment {
 		//Install Notifications
 		ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
 			
-			@SuppressWarnings("rawtypes")
 			@Override
 			public void done(ParseException e) {
 				if(e == null){
-					ParseQuery userQuery = ParseUser.getQuery().whereEqualTo("objectId", courierId);
 					
-					ParseQuery pushQuery = ParseInstallation.getQuery();
-					pushQuery.whereMatchesQuery("user", userQuery);
+					try {
+						JSONObject data = new JSONObject(							
+								"{\"alert\":\"Hey! Can you BringMe this item?\"," +
+								"\"action\":\"pt.ua.icm.bringme.MainActivity\"}");
 					
-					ParsePush push = new ParsePush();
-					//push.setQuery(pushQuery);
-					push.setChannel(courierId);
-					push.setMessage("Hey! Can you BringMe?");
-					push.sendInBackground(new SendCallback() {
-						
-						@Override
-						public void done(ParseException e) {
-							if(e == null){
-								Log.i(Consts.TAG, "Notification send with success!");
-								Toast.makeText(getActivity(), "Notification sent!", Toast.LENGTH_SHORT).show();
+						ParsePush push = new ParsePush();
+						push.setExpirationTimeInterval(60*5);
+						push.setChannel(courierId);
+						push.setData(data);
+						push.setMessage("Hey! Can you BringMe?");
+						push.sendInBackground(new SendCallback() {
+							
+							@Override
+							public void done(ParseException e) {
+								if(e == null){
+									Log.i(Consts.TAG, "Notification send with success!");
+									Toast.makeText(getActivity(), "Notification sent!", Toast.LENGTH_SHORT).show();
+									startActivity(new Intent(getActivity(),MainActivity.class));
+								}
+								else{
+									Toast.makeText(getActivity(), "Notification failed!", Toast.LENGTH_SHORT).show();
+									Log.e(Consts.TAG, "Notification failed! :(");
+								}
 							}
-							else{
-								Toast.makeText(getActivity(), "Notification failed!", Toast.LENGTH_SHORT).show();
-								Log.e(Consts.TAG, "Notification failed! :(");
-							}
-						}
-					});
+						});
+					} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}else{
 					Log.e(Consts.TAG, "Failed to save Current Installation!");					
 				}
