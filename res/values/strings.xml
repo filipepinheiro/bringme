@@ -36,6 +36,7 @@
     <string name="title_request_delivery_courier">Courier</string>
     <string name="title_request_delivery_destination">Destination</string>
     <string name="title_request_delivery_details">Details</string>
+    <string name="title_request_delivery_finish">Finish</string>
     <string name="package_address">Package Address</string>
     <string name="action_map">Map</string>
     <string name="action_list">List</string>
@@ -60,5 +61,8 @@
     <string name="request">Request</string>
 	<string name="title_activity_details_list">List</string>
 	<string name="title_activity_details">Details</string>
+	<string name="requests">Requests</string>
+	<string name="deliveries">Deliveries</string>
+	<string name="pick_courier">Pick courier</string>
 	
 </resources>

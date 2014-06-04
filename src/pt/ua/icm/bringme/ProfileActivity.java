@@ -1,9 +1,13 @@
 package pt.ua.icm.bringme;
 
+import java.util.concurrent.ExecutionException;
+
 import pt.ua.icm.bringme.helpers.BitmapHelper;
+import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import pt.ua.icm.bringme.helpers.RoundedImageView;
 import pt.ua.icm.bringme.models.User;
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -16,7 +20,6 @@ import com.parse.ParseUser;
 public class ProfileActivity extends ActionBarActivity {
 
 	TextView fullNameField, emailField, phoneNumberField;
-	User currentUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +74,22 @@ public class ProfileActivity extends ActionBarActivity {
 		else
 			phoneNumberField.setText("Do not has phone.");
 		
-		byte[] profilePictureBytes = user.getBytes("pic").clone();
-		RoundedImageView imageProfile = (RoundedImageView) findViewById(R.id.userImage);
-		imageProfile.setImageBitmap(BitmapHelper.byteArrayToBitmap(profilePictureBytes));
-		imageProfile.setBorderColor(Color.parseColor(getString(R.color.green_peas)));
-		
-		
+		FacebookImageLoader loader = new FacebookImageLoader();
+		Bitmap profilePicture = null;
+		try {
+			profilePicture = loader.execute(user.getString("facebookId"),"normal").get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(profilePicture != null){
+			RoundedImageView imageProfile = (RoundedImageView) findViewById(R.id.deliveryCourierUserImage);
+			imageProfile.setImageBitmap(profilePicture);
+			imageProfile.setBorderColor(Color.parseColor(getString(R.color.green_peas)));
+		}
 		
 		//Static rate
 		RatingBar rbar = (RatingBar) findViewById(R.id.starRatingBar);

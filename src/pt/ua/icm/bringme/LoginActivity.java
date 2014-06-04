@@ -1,13 +1,9 @@
 package pt.ua.icm.bringme;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.ExecutionException;
 
-import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -29,6 +25,7 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseFacebookUtils.Permissions;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -44,6 +41,7 @@ public class LoginActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		ParseObject.registerSubclass(pt.ua.icm.bringme.models.User.class);
 		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ",
 				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
 

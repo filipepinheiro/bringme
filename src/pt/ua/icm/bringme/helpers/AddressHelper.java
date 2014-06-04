@@ -1,5 +1,8 @@
 package pt.ua.icm.bringme.helpers;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.parse.ParseGeoPoint;
+
 import android.location.Address;
 
 public class AddressHelper {
@@ -16,5 +19,11 @@ public class AddressHelper {
 		}
 		
 		return prettyAddress.toString();
+	}
+	
+	public static LatLng parseGeoPointToLatLng(ParseGeoPoint geopoint){
+		LatLng point = new LatLng(geopoint.getLatitude(), geopoint.getLongitude());
+		return point;
+		
 	}
 }

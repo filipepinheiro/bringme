@@ -32,9 +32,11 @@ import android.widget.Toast;
 import com.google.android.gms.location.LocationListener;
 import com.parse.LocationCallback;
 import com.parse.Parse;
+import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+import com.parse.PushService;
 import com.parse.SaveCallback;
 
 public class MainActivity extends ActionBarActivity implements
@@ -59,6 +61,9 @@ public class MainActivity extends ActionBarActivity implements
 		
 		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ",
 				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
+		
+		PushService.setDefaultPushCallback(this, MainActivity.class);
+		ParseAnalytics.trackAppOpened(getIntent());
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();

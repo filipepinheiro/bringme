@@ -14,17 +14,20 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebStorage.Origin;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
-public class DeliveryCourierMapFragment extends Fragment {
+public class DeliveryCourierMapFragment extends Fragment implements OnMarkerClickListener{
 	private OnDeliveryListener mListener;
 	private LinkedList<ParseUser> courierList = new LinkedList<ParseUser>();
 	private LatLng origin;
@@ -70,6 +73,7 @@ public class DeliveryCourierMapFragment extends Fragment {
 		SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.courierMapFragment);
 		
 		map = mapFragment.getMap();
+		map.setOnMarkerClickListener(this);
 		
 		if(origin != null){
 			MapHelper.updateMapCamera(map, origin);
@@ -105,8 +109,16 @@ public class DeliveryCourierMapFragment extends Fragment {
 			map.addMarker(new MarkerOptions()
 			.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_place))
 			.position(coordinates)
-			.title(user.getString("firstName") + " " + user.getString("lastName")));
+			.title(user.getString("firstName") + " " + user.getString("lastName"))
+			.snippet(user.getObjectId()));
 		}
+	}
+
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		//Toast.makeText(getActivity(), marker.getSnippet(), Toast.LENGTH_SHORT).show();
+		mListener.showCourierProfile(marker.getSnippet());
+		return false;
 	}
 
 	@Override
@@ -137,6 +149,7 @@ public class DeliveryCourierMapFragment extends Fragment {
 	}
 
 	public interface OnDeliveryListener {
+		void showCourierProfile(String snippet);
 	}
 
 }

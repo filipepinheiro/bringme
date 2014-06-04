@@ -1,33 +1,48 @@
 package pt.ua.icm.bringme.models;
 
+import java.io.Serializable;
+
+import pt.ua.icm.bringme.Consts;
+
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.GetCallback;
+import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-public class User extends ParseUser{
+@ParseClassName("User")
+public class User extends ParseUser implements Serializable{
 	
-	private String objectId;
-	private String firstName;
-	private String lastName;
-	private String phoneNumber;
+	private static final long serialVersionUID = -7949525893899555714L;
+	
+	private String objectId, firstName, lastName, phoneNumber;
 	private ParseGeoPoint lastLocation;
+	private int requests = 0, deliveries = 0;
+	private double rating = 0.0;
+	
+	public User(){}
 
 	public User(String objectId) {
 		this.objectId = objectId;
+		Log.d(Consts.TAG, "New user based on objectId: " + objectId);
 		
-		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
-		try {
-			ParseObject user = query.get(objectId);
-			firstName = user.getString("firstName");
-			lastName = user.getString("lastName");
-			phoneNumber = user.getString("phoneNumber");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ParseUser.getQuery().getInBackground(objectId, new GetCallback<ParseUser>() {
+			
+			@Override
+			public void done(ParseUser user, ParseException e) {
+				if(e == null){
+					firstName = user.getString("firstName");
+					lastName = user.getString("lastName");
+					phoneNumber = user.getString("phoneNumber");
+					requests = user.getInt("requests");
+					deliveries = user.getInt("deliveries");
+					rating = user.getDouble("rating");
+				}
+			}
+		});
 	}
 
 	public String getObjectId() {
@@ -61,6 +76,10 @@ public class User extends ParseUser{
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
+	public int getRequests() {
+		return requests;
+	}
 
 	public ParseGeoPoint getLastLocation() {
 		return lastLocation;
@@ -72,6 +91,22 @@ public class User extends ParseUser{
 	
 	public LatLng getLastLocationLatLng(){
 		return new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+	}
+
+	public int getDeliveries() {
+		return deliveries;
+	}
+
+	public void setDeliveries(int deliveries) {
+		this.deliveries = deliveries;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 }

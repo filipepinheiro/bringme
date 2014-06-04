@@ -1,0 +1,153 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pt.ua.icm.bringme.DeliveryFinishFragment" >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/deliveryFinishLayout"
+            style="@style/paddingStyles"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical" >
+
+            <TextView
+                android:id="@+id/courierListItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/finish_delivery_package_name_label"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_peas"
+                android:textColorHint="@color/green_peas"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/finish_request_package_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Small Text"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/TextView08"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="@string/finish_delivery_package_description_label"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_peas"
+                android:textColorHint="@color/green_peas"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/finish_request_package_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Small Text"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/TextView06"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="@string/finish_delivery_package_special_notes_label"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_peas"
+                android:textColorHint="@color/green_peas"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/finish_request_special_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Small Text"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/TextView04"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="@string/finish_delivery_package_detailed_origin_label"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_peas"
+                android:textColorHint="@color/green_peas"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/finish_request_detailed_origin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Small Text"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="@string/finish_delivery_package_detailed_destination_label"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_peas"
+                android:textColorHint="@color/green_peas"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/finish_request_detailed_destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Small Text"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/finish_request_courier_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="15dp"
+                android:text="@string/courier"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/green_peas"
+                android:textColorHint="@color/green_peas"
+                android:textStyle="bold" />
+
+            <pt.ua.icm.bringme.helpers.RoundedImageView
+                android:id="@+id/userImageDrawer"
+                android:layout_width="75dip"
+                android:layout_height="75dip"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/finish_request_courier_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/finish_request_button"
+                style="@style/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/request" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

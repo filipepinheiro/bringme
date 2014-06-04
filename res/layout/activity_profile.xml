@@ -14,7 +14,7 @@
     tools:ignore="MergeRootFrame" >
 
     <pt.ua.icm.bringme.helpers.RoundedImageView
-        android:id="@+id/userImage"
+        android:id="@+id/deliveryCourierUserImage"
         android:layout_width="100dip"
         android:layout_height="100dip"
         android:layout_gravity="center"

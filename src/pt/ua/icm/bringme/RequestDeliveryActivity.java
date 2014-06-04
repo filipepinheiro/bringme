@@ -1,18 +1,12 @@
 package pt.ua.icm.bringme;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
-
-import pt.ua.icm.bringme.helpers.FacebookImageLoader;
-import pt.ua.icm.bringme.helpers.MapHelper;
+import pt.ua.icm.bringme.helpers.AddressHelper;
 import pt.ua.icm.bringme.models.Delivery;
 import pt.ua.icm.bringme.models.User;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,18 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class RequestDeliveryActivity extends ActionBarActivity implements
@@ -46,11 +33,11 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		DeliveryCourierListFragment.OnDeliveryListener,
 		DeliveryDestinationFragment.OnDeliveryListener,
 		DeliveryDetailsFragment.OnDeliveryListener,
-		DeliveryCourierMapFragment.OnDeliveryListener{
+		DeliveryCourierMapFragment.OnDeliveryListener,
+		DeliveryCourierProfileFragment.OnDeliveryListener,
+		DeliveryFinishFragment.OnDeliveryListener{
 
-	private MenuItem listActionButton;
-
-	private MenuItem mapActionButton;
+	private MenuItem listActionButton, mapActionButton;
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -172,6 +159,15 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			ft.addToBackStack(null);
 			ft.commit();
 		}
+		
+		if(tab.getPosition() == 4){
+			validateDelivery();
+			DeliveryFinishFragment f = new DeliveryFinishFragment().newInstance(delivery);
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			ft.replace(R.id.deliveryFinishContainer, f);
+			ft.addToBackStack(null);
+			ft.commit();
+		}
 	}
 
 	@Override
@@ -196,18 +192,6 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
-	/*public static boolean viewListFlag = false;
-
-	public void mapToList(View view) {
-
-		if (viewListFlag)
-			viewListFlag = false;
-		else
-			viewListFlag = true;
-
-		Log.d("PRESPA", "" + viewListFlag);		
-	}*/
-
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
@@ -229,6 +213,8 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 				return DeliveryDestinationFragment.newInstance();
 			case 3:
 				return DeliveryDetailsFragment.newInstance();
+			case 4:
+				return DeliveryFinishPlaceholderFragment.newInstance();
 			}
 			return null;
 		}
@@ -236,7 +222,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 4;
+			return 5;
 		}
 
 		@Override
@@ -255,6 +241,9 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			case 3:
 				return getString(R.string.title_request_delivery_details)
 						.toUpperCase(l);
+			case 4:
+				return getString(R.string.title_request_delivery_finish)
+						.toUpperCase(l);
 			}
 			return null;
 		}
@@ -267,12 +256,13 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 
 	@Override
 	public void setOrigin(ParseGeoPoint geoLocation, String addressName) {
-		delivery.origin = geoLocation;
+		
+		delivery.origin = AddressHelper.parseGeoPointToLatLng(geoLocation);
 		delivery.originAddress = addressName;
 		
 		if(delivery.origin != null){
-			origin = new LatLng(delivery.origin.getLatitude(), delivery.origin.getLongitude());
-			ParseUser.getQuery().whereWithinKilometers("lastLocation", delivery.origin,3)
+			origin = delivery.origin;
+			ParseUser.getQuery().whereWithinKilometers("lastLocation", geoLocation,3)
 			.findInBackground(new FindCallback<ParseUser>() {
 				
 				@Override
@@ -294,89 +284,11 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 				}
 			});
 		}
-		
-		
-		
-		/*
-		FragmentManager manager = getSupportFragmentManager();
-		final SupportMapFragment mapFragment = (SupportMapFragment) manager
-				.findFragmentById(R.id.courierMapFragment);
-
-		final GoogleMap map = (GoogleMap) mapFragment.getMap();
-
-		if (delivery.origin != null) {
-			double latitude = delivery.origin.getLatitude();
-			double longitude = delivery.origin.getLongitude();
-			LatLng target = new LatLng(latitude, longitude);
-
-			MapHelper.updateMapCamera(map, target);
-
-			ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
-			query.whereNear("lastLocation", delivery.origin).findInBackground(
-				new FindCallback<ParseObject>() {
-
-					@Override
-					public void done(List<ParseObject> objects, ParseException e) {
-						if (e != null) {
-							List<ParseUser> courierList = new ArrayList<ParseUser>();
-							for (ParseObject obj : objects) {
-								courierList.add((ParseUser) obj);
-							}
-
-							for (final ParseUser courier : courierList) {
-								Bitmap profilePic = new BitmapFactory().decodeResource(getResources(), R.drawable.com_facebook_profile_default_icon);
-								if (courier.has("facebookId")) {
-									FacebookImageLoader loader = new FacebookImageLoader();
-									try {
-										profilePic = loader.execute(courier.getString("facebookId"),"square").get();
-									} catch (InterruptedException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									} catch (ExecutionException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
-								}
-								
-								BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(profilePic);
-								ParseGeoPoint location = courier.getParseGeoPoint("lastLocation");
-								LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
-								MarkerOptions marker = new MarkerOptions().icon(icon).position(position);
-								map.addMarker(marker);
-							}
-						}
-					}
-				});
-		}*/
 	}
-	
-	/*private class CourierMark extends AsyncTask<String, Void, MarkerOptions>{
-		private String facebookId;
-
-		@Override
-		protected MarkerOptions doInBackground(String... params) {
-			facebookId = params[0];
-			FacebookImageLoader loader = new FacebookImageLoader();
-			Bitmap picture = null;
-			BitmapDescriptor icon = null;
-			try {
-				picture = loader.execute(facebookId,"").get();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			icon = BitmapDescriptorFactory.fromBitmap(picture);
-			MarkerOptions marker = new MarkerOptions().icon(icon);
-			return marker;
-		}
-	}*/
 
 	@Override
 	public void setDestination(ParseGeoPoint geoPoint, String addressName) {
-		delivery.destination = geoPoint;
+		delivery.destination = AddressHelper.parseGeoPointToLatLng(geoPoint);
 		delivery.destinationAddress = addressName;
 	}
 
@@ -393,60 +305,66 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		delivery.name = packageName;
 		delivery.description = packageDescription;
 		delivery.notes = packageDetails;
+		Toast.makeText(getApplicationContext(), "Details saved", Toast.LENGTH_SHORT)
+		.show();
 	}
 
 	@Override
 	public void validateDelivery() {
-		boolean valid = true;
-
 		if (delivery.origin == null) {
 			mViewPager.setCurrentItem(0);
 			Toast.makeText(this, "Specify Origin!", Toast.LENGTH_SHORT).show();
-			valid = false;
 			return;
 		}
 		if (delivery.courierId == null || delivery.courierId.isEmpty()) {
 			mViewPager.setCurrentItem(1);
 			Toast.makeText(this, "Specify Courier!", Toast.LENGTH_SHORT).show();
-			valid = false;
 			return;
 		}
 		if (delivery.destination == null) {
 			mViewPager.setCurrentItem(2);
 			Toast.makeText(this, "Specify Destination!", Toast.LENGTH_SHORT)
 					.show();
-			valid = false;
 			return;
 		}
-		if (delivery.detailedOrigin.isEmpty()) {
+		if (delivery.detailedDestination == null || delivery.detailedOrigin.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Detailed Origin!", Toast.LENGTH_SHORT)
 					.show();
-			valid = false;
 			return;
 		}
-		if (delivery.detailedDestination.isEmpty()) {
+		if (delivery.detailedDestination == null || delivery.detailedDestination.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Detailed Destination!",
 					Toast.LENGTH_SHORT).show();
-			valid = false;
 			return;
 		}
-		if (delivery.name.isEmpty()) {
+		if (delivery.name == null || delivery.name.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Package Name!", Toast.LENGTH_SHORT)
 					.show();
-			valid = false;
 			return;
 		}
+	}
 
-		if (valid) {
-			Intent finishDeliveryRequest = 
-					new Intent(this, FinishRequestDeliveryActivity.class);
-			Bundle deliveryBundle = new Bundle();
-			deliveryBundle.putSerializable("delivery", delivery);
-			finishDeliveryRequest.putExtra("delivery", deliveryBundle);
-			startActivity(finishDeliveryRequest);
-		}
+	@Override
+	public void showCourierProfile(String objectId) {
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		Fragment f = new DeliveryCourierProfileFragment().newInstance(objectId);
+		ft.replace(R.id.courierMapContainer, f);
+		ft.addToBackStack(null);
+		ft.commit();
+	}
+
+	@Override
+	public void setCourier(String objectId) {
+		delivery.courierId = objectId;
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		Fragment f = new DeliveryCourierMapFragment().newInstance(courierList, origin);
+		ft.replace(R.id.courierMapContainer, f);
+		ft.addToBackStack(null);
+		ft.commit();
+		
+		mSectionsPagerAdapter.getItem(3);
 	}
 }
