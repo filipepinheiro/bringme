@@ -315,4 +315,10 @@ public class MainActivity extends ActionBarActivity implements
 			}
 		});
 	}
+	
+
+	public void creditsActivity(View view){
+		Intent intCredits = new Intent(this, CreditsActivity.class);
+		startActivity(intCredits);
+	}
 }

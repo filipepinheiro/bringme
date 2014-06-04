@@ -47,28 +47,37 @@
                 android:id="@+id/drawerProfileButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/green_soft"
                 android:minHeight="28dp"
                 android:onClick="openProfileActivity"
-                android:text="Profile"
-                android:background="@color/green_soft" />
+                android:text="Profile" />
 
             <Button
                 android:id="@+id/drawerHistoryButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/green_medium"
                 android:minHeight="28dp"
                 android:onClick="openHistoryActivity"
-                android:text="History"
-                android:background="@color/green_medium" />
+                android:text="History" />
 
             <Button
                 android:id="@+id/drawerLogoutButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/green_hard"
                 android:minHeight="28dp"
                 android:onClick="userLogout"
-                android:text="Logout"
-                android:background="@color/green_hard" />
+                android:text="Logout" />
+
+            <Button
+                android:id="@+id/drawerCreditsButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:minHeight="28dp"
+                android:onClick="creditsActivity"
+                android:text="Credits" />
         </LinearLayout>
     </FrameLayout>
 

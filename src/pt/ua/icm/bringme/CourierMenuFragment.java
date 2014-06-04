@@ -116,7 +116,10 @@ public class CourierMenuFragment extends Fragment {
 
 		@Override
 		public int getCount() {
-			return deliveryList.size();
+			if(deliveryList==null)
+				return 0;
+			else
+				return deliveryList.size();
 		}
 
 		@Override

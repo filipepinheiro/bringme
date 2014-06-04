@@ -125,6 +125,10 @@ public class DeliveryFinishFragment extends Fragment {
 		};
 	}
 	
+	public void finishDelivery(){
+		getActivity().finish();
+	}
+	
 	private void fillFields() {
 		if(delivery != null){
 			packageName.setText(delivery.name.toString());
@@ -161,6 +165,7 @@ public class DeliveryFinishFragment extends Fragment {
 									Log.i(Consts.TAG, "Notification send with success!");
 									Toast.makeText(getActivity(), "Notification sent!", Toast.LENGTH_SHORT).show();
 									mListener.deliverySent();
+									finishDelivery();
 								}
 								else{
 									Toast.makeText(getActivity(), "Notification failed!", Toast.LENGTH_SHORT).show();
