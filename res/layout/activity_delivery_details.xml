@@ -4,9 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="vertical"
+        android:background="@color/green_super_hard" >
+        
+            <TextView
+                android:id="@+id/labelDeliveriesDetails"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="30dp"
+                android:text="Delivery Details"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center_vertical" />
+        
+    </LinearLayout>
+    
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:background="@color/transparent" >
 
         <LinearLayout
@@ -28,13 +48,14 @@
 
             <TextView
                 android:id="@+id/expectedTime"
-                android:layout_width="match_parent"
+                android:layout_width="292dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
                 android:text="40 minutes left"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -69,9 +90,29 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="15dp" >
+        
+            <TextView
+                android:id="@+id/labelCurrentTime"
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:text="Current Location:"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        
+        
+    </LinearLayout>
+
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="fill_parent"
         android:background="@color/transparent" >
 
         <fragment

@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/adapterow"
     android:layout_width="wrap_content"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:id="@+id/adapterow"
     android:padding="6dip" >
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Description"
-        android:textColor="@color/white"
-        android:textSize="12sp" />
+    <pt.ua.icm.bringme.helpers.RoundedImageView
+        android:id="@+id/userImageViewAdapter"
+        android:layout_width="75dip"
+        android:layout_height="75dip"
+        android:layout_gravity="center"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:scaleType="centerInside"/>
 
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvDescription"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:gravity="center_vertical"
-        android:textColor="@color/white"
-        android:text="Example application"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="fill_parent"
+            android:layout_height="26dip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:text="Description"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:paddingLeft="70dp" />
 
-</RelativeLayout> 
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvDescription"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:gravity="center_vertical"
+            android:text="Example application"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:paddingLeft="70dp" />
+
+</RelativeLayout>
