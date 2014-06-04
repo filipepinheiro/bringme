@@ -9,11 +9,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.json.JSONObject;
 
+import pt.ua.icm.bringme.helpers.BitmapHelper;
 import pt.ua.icm.bringme.helpers.DirectionsJSONParser;
+import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import pt.ua.icm.bringme.helpers.MapHelper;
+import pt.ua.icm.bringme.helpers.RoundedImageView;
+import pt.ua.icm.bringme.models.Delivery;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +34,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class DetailsActivity extends ActionBarActivity {
 
@@ -39,6 +51,68 @@ public class DetailsActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_delivery_details);
 
+		Intent i = getIntent();
+		final Delivery delivery = (Delivery) i.getParcelableExtra("delivery");
+
+		
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+		query.findInBackground(new FindCallback<ParseObject>() {
+			public void done(List<ParseObject> objects, ParseException e) {
+				if (e == null) {
+					Log.i(Consts.TAG, "LIST = " + objects.size());
+					setNameOfCourier(objects, delivery);
+				} else {
+					Log.i(Consts.TAG, "Delivery List Empty! - " + e);
+				}
+			}
+
+		});
+
+		// TODO;
+		//
+		String fbId = delivery.facebookId;
+
+		RoundedImageView drawerProfilePicture = (RoundedImageView) findViewById(R.id.deliveryCourierUserImage);
+		drawerProfilePicture.setBorderColor(Color
+				.parseColor(getString(R.color.green_peas)));
+
+		if (fbId != null) {
+
+			FacebookImageLoader profilePictureLoader = new FacebookImageLoader();
+
+			Bitmap profilePicture = null;
+
+			try {
+
+				profilePicture = profilePictureLoader.execute(fbId, "normal")
+						.get();
+
+			} catch (InterruptedException e) {
+				Log.e(Consts.TAG, "Load profile picture was cancelled!");
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				Log.e(Consts.TAG, "Execution Error!");
+				e.printStackTrace();
+			}
+
+			if (profilePicture != null) {
+				drawerProfilePicture.setImageBitmap(profilePicture);
+			} else {
+				Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
+						R.drawable.default_profile_picture, this);
+				drawerProfilePicture.setImageBitmap(defaultPicture);
+				drawerProfilePicture.setBorderColor(Color
+						.parseColor(getString(R.color.green_peas)));
+			}
+		} else {
+			Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
+					R.drawable.default_profile_picture, this);
+			drawerProfilePicture.setImageBitmap(defaultPicture);
+			drawerProfilePicture.setBorderColor(Color
+					.parseColor(getString(R.color.green_peas)));
+
+		}
+
 		SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.detailLastMapFragment);
 
@@ -47,14 +121,12 @@ public class DetailsActivity extends ActionBarActivity {
 		// Getting Map for the SupportMapFragment
 		map = fm.getMap();
 
-		LatLng point1 = new LatLng(40.641491, -8.653645);
+		LatLng point1 = delivery.origin;
 		markerPoints.add(point1);
-		LatLng point2 = new LatLng(40.633891, -8.658354);
+		LatLng point2 = delivery.destination;
 		markerPoints.add(point2);
 
 		MapHelper.updateMapCamera(map, point1);
-		// Enable MyLocation Button in the Map
-		// map.setMyLocationEnabled(true);
 
 		MarkerOptions options = new MarkerOptions();
 		MarkerOptions options2 = new MarkerOptions();
@@ -62,23 +134,16 @@ public class DetailsActivity extends ActionBarActivity {
 		// Setting the position of the marker
 		options.position(point1);
 		options2.position(point2);
-		// options.position(point2);
 
 		/**
 		 * For the start location, the color of marker is GREEN and for the end
 		 * location, the color of marker is RED.
 		 */
-		// if (markerPoints.size() == 1) {
 		options.icon(BitmapDescriptorFactory
 				.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
 		options2.icon(BitmapDescriptorFactory
 				.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-		// } else if (markerPoints.size() == 2) {
-		// options.icon(BitmapDescriptorFactory
-		// .defaultMarker(BitmapDescriptorFactory.HUE_RED));
-		// }
-
 		// Add new marker to the Google Map Android API V2
 		map.addMarker(options);
 		map.addMarker(options2);
@@ -98,6 +163,26 @@ public class DetailsActivity extends ActionBarActivity {
 
 		}
 
+	}
+
+	protected void setNameOfCourier(List<ParseObject> objects, Delivery delivery) {
+		// TODO Auto-generated method stub
+
+		while (!objects.isEmpty()) {
+
+			if (objects.get(0).getObjectId().equals(delivery.courierId)) {
+
+				String firstName = objects.get(0).get("firstName").toString();
+				String lastName = objects.get(0).get("lastName").toString();
+				
+				TextView tvUserName = (TextView) findViewById(R.id.nameUserCourier);
+tvUserName.setText(firstName + " " + lastName);
+
+				objects.clear();
+			}
+			else
+				objects.remove(0);
+		}
 	}
 
 	private static String getDirectionsUrl(LatLng origin, LatLng dest) {

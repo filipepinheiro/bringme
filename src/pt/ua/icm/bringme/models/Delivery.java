@@ -10,8 +10,8 @@ import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
-public class Delivery implements Parcelable, Serializable{
-	private static final long serialVersionUID = -5653952413868651761L;
+public class Delivery implements Parcelable{
+	//private static final long serialVersionUID = -5653952413868651761L;
 
 	public String id;
 	
@@ -25,7 +25,9 @@ public class Delivery implements Parcelable, Serializable{
 	
 	public String name, description, notes, courierId, requesterId;
 	
-	private boolean accepted, finished;
+	public boolean accepted, finished;
+	
+	public String facebookId;
 
 	public Delivery() {
 	}
@@ -44,6 +46,8 @@ public class Delivery implements Parcelable, Serializable{
 		requesterId = source.readString();
 		accepted = source.readByte() != 0;
 		finished = source.readByte() != 0;
+	
+		facebookId = source.readString();
 	}
 
 	public boolean isAccepted() {
@@ -98,6 +102,8 @@ public class Delivery implements Parcelable, Serializable{
 		dest.writeString(requesterId);
 		dest.writeByte((byte) (accepted ? 1 : 0));
 		dest.writeByte((byte) (finished ? 1 : 0));
+		
+		dest.writeString(facebookId);
 	}
 	
 	public static final Parcelable.Creator<Delivery> CREATOR = new Parcelable.Creator<Delivery>() {
