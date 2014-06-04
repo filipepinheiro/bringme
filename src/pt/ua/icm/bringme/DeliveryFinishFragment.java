@@ -1,10 +1,14 @@
 package pt.ua.icm.bringme;
 
 import org.json.JSONException;
+import pt.ua.icm.bringme.helpers.*;
 import org.json.JSONObject;
 
+import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseInstallation;
+import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -85,7 +89,38 @@ public class DeliveryFinishFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				sendRequestNotification(delivery.courierId);
+				
+				ParseGeoPoint destination = AddressHelper.latLngToParseGeoPoint(delivery.destination);
+
+				ParseObject parseDelivery = new ParseObject("Delivery");
+				
+				parseDelivery.put("origin", AddressHelper.latLngToParseGeoPoint(delivery.origin));
+				parseDelivery.put("detailedOrigin", delivery.detailedOrigin);
+				parseDelivery.put("destinationLat", destination.getLatitude());
+				parseDelivery.put("destinationLng", destination.getLongitude());
+				parseDelivery.put("detailedDestination", delivery.detailedDestination);
+				parseDelivery.put("packageName", delivery.name);
+				parseDelivery.put("packageDescription", delivery.description);
+				parseDelivery.put("packageNotes", delivery.notes);
+				parseDelivery.put("courier", delivery.courierId);
+				parseDelivery.put("requester", ParseUser.getCurrentUser());
+				parseDelivery.put("accepted", false);
+				parseDelivery.put("finished", false);
+				
+				parseDelivery.saveInBackground(new SaveCallback() {
+					
+					@Override
+					public void done(ParseException e) {
+						if(e == null){
+							Log.d(Consts.TAG, "Delivery persistence success!");
+							sendRequestNotification(delivery.courierId);
+						}
+						else{
+							Log.d(Consts.TAG, "Delivery persistence failed!");
+							Log.e(Consts.TAG, e.getMessage());
+						}
+					}
+				});
 			}
 		};
 	}
@@ -125,7 +160,7 @@ public class DeliveryFinishFragment extends Fragment {
 								if(e == null){
 									Log.i(Consts.TAG, "Notification send with success!");
 									Toast.makeText(getActivity(), "Notification sent!", Toast.LENGTH_SHORT).show();
-									startActivity(new Intent(getActivity(),MainActivity.class));
+									mListener.deliverySent();
 								}
 								else{
 									Toast.makeText(getActivity(), "Notification failed!", Toast.LENGTH_SHORT).show();
@@ -133,9 +168,8 @@ public class DeliveryFinishFragment extends Fragment {
 								}
 							}
 						});
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					} catch (JSONException jsonException) {
+						jsonException.printStackTrace();
 					}
 				}else{
 					Log.e(Consts.TAG, "Failed to save Current Installation!");					
@@ -161,16 +195,9 @@ public class DeliveryFinishFragment extends Fragment {
 		mListener = null;
 	}
 
-	/**
-	 * This interface must be implemented by activities that contain this
-	 * fragment to allow an interaction in this fragment to be communicated to
-	 * the activity and potentially other fragments contained in that activity.
-	 * <p>
-	 * See the Android Training lesson <a href=
-	 * "http://developer.android.com/training/basics/fragments/communicating.html"
-	 * >Communicating with Other Fragments</a> for more information.
-	 */
 	public interface OnDeliveryListener {
+
+		void deliverySent();
 	}
 
 }

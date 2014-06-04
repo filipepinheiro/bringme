@@ -59,10 +59,11 @@
     <string name="finish_delivery_package_detailed_destination_label">Package Detailed Destination</string>
     <string name="courier">courier</string>
     <string name="request">Request</string>
-	<string name="title_activity_details_list">List</string>
-	<string name="title_activity_details">Details</string>
-	<string name="requests">Requests</string>
-	<string name="deliveries">Deliveries</string>
-	<string name="pick_courier">Pick courier</string>
-	
+    <string name="title_activity_details_list">List</string>
+    <string name="title_activity_details">Details</string>
+    <string name="requests">Requests</string>
+    <string name="deliveries">Deliveries</string>
+    <string name="pick_courier">Pick courier</string>
+    <string name="title_activity_accept_delivery">AcceptDeliveryActivity</string>
+
 </resources>

@@ -24,6 +24,10 @@ public class AddressHelper {
 	public static LatLng parseGeoPointToLatLng(ParseGeoPoint geopoint){
 		LatLng point = new LatLng(geopoint.getLatitude(), geopoint.getLongitude());
 		return point;
-		
+	}
+	
+	public static ParseGeoPoint latLngToParseGeoPoint(LatLng latlng){
+		ParseGeoPoint point = new ParseGeoPoint(latlng.latitude, latlng.longitude);
+		return point;
 	}
 }

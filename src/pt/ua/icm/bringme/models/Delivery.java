@@ -6,7 +6,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 
 public class Delivery implements Parcelable, Serializable{
 	private static final long serialVersionUID = -5653952413868651761L;
@@ -68,11 +70,11 @@ public class Delivery implements Parcelable, Serializable{
 		return courierId;
 	}
 	
-	private void setRequestId(String requesterId){
+	public void setRequesterId(String requesterId){
 		this.requesterId = requesterId;
 	}
 	
-	private String getRequestId(){
+	public String getRequesterId(){
 		return requesterId;
 	}
 
@@ -109,7 +111,6 @@ public class Delivery implements Parcelable, Serializable{
         public Delivery[] newArray(int size) {
             return new Delivery[size]; // CREATING AN ARRAY OF VENUES
         }
- 
     };
 
 }

@@ -41,7 +41,7 @@ public class LoginActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		ParseObject.registerSubclass(pt.ua.icm.bringme.models.User.class);
+		ParseUser.registerSubclass(pt.ua.icm.bringme.models.User.class);
 		Parse.initialize(this, "99yFCBTgfHtYIhUVJrjmmu0BadhZizdif5tWZCaZ",
 				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
 

@@ -360,12 +360,20 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		ft.addToBackStack(null);
 		ft.commit();
 		
-		mViewPager.setCurrentItem(3);
+		mViewPager.setCurrentItem(2);
 	}
 
 	@Override
 	public void setCourierFromList(String objectId) {
 		delivery.courierId = objectId;
-		mViewPager.setCurrentItem(3);
+		mViewPager.setCurrentItem(2);
+	}
+
+	@Override
+	public void deliverySent() {
+		Log.i(Consts.TAG, "Called deliverySent()");
+		/*
+		Intent mainMenu = new Intent(this, MainActivity.class);
+		startActivity(mainMenu);*/
 	}
 }
