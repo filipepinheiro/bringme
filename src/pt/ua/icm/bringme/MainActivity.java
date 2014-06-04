@@ -289,7 +289,8 @@ public class MainActivity extends ActionBarActivity implements
 					if(e == null){
 						Log.i(Consts.TAG, "Location saved successfully!");
 						Toast.makeText(getApplicationContext(), "Courier mode ON", Toast.LENGTH_SHORT).show();
-						PushService.subscribe(getApplicationContext(), user.getObjectId(), MainActivity.class);
+						Log.i(Consts.TAG, "User: " + user.getObjectId());
+						PushService.subscribe(getApplicationContext(), "bringme" + user.getObjectId(), MainActivity.class);
 					}
 				}
 			});

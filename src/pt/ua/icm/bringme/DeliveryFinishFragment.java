@@ -115,7 +115,7 @@ public class DeliveryFinishFragment extends Fragment {
 					
 						ParsePush push = new ParsePush();
 						push.setExpirationTimeInterval(60*5);
-						push.setChannel(courierId);
+						push.setChannel("bringme"+courierId);
 						push.setData(data);
 						push.setMessage("Hey! Can you BringMe?");
 						push.sendInBackground(new SendCallback() {

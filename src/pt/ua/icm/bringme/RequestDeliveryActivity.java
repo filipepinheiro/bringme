@@ -257,6 +257,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		if(delivery.origin != null){
 			origin = delivery.origin;
 			ParseUser.getQuery().whereWithinKilometers("lastLocation", geoLocation,3)
+			.whereEqualTo("courier", true)
 			.findInBackground(new FindCallback<ParseUser>() {
 				
 				@Override
