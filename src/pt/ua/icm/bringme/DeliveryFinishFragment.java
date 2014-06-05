@@ -89,6 +89,14 @@ public class DeliveryFinishFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
+				ParseUser courier = null;
+				
+				try {
+					courier = ParseUser.getQuery().get(delivery.courierId);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				ParseGeoPoint destination = AddressHelper.latLngToParseGeoPoint(delivery.destination);
 
@@ -102,7 +110,7 @@ public class DeliveryFinishFragment extends Fragment {
 				parseDelivery.put("packageName", delivery.name);
 				parseDelivery.put("packageDescription", delivery.description);
 				parseDelivery.put("packageNotes", delivery.notes);
-				parseDelivery.put("courier", delivery.courierId);
+				parseDelivery.put("courier", courier);
 				parseDelivery.put("requester", ParseUser.getCurrentUser());
 				parseDelivery.put("accepted", false);
 				parseDelivery.put("finished", false);
@@ -164,7 +172,6 @@ public class DeliveryFinishFragment extends Fragment {
 								if(e == null){
 									Log.i(Consts.TAG, "Notification send with success!");
 									Toast.makeText(getActivity(), "Notification sent!", Toast.LENGTH_SHORT).show();
-									mListener.deliverySent();
 									finishDelivery();
 								}
 								else{

@@ -152,7 +152,7 @@ public class DeliveryDetailsFragment extends Fragment{
 		public void setPackageLocationDetails(String detailedPackageLocation, 
 				String detailedDestinationLocation);
 
-		public void validateDelivery();
+		public boolean validateDelivery();
 
 		public void setPackageDetails(String packageName,
 				String packageDescription, String packageDetails);
