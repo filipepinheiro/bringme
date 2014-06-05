@@ -68,8 +68,7 @@ public class DetailsActivity extends ActionBarActivity {
 
 		});
 
-		// TODO;
-		//
+	
 		String fbId = delivery.facebookId;
 
 		RoundedImageView drawerProfilePicture = (RoundedImageView) findViewById(R.id.deliveryCourierUserImage);

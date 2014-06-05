@@ -41,20 +41,6 @@ public class ProfileActivity extends ActionBarActivity {
 
 	}
 
-	/*
-	 * @Override public boolean onCreateOptionsMenu(Menu menu) {
-	 * 
-	 * // Inflate the menu; this adds items to the action bar if it is present.
-	 * getMenuInflater().inflate(R.menu.profile, menu); return true; }
-	 * 
-	 * @Override public boolean onOptionsItemSelected(MenuItem menuItem) {
-	 * switch (menuItem.getItemId()) { case android.R.id.home: Intent homeIntent
-	 * = new Intent(this, MainMenuActivity.class);
-	 * homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	 * startActivity(homeIntent); } return
-	 * (super.onOptionsItemSelected(menuItem)); }
-	 */
-
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -84,16 +70,10 @@ public class ProfileActivity extends ActionBarActivity {
 		else
 			deliveriesField.setText("0");
 
-		/*byte[] profilePictureBytes = user.getBytes("pic").clone();
-		RoundedImageView imageProfile = (RoundedImageView) findViewById(R.id.userImage);
-		imageProfile.setImageBitmap(BitmapHelper
-				.byteArrayToBitmap(profilePictureBytes));
-		imageProfile.setBorderColor(Color
-				.parseColor(getString(R.color.green_peas)));*/
 		
 		
 		RoundedImageView drawerProfilePicture = 
-				(RoundedImageView) findViewById(R.id.userImage);
+				(RoundedImageView) findViewById(R.id.deliveryCourierUserImage);
 		drawerProfilePicture.setBorderColor(Color
 				.parseColor(getString(R.color.green_peas)));
 		
@@ -121,9 +101,6 @@ public class ProfileActivity extends ActionBarActivity {
 		} else {
 			Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
 					R.drawable.default_profile_picture, this);
-			//Bitmap roundedPicture = BitmapHelper
-			//		.getRoundedCornerBitmap(defaultPicture);
-			//drawerProfilePicture.setImageBitmap(roundedPicture);
 		
 			drawerProfilePicture.setImageBitmap(defaultPicture);
 			drawerProfilePicture.setBorderColor(Color.parseColor(getString(R.color.green_peas)));
@@ -139,9 +116,6 @@ public class ProfileActivity extends ActionBarActivity {
 			rbar.setEnabled(false);
 		}
 
-		// TODO: GET INFO ABOUT REQUESTS, DELIVERIES AND RATING
-
-		// .............................................
 
 	}
 

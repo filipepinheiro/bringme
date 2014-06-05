@@ -152,7 +152,7 @@ public class DeliveryStatusActivity extends ListActivity {
 		detailedInt.putExtra("delivery", deliveries[position]);
 		
 		startActivityForResult(detailedInt, position);
-
+		
 	}
 
 	@Override
