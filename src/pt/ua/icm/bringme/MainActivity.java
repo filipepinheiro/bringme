@@ -1,5 +1,6 @@
 package pt.ua.icm.bringme;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
@@ -26,15 +27,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
+import com.parse.FindCallback;
 import com.parse.LocationCallback;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.PushService;
 import com.parse.SaveCallback;
@@ -46,6 +51,7 @@ public class MainActivity extends ActionBarActivity implements
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ParseUser user;
+	private LinkedList<ParseObject> deliveryList = new LinkedList<ParseObject>();
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -210,6 +216,28 @@ public class MainActivity extends ActionBarActivity implements
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
 		mViewPager.setCurrentItem(tab.getPosition());
+		
+		if(tab.getPosition() == 1){
+			ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Delivery");
+			query.whereEqualTo("courier", user);
+			query.whereEqualTo("finished", false);
+			query.findInBackground(new FindCallback<ParseObject>() {
+				
+				@Override
+				public void done(List<ParseObject> objects, ParseException e) {
+					if(e == null){
+						for(ParseObject delivery : objects){
+							deliveryList.add(delivery);
+						}
+						
+						Log.i(Consts.TAG, "Retrieve Delivery List with success!");
+					}
+					else{
+						Log.e(Consts.TAG, "Failed to retrieve Delivery List!");
+					}
+				}
+			});
+		}
 	}
 
 	@Override

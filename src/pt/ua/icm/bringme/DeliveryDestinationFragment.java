@@ -19,9 +19,11 @@ import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,62 +79,75 @@ public class DeliveryDestinationFragment extends Fragment {
 			List<String> addressNameList = new ArrayList<String>();
 			List<Address> addressList = new ArrayList<Address>();
 			
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if (s.length() < 3){
-					map.clear();
-					return;
-				}
-				
-				addressNameList.clear();
-				
-				try {
-					addressList = coder.getFromLocationName(s.toString(), 3);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			String query = "";
+			
+			private Handler mHandler = new Handler();
+			
+			private Runnable queryMap = new Runnable(){
 
-				for (Address address : addressList) {
-					addressNameList.add(AddressHelper.getPrettyAddress(address));
-				}
-
-				autoCompleteField.setAdapter(
-						new ArrayAdapter<String>(getActivity(),
-								android.R.layout.simple_dropdown_item_1line,
-								addressNameList));
-				autoCompleteField.showDropDown();
-
-				if (!addressList.isEmpty()) {
-					double latitude = addressList.get(0).getLatitude(), 
-							longitude = addressList.get(0).getLongitude();
-					LatLng address = new LatLng(latitude, longitude);
+				@Override
+				public void run() {
+					if (query.length() < 3){
+						map.clear();
+						return;
+					}
 					
-					map.clear();
+					addressNameList.clear();
+					
+					try {
+						Log.d(Consts.TAG, "Searching for: "+query);
+						addressList = coder.getFromLocationName(query, 3);
+					} catch (IOException e) {
+						Toast.makeText(getActivity(), "Failed to retrive location!", Toast.LENGTH_SHORT).show();
+					}
 
-					map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory
-							.fromResource(R.drawable.ic_action_place))
-							.position(address).flat(true).rotation(0));
-					
-					MapHelper.updateMapCamera(map, address);
-					
-					if(mListener != null){
-						mListener.setDestination(new ParseGeoPoint(latitude, longitude), addressNameList.get(0));
+					for (Address address : addressList) {
+						addressNameList.add(AddressHelper.getPrettyAddress(address));
+					}
+
+					autoCompleteField.setAdapter(
+							new ArrayAdapter<String>(getActivity(),
+									android.R.layout.simple_dropdown_item_1line,
+									addressNameList));
+					autoCompleteField.showDropDown();
+
+					if (!addressList.isEmpty()) {
+						double latitude = addressList.get(0).getLatitude(), 
+								longitude = addressList.get(0).getLongitude();
+						LatLng address = new LatLng(latitude, longitude);
+						
+						map.clear();
+
+						map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory
+								.fromResource(R.drawable.ic_action_place))
+								.position(address).flat(true).rotation(0));
+						
+						MapHelper.updateMapCamera(map, address);
+						
+						if(mListener != null){
+							mListener.setDestination(new ParseGeoPoint(latitude, longitude), addressNameList.get(0));
+						}
 					}
 				}
-			}
+			};
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {}
 			
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,	int after) {}
 
 			@Override
-			public void afterTextChanged(Editable query) {}
+			public void afterTextChanged(Editable query) {
+				this.query = query.toString();
+				mHandler.removeCallbacks(queryMap);
+				mHandler.postDelayed(queryMap, 2000);
+			}
 		};
 	}
 	
 	private OnMapClickListener mapClickHandler(final GoogleMap map, 
 			final AutoCompleteTextView addressTextView){
-		// TODO Auto-generated method stub
 		return new OnMapClickListener(){
 
 			@Override

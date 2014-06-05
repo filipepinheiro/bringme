@@ -7,21 +7,18 @@
     android:weightSum="6"
     tools:context="pt.ua.icm.bringme.CourierMenuFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ListView
         android:id="@+id/listViewTaskList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4" >
+        android:layout_weight="5" >
 
     </ListView>
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="Toggle Courier Mode"
         android:textAppearance="?android:attr/textAppearanceMedium" />

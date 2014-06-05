@@ -292,6 +292,9 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			String detailedDestinationLocation) {
 		delivery.detailedOrigin = detailedPackageLocation;
 		delivery.detailedDestination = detailedDestinationLocation;
+		if(validateDelivery()){
+			mViewPager.setCurrentItem(4);
+		}
 	}
 
 	@Override
@@ -305,41 +308,43 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 	}
 
 	@Override
-	public void validateDelivery() {
+	public boolean validateDelivery() {
 		if (delivery.origin == null) {
 			mViewPager.setCurrentItem(0);
 			Toast.makeText(this, "Specify Origin!", Toast.LENGTH_SHORT).show();
-			return;
+			return false;
 		}
 		if (delivery.courierId == null || delivery.courierId.isEmpty()) {
 			mViewPager.setCurrentItem(1);
 			Toast.makeText(this, "Specify Courier!", Toast.LENGTH_SHORT).show();
-			return;
+			return false;
 		}
 		if (delivery.destination == null) {
 			mViewPager.setCurrentItem(2);
 			Toast.makeText(this, "Specify Destination!", Toast.LENGTH_SHORT)
 					.show();
-			return;
+			return false;
 		}
 		if (delivery.detailedDestination == null || delivery.detailedOrigin.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Detailed Origin!", Toast.LENGTH_SHORT)
 					.show();
-			return;
+			return false;
 		}
 		if (delivery.detailedDestination == null || delivery.detailedDestination.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Detailed Destination!",
 					Toast.LENGTH_SHORT).show();
-			return;
+			return false;
 		}
 		if (delivery.name == null || delivery.name.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Package Name!", Toast.LENGTH_SHORT)
 					.show();
-			return;
+			return false;
 		}
+		
+		return true;
 	}
 
 	@Override
