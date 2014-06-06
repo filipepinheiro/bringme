@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseGeoPoint;
 
 import android.app.Activity;
+import android.app.Service;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
@@ -128,6 +130,10 @@ public class DeliveryDestinationFragment extends Fragment {
 							mListener.setDestination(new ParseGeoPoint(latitude, longitude), addressNameList.get(0));
 						}
 					}
+					
+					//Hide the soft keyboard
+					InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Service.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(autoCompleteField.getWindowToken(), 0);
 				}
 			};
 			
@@ -166,6 +172,8 @@ public class DeliveryDestinationFragment extends Fragment {
 					String originAddressName = AddressHelper.getPrettyAddress(address); 
 
 					addressTextView.setText(originAddressName);
+					
+					mListener.setDestination(AddressHelper.latLngToParseGeoPoint(coordinates), originAddressName);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

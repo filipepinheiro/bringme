@@ -100,7 +100,9 @@ public class DeliveryCourierListFragment extends Fragment{
 	
 	
 	public interface OnDeliveryListener {
-		public void setCourierFromList(String courier);
+		//public void setCourierFromList(String courier);
+
+		public void showCourierProfile(String objectId);
 	}
 	
 
@@ -143,7 +145,8 @@ public class DeliveryCourierListFragment extends Fragment{
 				
 				@Override
 				public void onClick(View v) {
-					mListener.setCourierFromList(courier.getObjectId());
+					mListener.showCourierProfile(courier.getObjectId());
+					//mListener.setCourierFromList(courier.getObjectId());
 				}
 			});
 			return rowView;

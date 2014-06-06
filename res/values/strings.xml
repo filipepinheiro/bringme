@@ -73,5 +73,8 @@
     <string name="filipe">Filipe Pinheiro</string>
     <string name="hugo">Hugo Correia</string>
     <string name="title_activity_credits">CreditsActivity</string>
+    <string name="loading_couriers">Loading Couriers</string>
+    <string name="none">None</string>
+    <string name="sending_notification">Sending Notification</string>
 
 </resources>

@@ -33,7 +33,7 @@
                 android:id="@+id/finish_request_package_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Small Text"
+                android:text="@string/none"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -51,7 +51,7 @@
                 android:id="@+id/finish_request_package_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Small Text"
+                android:text="@string/none"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -69,7 +69,7 @@
                 android:id="@+id/finish_request_special_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Small Text"
+                android:text="@string/none"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -87,7 +87,7 @@
                 android:id="@+id/finish_request_detailed_origin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Small Text"
+                android:text="@string/none"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -105,7 +105,7 @@
                 android:id="@+id/finish_request_detailed_destination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Small Text"
+                android:text="@string/none"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -122,12 +122,13 @@
 
             <pt.ua.icm.bringme.helpers.RoundedImageView
                 android:id="@+id/userImageDrawer"
-                android:layout_width="75dip"
-                android:layout_height="75dip"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="4dp"
-                android:scaleType="centerInside" />
+                android:scaleType="centerInside"
+                android:src="@drawable/default_profile_picture" />
 
             <TextView
                 android:id="@+id/finish_request_courier_name"
@@ -149,5 +150,30 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/deliveryFinishLoaderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/sending_notification"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
 
 </FrameLayout>

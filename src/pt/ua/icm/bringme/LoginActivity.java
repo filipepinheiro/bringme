@@ -399,8 +399,8 @@ public class LoginActivity extends ActionBarActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		showLoader();
 		if(resultCode == RESULT_OK){
-			showLoader();
 			ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
 		}
 	}

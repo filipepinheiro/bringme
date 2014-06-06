@@ -38,8 +38,6 @@ public class DeliveryDetailsFragment extends Fragment{
 		View view = inflater.inflate(R.layout.fragment_delivery_details, container,
 				false);
 		
-		packageLocationLayout = 
-				(LinearLayout) view.findViewById(R.id.packageLocationDetails);
 		packageDetailsLayout = 
 				(LinearLayout) view.findViewById(R.id.packageDetails);
 		
@@ -55,49 +53,26 @@ public class DeliveryDetailsFragment extends Fragment{
 		packageDetails = 
 				(EditText) view.findViewById(R.id.packageDetailsEditText);
 		
-		showLocationDetails();
-		
 		Button detailedLocationButton = 
 				(Button) view.findViewById(R.id.packageLocationDetailsButton);
-		Button packageDetailsButton = 
-				(Button) view.findViewById(R.id.packageDetailsButton);
 		
-		detailedLocationButton.setOnClickListener(submitDetailedLocation());
-		packageDetailsButton.setOnClickListener(submitPackageDetails());
+		detailedLocationButton.setOnClickListener(submitDetails());
 		
 		return view;
 	}
 
-	private OnClickListener submitPackageDetails() {
+	private OnClickListener submitDetails() {
 		return new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				
 				String packageNameValue = 
 						packageName.getText().toString();
 				String packageDescriptionValue = 
 						packageDescription.getText().toString();
 				String packageDetailsValue = 
 						packageDetails.getText().toString();
-				
-				if(packageNameValue.isEmpty()){
-					packageDetails.setError("Required!");
-					return;
-				}
-				
-				mListener.setPackageDetails(packageNameValue,packageDescriptionValue,
-						packageDetailsValue);
-				
-				mListener.validateDelivery();
-			}
-		};
-	}
-
-	private OnClickListener submitDetailedLocation() {
-		return new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
 				
 				String detailedPackageLocationValue = 
 						detailedPackageLocation.getText().toString();
@@ -112,23 +87,18 @@ public class DeliveryDetailsFragment extends Fragment{
 					detailedPackageLocation.setError("Required!");
 					return;
 				}
+				else if(packageNameValue.isEmpty()){
+					packageDetails.setError("Required!");
+					return;
+				}
 				
-				showPackageDetails();
+				mListener.validateDelivery();
 				
-				mListener.setPackageLocationDetails(detailedPackageLocationValue, 
+				mListener.setDeliveryDetails(packageNameValue,packageDescriptionValue,
+						packageDetailsValue,detailedPackageLocationValue, 
 						detailedDestinationLocationValue);
 			}
 		};
-	}
-
-	protected void showLocationDetails() {
-		packageLocationLayout.setVisibility(View.VISIBLE);
-		packageDetailsLayout.setVisibility(View.INVISIBLE);
-	}
-
-	protected void showPackageDetails() {
-		packageLocationLayout.setVisibility(View.INVISIBLE);
-		packageDetailsLayout.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -149,13 +119,12 @@ public class DeliveryDetailsFragment extends Fragment{
 	}
 
 	public interface OnDeliveryListener {
-		public void setPackageLocationDetails(String detailedPackageLocation, 
-				String detailedDestinationLocation);
+		public void setDeliveryDetails(String name,
+				String description, String details,
+				String originDetails,
+				String destinationDetails);
 
 		public boolean validateDelivery();
-
-		public void setPackageDetails(String packageName,
-				String packageDescription, String packageDetails);
 	}
 
 }

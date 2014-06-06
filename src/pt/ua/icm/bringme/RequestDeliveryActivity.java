@@ -288,26 +288,6 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 	}
 
 	@Override
-	public void setPackageLocationDetails(String detailedPackageLocation,
-			String detailedDestinationLocation) {
-		delivery.detailedOrigin = detailedPackageLocation;
-		delivery.detailedDestination = detailedDestinationLocation;
-		if(validateDelivery()){
-			mViewPager.setCurrentItem(4);
-		}
-	}
-
-	@Override
-	public void setPackageDetails(String packageName,
-			String packageDescription, String packageDetails) {
-		delivery.name = packageName;
-		delivery.description = packageDescription;
-		delivery.notes = packageDetails;
-		Toast.makeText(getApplicationContext(), "Details saved", Toast.LENGTH_SHORT)
-		.show();
-	}
-
-	@Override
 	public boolean validateDelivery() {
 		if (delivery.origin == null) {
 			mViewPager.setCurrentItem(0);
@@ -325,7 +305,13 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 					.show();
 			return false;
 		}
-		if (delivery.detailedDestination == null || delivery.detailedOrigin.isEmpty()) {
+		if (delivery.name == null || delivery.name.isEmpty()) {
+			mViewPager.setCurrentItem(3);
+			Toast.makeText(this, "Specify Package Name!", Toast.LENGTH_SHORT)
+					.show();
+			return false;
+		}
+		if (delivery.detailedOrigin == null || delivery.detailedOrigin.isEmpty()) {
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Detailed Origin!", Toast.LENGTH_SHORT)
 					.show();
@@ -335,12 +321,6 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			mViewPager.setCurrentItem(3);
 			Toast.makeText(this, "Specify Detailed Destination!",
 					Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		if (delivery.name == null || delivery.name.isEmpty()) {
-			mViewPager.setCurrentItem(3);
-			Toast.makeText(this, "Specify Package Name!", Toast.LENGTH_SHORT)
-					.show();
 			return false;
 		}
 		
@@ -368,11 +348,11 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		mViewPager.setCurrentItem(2);
 	}
 
-	@Override
+	/*@Override
 	public void setCourierFromList(String objectId) {
 		delivery.courierId = objectId;
 		mViewPager.setCurrentItem(2);
-	}
+	}*/
 
 	@Override
 	public void deliverySent() {
@@ -380,5 +360,18 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		/*
 		Intent mainMenu = new Intent(this, MainActivity.class);
 		startActivity(mainMenu);*/
+	}
+
+	@Override
+	public void setDeliveryDetails(String name, String description,
+			String details, String originDetails, String destinationDetails) {
+		delivery.name = name;
+		delivery.description = description;
+		delivery.notes = details;
+		delivery.detailedOrigin = originDetails;
+		delivery.detailedDestination = destinationDetails;
+		if(validateDelivery()){
+			mViewPager.setCurrentItem(4);
+		}
 	}
 }

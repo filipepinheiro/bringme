@@ -295,14 +295,10 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public void onLocationChanged(Location newLocation) {
-		ParseGeoPoint.getCurrentLocationInBackground(5000, new LocationCallback() {
-			@Override
-			public void done(ParseGeoPoint geoPoint, ParseException e) {
-				updateLastLocation(geoPoint);
-			}
-		});
+		updateLocation();
 	}
 	
+	/*
 	public void updateLastLocation(ParseGeoPoint geoPoint){
 		if(geoPoint != null){
 			Log.i(Consts.TAG, "My location is: " + geoPoint.getLatitude() + "," 
@@ -330,16 +326,55 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void changeLastLocation(ParseGeoPoint geoPoint) {
 		updateLastLocation(geoPoint);
-	}
+	}*/
 
 	@Override
-	public void setCourierMode(boolean state) {
-		user.put("courier", false);
+	public void setCourierMode(final boolean state) {
+		user.put("courier", state);
 		user.saveInBackground(new SaveCallback() {
 			@Override
 			public void done(ParseException e) {
-				Log.i(Consts.TAG, "Courier mode set to false.");
-				Toast.makeText(getApplicationContext(), "Courier mode OFF", Toast.LENGTH_SHORT).show();
+				if(state){
+					Log.i(Consts.TAG, "Courier mode set to false.");
+					Toast.makeText(getApplicationContext(), "Courier mode OFF", Toast.LENGTH_SHORT).show();
+					PushService.unsubscribe(getApplicationContext(), "bringme" + user.getObjectId());
+				}
+				else{
+					Log.i(Consts.TAG, "Courier mode set to true.");
+					Toast.makeText(getApplicationContext(), "Courier mode ON", Toast.LENGTH_SHORT).show();
+					updateLocation();
+				}
+			}
+		});
+	}
+	
+	public void updateLocation(){
+		ParseGeoPoint.getCurrentLocationInBackground(5000, new LocationCallback() {
+			@Override
+			public void done(ParseGeoPoint geoPoint, ParseException e) {
+				if(e == null){
+					Log.d(Consts.TAG, "Retrieved location!");
+					
+					if(geoPoint != null){
+						Log.i(Consts.TAG, "My location is: " + geoPoint.getLatitude() + "," 
+							+ geoPoint.getLongitude());
+						
+						user.put("lastLocation", geoPoint);
+						user.saveInBackground(new SaveCallback() {
+							
+							@Override
+							public void done(ParseException e) {
+								if(e == null){
+									Log.d(Consts.TAG, "Location saved successfully!");
+									Log.d(Consts.TAG, "User: " + user.getObjectId());
+									PushService.subscribe(getApplicationContext(), "bringme" + user.getObjectId(), MainActivity.class);
+								}
+							}
+						});
+					}else{
+						Log.e(Consts.TAG, "Location is null!");
+					}
+				}
 			}
 		});
 	}

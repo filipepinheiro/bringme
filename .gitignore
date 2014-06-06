@@ -125,3 +125,4 @@ bin/dexedLibs/facebooksdk-b256e8cb18d36d3bf58e34ce01cc9716.jar
 bin/dexedLibs/google-play-services-c74220f583840cb9455685adf0b2d2a5.jar
 bin/dexedLibs/google-play-services_lib-e6834d99dcbe72153fc915a296060be8.jar
 project.properties
+*.class

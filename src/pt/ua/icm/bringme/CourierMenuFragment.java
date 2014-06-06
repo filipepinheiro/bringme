@@ -54,20 +54,19 @@ public class CourierMenuFragment extends Fragment {
 				false);
 		
 		courierToggle = (ToggleButton) view.findViewById(R.id.toggleCourierModeButton);
+		
+		courierToggle.setChecked(ParseUser.getCurrentUser().getBoolean("courier"));
+		
+		if(courierToggle.isChecked()){
+			mListener.updateLocation();
+		}
+		
 		courierToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
-					ParseGeoPoint.getCurrentLocationInBackground(5000, new LocationCallback() {
-						@Override
-						public void done(ParseGeoPoint geoPoint, ParseException e) {
-							if(e == null){
-								Log.i(Consts.TAG, "Retrieved location!");
-								mListener.changeLastLocation(geoPoint);
-							}
-						}
-					});
+					mListener.setCourierMode(true);
 				}
 				else{
 					mListener.setCourierMode(false);
@@ -81,6 +80,18 @@ public class CourierMenuFragment extends Fragment {
 		
 		return view;
 	}
+	
+	/*public void updateLocation(){
+		ParseGeoPoint.getCurrentLocationInBackground(5000, new LocationCallback() {
+			@Override
+			public void done(ParseGeoPoint geoPoint, ParseException e) {
+				if(e == null){
+					Log.i(Consts.TAG, "Retrieved location!");
+					mListener.changeLastLocation(geoPoint);
+				}
+			}
+		});
+	}*/
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -99,9 +110,11 @@ public class CourierMenuFragment extends Fragment {
 	}
 	
 	public interface OnLocationListener {
-		void changeLastLocation(ParseGeoPoint geoPoint);
+		//void changeLastLocation(ParseGeoPoint geoPoint);
 
 		void setCourierMode(boolean b);
+
+		void updateLocation();
 	}
 
 	public class deliveryAdapter extends BaseAdapter {

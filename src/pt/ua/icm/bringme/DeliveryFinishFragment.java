@@ -18,6 +18,7 @@ import com.parse.SendCallback;
 import pt.ua.icm.bringme.models.Delivery;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.NetworkInfo.DetailedState;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +37,11 @@ public class DeliveryFinishFragment extends Fragment {
 
 	private Delivery delivery;
 	
+	LinearLayout deliveryFinishLayout;
+	LinearLayout deliveryFinishLoaderLayout;
+	
 	TextView packageName, packageDescription, packageNotes, packageDetailedOrigin,
-	packageDetailedDestination;
+	packageDetailedDestination, courierName;
 	
 	private OnDeliveryListener mListener;
 
@@ -70,12 +75,17 @@ public class DeliveryFinishFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_delivery_finish, container,
 				false);
 		
+		deliveryFinishLayout = (LinearLayout) view.findViewById(R.id.deliveryFinishLayout);
+		deliveryFinishLoaderLayout = (LinearLayout) view.findViewById(R.id.deliveryFinishLoaderLayout);
+		
 		packageName = (TextView) view.findViewById(R.id.finish_request_package_name);
 		packageDescription = (TextView) view.findViewById(R.id.finish_request_package_description);
 		packageNotes = (TextView) view.findViewById(R.id.finish_request_special_notes);
 		packageDetailedOrigin = (TextView) view.findViewById(R.id.finish_request_detailed_origin);
 		packageDetailedDestination = (TextView) view.findViewById(R.id.finish_request_detailed_destination);
+		courierName = (TextView) view.findViewById(R.id.finish_request_courier_name);
 		
+		showFinishDelivery();
 		fillFields();
 		
 		Button submitButton = (Button) view.findViewById(R.id.finish_request_button);
@@ -90,6 +100,8 @@ public class DeliveryFinishFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				ParseUser courier = null;
+				
+				showLoader();
 				
 				try {
 					courier = ParseUser.getQuery().get(delivery.courierId);
@@ -124,6 +136,7 @@ public class DeliveryFinishFragment extends Fragment {
 							sendRequestNotification(delivery.courierId);
 						}
 						else{
+							showFinishDelivery();
 							Log.d(Consts.TAG, "Delivery persistence failed!");
 							Log.e(Consts.TAG, e.getMessage());
 						}
@@ -133,17 +146,37 @@ public class DeliveryFinishFragment extends Fragment {
 		};
 	}
 	
+	private void showLoader() {
+		deliveryFinishLayout.setVisibility(View.GONE);
+		deliveryFinishLoaderLayout.setVisibility(View.VISIBLE);
+	}
+	
+	private void showFinishDelivery() {
+		deliveryFinishLayout.setVisibility(View.VISIBLE);
+		deliveryFinishLoaderLayout.setVisibility(View.GONE);
+	}
+	
 	public void finishDelivery(){
 		getActivity().finish();
 	}
 	
 	private void fillFields() {
-		if(delivery != null){
+		if(delivery != null && delivery.name != null && 
+				delivery.description != null && delivery.notes != null
+				&& delivery.detailedOrigin != null && delivery.detailedDestination != null && delivery.courierId != null){
 			packageName.setText(delivery.name.toString());
 			packageDescription.setText(delivery.description.toString());
 			packageNotes.setText(delivery.notes.toString());
 			packageDetailedOrigin.setText(delivery.detailedOrigin.toString());
 			packageDetailedDestination.setText(delivery.detailedDestination.toString());
+			ParseUser courier = null;
+			try {
+				courier = ParseUser.getQuery().get(delivery.courierId);
+				courierName.setText(courier.getString("firstName") + " " + courier.getString("lastName"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
 		}
 	}
 
@@ -175,6 +208,7 @@ public class DeliveryFinishFragment extends Fragment {
 									finishDelivery();
 								}
 								else{
+									showFinishDelivery();
 									Toast.makeText(getActivity(), "Notification failed!", Toast.LENGTH_SHORT).show();
 									Log.e(Consts.TAG, "Notification failed! :(");
 								}

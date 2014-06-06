@@ -5,19 +5,52 @@
     android:layout_height="match_parent"
     tools:context="pt.ua.icm.bringme.DeliveryCourierProfileFragment" >
 
+    <RelativeLayout
+        android:id="@+id/deliveryCourierLoader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:text="@string/loading_couriers"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+    </RelativeLayout>
+
     <LinearLayout
+        android:id="@+id/deliveryCourierProfile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
-        
+
         <pt.ua.icm.bringme.helpers.RoundedImageView
             android:id="@+id/deliveryCourierUserImage"
-            android:layout_width="100dip"
-            android:layout_height="100dip"
-            android:layout_gravity="center"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
-            android:scaleType="centerInside" />
+            android:maxHeight="70dp"
+            android:maxWidth="70dp"
+            android:src="@drawable/default_profile_picture"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/deliveryCourierProfileName"
@@ -29,11 +62,17 @@
             android:textStyle="bold" />
 
         <RatingBar
-            android:id="@+id/ratingBar1"
+            android:id="@+id/deliveryCourierRating"
+            style="@style/ratingBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:minHeight="57dip" />
+            android:isIndicator="true"
+            android:max="5"
+            android:minHeight="57dip"
+            android:numStars="5"
+            android:rating="0.0"
+            android:stepSize="1.0" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +112,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-
         </LinearLayout>
 
         <Button
@@ -83,7 +121,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/pick_courier" />
-
     </LinearLayout>
 
 </FrameLayout>

@@ -21,6 +21,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class DeliveryCourierProfileFragment extends Fragment {
@@ -28,6 +30,8 @@ public class DeliveryCourierProfileFragment extends Fragment {
 	private TextView deliveryCourierProfileName, deliveryCourierProfileRequests,
 		deliveryCourierProfileDeliveries;
 	private RoundedImageView deliveryCourierProfileImage;
+	private RelativeLayout loadingLayout;
+	private LinearLayout profileLayout;
 
 	private OnDeliveryListener mListener;
 
@@ -63,6 +67,11 @@ public class DeliveryCourierProfileFragment extends Fragment {
 		deliveryCourierProfileDeliveries = (TextView) view.findViewById(R.id.deliveryCourierDeliveriesValue);
 		deliveryCourierProfileImage = (RoundedImageView) view.findViewById(R.id.deliveryCourierUserImage);
 		
+		loadingLayout = (RelativeLayout) view.findViewById(R.id.deliveryCourierLoader);
+		profileLayout = (LinearLayout) view.findViewById(R.id.deliveryCourierProfile);
+		
+		showLoading();
+		
 		ParseUser.getQuery().getInBackground(userId, new GetCallback<ParseUser>() {
 
 			@Override
@@ -73,6 +82,10 @@ public class DeliveryCourierProfileFragment extends Fragment {
 						try {
 							Bitmap picture = loader.execute(user.getString("facebookId"),"normal").get();
 							deliveryCourierProfileImage.setImageBitmap(picture);
+							deliveryCourierProfileName.setText(user.getString("firstName") + " "+ user.getString("lastName"));
+							deliveryCourierProfileRequests.setText(String.valueOf(user.getInt("requests")));
+							deliveryCourierProfileDeliveries.setText(String.valueOf(user.getInt("deliveries")));
+							showProfile();
 						} catch (InterruptedException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -81,9 +94,6 @@ public class DeliveryCourierProfileFragment extends Fragment {
 							e1.printStackTrace();
 						}
 					}
-					deliveryCourierProfileName.setText(user.getString("firstName") + " "+ user.getString("lastName"));
-					deliveryCourierProfileRequests.setText(String.valueOf(user.getInt("requests")));
-					deliveryCourierProfileDeliveries.setText(String.valueOf(user.getInt("deliveries")));
 				}
 			}
 		});
@@ -98,6 +108,16 @@ public class DeliveryCourierProfileFragment extends Fragment {
 		});
 		
 		return view;
+	}
+
+	private void showLoading() {
+		loadingLayout.setVisibility(View.VISIBLE);
+		profileLayout.setVisibility(View.INVISIBLE);
+	}
+	
+	private void showProfile() {
+		loadingLayout.setVisibility(View.INVISIBLE);
+		profileLayout.setVisibility(View.VISIBLE);
 	}
 
 	@Override

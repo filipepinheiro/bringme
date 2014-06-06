@@ -1,158 +1,107 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/paddingStyles"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="pt.ua.icm.bringme.DeliveryDetailsFragment" >
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        android:id="@+id/packageDetails"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="3" >
+        android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/packageNameTitle"
+        <LinearLayout
+            android:id="@+id/packageDetails"
+            style="@style/paddingStyles"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/package_name_title"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical" >
 
-        <EditText
-            android:id="@+id/packageNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/field_background"
-            android:minHeight="48dp"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            <EditText
+                android:id="@+id/packageNameEditText"
+                style="@style/editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="4dp"
+                android:hint="@string/package_name_title"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:textColor="@color/white"
+                android:textSize="14sp" >
 
-        <TextView
-            android:id="@+id/packageDescriptionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/package_description_title"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+                <requestFocus />
+            </EditText>
 
-        <EditText
-            android:id="@+id/packageDescriptionEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/field_background"
-            android:minHeight="48dp"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            <EditText
+                android:id="@+id/packageDescriptionEditText"
+                style="@style/editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/package_description_title"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/packageDetailsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/package_details_title"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <EditText
+                android:id="@+id/packageDetailsEditText"
+                style="@style/editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/package_details_title"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/packageDetailsEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/field_background"
-            android:minHeight="48dp"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            <EditText
+                android:id="@+id/detailedPackageLocationEditText"
+                style="@style/editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:ems="10"
+                android:gravity="center_vertical|center_horizontal"
+                android:hint="@string/detailed_package_location"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/packageDetailsButton"
-            style="@style/buttonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:onClick="submitPackageDetails"
-            android:text="@string/ok" />
+            <EditText
+                android:id="@+id/detailedDestinationLocationEditText"
+                style="@style/editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:ems="10"
+                android:gravity="center_vertical|center_horizontal"
+                android:hint="@string/detailed_destination_location"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/packageLocationDetailsButton"
+                style="@style/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:minWidth="64dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/ok" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/packageLocationDetails"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="2" >
-
-        <TextView
-            android:id="@+id/detailedPackageLocationTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/detailed_package_location"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/detailedPackageLocationExample"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/detailed_package_location_example"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/detailedPackageLocationEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/field_background"
-            android:ems="10"
-            android:gravity="start"
-            android:inputType="textMultiLine"
-            android:textColor="@color/white"
-            android:textSize="14sp" >
-
-            <requestFocus />
-        </EditText>
-
-        <TextView
-            android:id="@+id/detailedDestinationLocationTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/detailed_destination_location"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/detailedDestinationLocationEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/field_background"
-            android:ems="10"
-            android:gravity="start"
-            android:inputType="textMultiLine"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/packageLocationDetailsButton"
-            style="@style/buttonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="@string/ok" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

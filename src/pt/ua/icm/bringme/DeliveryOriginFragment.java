@@ -7,10 +7,13 @@ import java.util.List;
 import pt.ua.icm.bringme.helpers.AddressHelper;
 import pt.ua.icm.bringme.helpers.MapHelper;
 import android.app.Activity;
+import android.app.Service;
+import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +21,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
@@ -56,22 +61,27 @@ public class DeliveryOriginFragment extends Fragment{
 		View view = inflater.inflate(R.layout.fragment_delivery_origin, container,
 				false);
 		
-		final SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
+		final SupportMapFragment mapFragment = 
+				(SupportMapFragment) getFragmentManager()
 				.findFragmentById(R.id.originMapFragment);
 		
-		final AutoCompleteTextView originAddress = (AutoCompleteTextView) view.findViewById(R.id.deliveryDestinationAddress);
+		final AutoCompleteTextView originAddress = (AutoCompleteTextView) 
+				view.findViewById(R.id.deliveryDestinationAddress);
 		
 		final GoogleMap map = (GoogleMap) mapFragment.getMap();
 		
 		map.setOnMapClickListener(mapClickHandler(map, originAddress));
 		
-		originAddress.addTextChangedListener(addressSugestionsHandler(originAddress, map));
+		originAddress.addTextChangedListener(
+				addressSugestionsHandler(originAddress, map));
 		
 		return view;
 	}
 
-	private TextWatcher addressSugestionsHandler(final AutoCompleteTextView autoCompleteField, 
+	private TextWatcher addressSugestionsHandler(
+			final AutoCompleteTextView autoCompleteField, 
 			final GoogleMap map) {
+		
 		return new TextWatcher() {
 			
 			List<String> addressNameList = new ArrayList<String>();
@@ -96,6 +106,7 @@ public class DeliveryOriginFragment extends Fragment{
 						addressList = coder.getFromLocationName(query, 3);
 					} catch (IOException e) {
 						Toast.makeText(getActivity(), "Failed to retrive location!", Toast.LENGTH_SHORT).show();
+						Log.e(Consts.TAG, e.getMessage());
 					}
 
 					for (Address address : addressList) {
@@ -125,6 +136,10 @@ public class DeliveryOriginFragment extends Fragment{
 							mListener.setOrigin(new ParseGeoPoint(latitude, longitude), addressNameList.get(0));
 						}
 					}
+					
+					//Hide the soft keyboard
+					InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Service.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(autoCompleteField.getWindowToken(), 0);
 				}
 				
 			};
@@ -158,7 +173,6 @@ public class DeliveryOriginFragment extends Fragment{
 					map.addMarker(new MarkerOptions().position(coordinates)
 							.icon(BitmapDescriptorFactory
 									.fromResource(R.drawable.ic_action_place)));
-				
 				
 					Address address = coder.getFromLocation(latitude, 
 							longitude, 1).get(0);
