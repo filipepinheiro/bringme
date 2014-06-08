@@ -15,8 +15,8 @@
 
     <pt.ua.icm.bringme.helpers.RoundedImageView
         android:id="@+id/deliveryCourierUserImage"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="4dp"

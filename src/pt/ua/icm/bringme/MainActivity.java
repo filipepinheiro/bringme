@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
+import pt.ua.icm.bringme.helpers.AddressHelper;
 import pt.ua.icm.bringme.helpers.BitmapHelper;
 import pt.ua.icm.bringme.helpers.FacebookImageLoader;
 import pt.ua.icm.bringme.helpers.RoundedImageView;
@@ -89,7 +90,7 @@ public class MainActivity extends ActionBarActivity implements
 		
 		user = ParseUser.getCurrentUser();
 		
-		Log.i(Consts.TAG, "Last location on Parse: " + user.getParseGeoPoint("lastLocation"));
+		Log.i(Consts.TAG, "Last location on Parse: " + AddressHelper.printParseGeoPoint(user.getParseGeoPoint("lastLocation")));
 		
 		final RoundedImageView drawerProfilePicture = 
 				(RoundedImageView) findViewById(R.id.userImageDrawer);
@@ -297,36 +298,6 @@ public class MainActivity extends ActionBarActivity implements
 	public void onLocationChanged(Location newLocation) {
 		updateLocation();
 	}
-	
-	/*
-	public void updateLastLocation(ParseGeoPoint geoPoint){
-		if(geoPoint != null){
-			Log.i(Consts.TAG, "My location is: " + geoPoint.getLatitude() + "," 
-				+ geoPoint.getLongitude());
-			
-			user.put("lastLocation", geoPoint);
-			user.put("courier", true);
-			user.saveInBackground(new SaveCallback() {
-				
-				@Override
-				public void done(ParseException e) {
-					if(e == null){
-						Log.i(Consts.TAG, "Location saved successfully!");
-						Toast.makeText(getApplicationContext(), "Courier mode ON", Toast.LENGTH_SHORT).show();
-						Log.i(Consts.TAG, "User: " + user.getObjectId());
-						PushService.subscribe(getApplicationContext(), "bringme" + user.getObjectId(), MainActivity.class);
-					}
-				}
-			});
-		}else{
-			Log.e(Consts.TAG, "Location is null!");
-		}
-	}
-
-	@Override
-	public void changeLastLocation(ParseGeoPoint geoPoint) {
-		updateLastLocation(geoPoint);
-	}*/
 
 	@Override
 	public void setCourierMode(final boolean state) {
@@ -335,14 +306,16 @@ public class MainActivity extends ActionBarActivity implements
 			@Override
 			public void done(ParseException e) {
 				if(state){
-					Log.i(Consts.TAG, "Courier mode set to false.");
-					Toast.makeText(getApplicationContext(), "Courier mode OFF", Toast.LENGTH_SHORT).show();
-					PushService.unsubscribe(getApplicationContext(), "bringme" + user.getObjectId());
-				}
-				else{
 					Log.i(Consts.TAG, "Courier mode set to true.");
 					Toast.makeText(getApplicationContext(), "Courier mode ON", Toast.LENGTH_SHORT).show();
 					updateLocation();
+				}
+				else{
+					Log.i(Consts.TAG, "Courier mode set to false.");
+					Toast.makeText(getApplicationContext(), "Courier mode OFF", Toast.LENGTH_SHORT).show();
+					
+					Log.i(Consts.TAG, "Unsubscribed to my channel.");
+					PushService.unsubscribe(getApplicationContext(), "bringme" + user.getObjectId());
 				}
 			}
 		});

@@ -90,6 +90,11 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 					.setTabListener(this));
 		}
 	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		//super.onSaveInstanceState(outState);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,7 +121,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			ft.replace(R.id.courierMapContainer, f);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.addToBackStack(null);
-			ft.commit();
+			ft.commitAllowingStateLoss();
 			return true;
 		}
 		if(id == R.id.listViewActionIcon){
@@ -126,7 +131,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			ft.replace(R.id.courierMapContainer, f);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.addToBackStack(null);
-			ft.commit();
+			ft.commitAllowingStateLoss();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -156,7 +161,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 			ft.replace(R.id.courierMapContainer, f);
 			ft.addToBackStack(null);
-			ft.commit();
+			ft.commitAllowingStateLoss();
 		}
 		
 		if(tab.getPosition() == 4){
@@ -165,7 +170,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 			ft.replace(R.id.deliveryFinishContainer, f);
 			ft.addToBackStack(null);
-			ft.commit();
+			ft.commitAllowingStateLoss();
 		}
 	}
 
@@ -181,7 +186,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 			mapActionButton.setVisible(false);
 			SupportMapFragment f = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.courierMapFragment);
 			if(f != null){
-				getSupportFragmentManager().beginTransaction().remove(f).commit();
+				getSupportFragmentManager().beginTransaction().remove(f).commitAllowingStateLoss();
 			}
 		}
 	}
@@ -333,7 +338,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		Fragment f = new DeliveryCourierProfileFragment().newInstance(objectId);
 		ft.replace(R.id.courierMapContainer, f);
 		ft.addToBackStack(null);
-		ft.commit();
+		ft.commitAllowingStateLoss();
 	}
 
 	@Override
@@ -343,7 +348,7 @@ public class RequestDeliveryActivity extends ActionBarActivity implements
 		Fragment f = new DeliveryCourierMapFragment().newInstance(courierList, origin);
 		ft.replace(R.id.courierMapContainer, f);
 		ft.addToBackStack(null);
-		ft.commit();
+		ft.commitAllowingStateLoss();
 		
 		mViewPager.setCurrentItem(2);
 	}

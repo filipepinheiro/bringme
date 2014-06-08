@@ -128,7 +128,8 @@
 
         <activity
             android:name="pt.ua.icm.bringme.RequestDeliveryActivity"
-            android:label="@string/title_activity_request_delivery" >
+            android:label="@string/title_activity_request_delivery"
+            android:hardwareAccelerated="true" >
         </activity>
         <activity
             android:name="pt.ua.icm.bringme.FinishRequestDeliveryActivity"
@@ -139,7 +140,7 @@
             android:label="@string/title_activity_finish_request_delivery" >
         </activity>
         <activity
-            android:name="pt.ua.icm.bringme.DetailsActivity"
+            android:name="pt.ua.icm.bringme.DeliveryDetailsActivity"
             android:label="@string/title_activity_finish_request_delivery" >
         </activity>
         <activity
@@ -149,6 +150,10 @@
         <activity
             android:name="pt.ua.icm.bringme.CreditsActivity"
             android:label="@string/title_activity_credits" >
+        </activity>
+        <activity
+            android:name="pt.ua.icm.bringme.DeliveryActionActivity"
+            android:label="@string/title_activity_delivery_action" >
         </activity>
     </application>
 

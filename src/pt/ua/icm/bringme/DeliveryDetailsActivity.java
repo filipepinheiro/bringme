@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.json.JSONObject;
 
+import pt.ua.icm.bringme.helpers.AddressHelper;
 import pt.ua.icm.bringme.helpers.BitmapHelper;
 import pt.ua.icm.bringme.helpers.DirectionsJSONParser;
 import pt.ua.icm.bringme.helpers.FacebookImageLoader;
@@ -35,15 +36,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-public class DetailsActivity extends ActionBarActivity {
+public class DeliveryDetailsActivity extends ActionBarActivity {
 
+	ParseObject delivery;
+	TextView expectedTime, courierName;
+	
 	GoogleMap map;
 	ArrayList<LatLng> markerPoints;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +57,24 @@ public class DetailsActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_delivery_details);
 
-		Intent i = getIntent();
-		final Delivery delivery = (Delivery) i.getParcelableExtra("delivery");
+		Intent received = getIntent();
+		
+		String deliveryId = received.getStringExtra("deliveryId");
+		
+		expectedTime = (TextView) findViewById(R.id.expectedTime);
+		courierName = (TextView) findViewById(R.id.deliveryDetailsCourierName);
+		
+		ParseQuery<ParseObject> queryDelivery = new ParseQuery<ParseObject>("Delivery");
+		queryDelivery.getInBackground(deliveryId, new GetCallback<ParseObject>() {
+			
+			@Override
+			public void done(ParseObject parseDelivery, ParseException e) {
+				if(e == null){
+					delivery = parseDelivery;
+				}
+			}
+		});
+		/*final Delivery delivery = (Delivery) i.getParcelableExtra("delivery");
 
 		
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
@@ -66,10 +88,10 @@ public class DetailsActivity extends ActionBarActivity {
 				}
 			}
 
-		});
+		});*/
 
 	
-		String fbId = delivery.facebookId;
+		/*String fbId = delivery.facebookId;
 
 		RoundedImageView drawerProfilePicture = (RoundedImageView) findViewById(R.id.deliveryCourierUserImage);
 		drawerProfilePicture.setBorderColor(Color
@@ -110,7 +132,7 @@ public class DetailsActivity extends ActionBarActivity {
 			drawerProfilePicture.setBorderColor(Color
 					.parseColor(getString(R.color.green_peas)));
 
-		}
+		}*/
 
 		SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.detailLastMapFragment);
@@ -120,32 +142,32 @@ public class DetailsActivity extends ActionBarActivity {
 		// Getting Map for the SupportMapFragment
 		map = fm.getMap();
 
-		LatLng point1 = delivery.origin;
-		markerPoints.add(point1);
-		LatLng point2 = delivery.destination;
-		markerPoints.add(point2);
+		LatLng startPoint = AddressHelper.parseGeoPointToLatLng(delivery.getParseGeoPoint("origin"));
+		markerPoints.add(startPoint);
+		LatLng endPoint = new LatLng(delivery.getDouble("destinationLat"),delivery.getDouble("destinationLng"));
+		markerPoints.add(endPoint);
 
-		MapHelper.updateMapCamera(map, point1);
+		MapHelper.updateMapCamera(map, startPoint);
 
-		MarkerOptions options = new MarkerOptions();
-		MarkerOptions options2 = new MarkerOptions();
+		MarkerOptions startMarker = new MarkerOptions();
+		MarkerOptions endMarker = new MarkerOptions();
 
 		// Setting the position of the marker
-		options.position(point1);
-		options2.position(point2);
+		startMarker.position(startPoint);
+		endMarker.position(endPoint);
 
 		/**
 		 * For the start location, the color of marker is GREEN and for the end
 		 * location, the color of marker is RED.
 		 */
-		options.icon(BitmapDescriptorFactory
+		startMarker.icon(BitmapDescriptorFactory
 				.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
-		options2.icon(BitmapDescriptorFactory
+		endMarker.icon(BitmapDescriptorFactory
 				.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 		// Add new marker to the Google Map Android API V2
-		map.addMarker(options);
-		map.addMarker(options2);
+		map.addMarker(startMarker);
+		map.addMarker(endMarker);
 
 		// Checks, whether start and end locations are captured
 		if (markerPoints.size() >= 2) {
@@ -159,29 +181,8 @@ public class DetailsActivity extends ActionBarActivity {
 
 			// Start downloading json data from Google Directions API
 			downloadTask.execute(url);
-
 		}
 
-	}
-
-	protected void setNameOfCourier(List<ParseObject> objects, Delivery delivery) {
-		// TODO Auto-generated method stub
-
-		while (!objects.isEmpty()) {
-
-			if (objects.get(0).getObjectId().equals(delivery.courierId)) {
-
-				String firstName = objects.get(0).get("firstName").toString();
-				String lastName = objects.get(0).get("lastName").toString();
-				
-				TextView tvUserName = (TextView) findViewById(R.id.nameUserCourier);
-tvUserName.setText(firstName + " " + lastName);
-
-				objects.clear();
-			}
-			else
-				objects.remove(0);
-		}
 	}
 
 	private static String getDirectionsUrl(LatLng origin, LatLng dest) {

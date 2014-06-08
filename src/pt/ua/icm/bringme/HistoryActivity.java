@@ -129,7 +129,7 @@ public class HistoryActivity extends ListActivity{
 	protected void onListItemClick(ListView l, android.view.View v, int position, long id){
 		super.onListItemClick(l, v, position, id);
 		
-		Intent detailedInt = new Intent(getApplicationContext(), DetailsActivity.class);
+		Intent detailedInt = new Intent(getApplicationContext(), DeliveryDetailsActivity.class);
 		detailedInt.putExtra("delivery", deliveries[position]);
 		
 		startActivityForResult(detailedInt, position);

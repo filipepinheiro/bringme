@@ -148,7 +148,7 @@ public class DeliveryStatusActivity extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
 		
-		Intent detailedInt = new Intent(getApplicationContext(), DetailsActivity.class);
+		Intent detailedInt = new Intent(getApplicationContext(), DeliveryDetailsActivity.class);
 		detailedInt.putExtra("delivery", deliveries[position]);
 		
 		startActivityForResult(detailedInt, position);

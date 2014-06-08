@@ -76,5 +76,14 @@
     <string name="loading_couriers">Loading Couriers</string>
     <string name="none">None</string>
     <string name="sending_notification">Sending Notification</string>
+    <string name="title_activity_delivery_action">DeliveryActionActivity</string>
+    <string name="requester">Requester</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="origin_address">Origin Address</string>
+    <string name="positive">Yes</string>
+    <string name="negative">No</string>
+    <string name="delivery_details">Delivery Details</string>
+    <string name="finish">Finish</string>
 
 </resources>

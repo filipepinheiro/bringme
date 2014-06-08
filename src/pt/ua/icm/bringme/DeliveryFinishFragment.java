@@ -124,7 +124,7 @@ public class DeliveryFinishFragment extends Fragment {
 				parseDelivery.put("packageNotes", delivery.notes);
 				parseDelivery.put("courier", courier);
 				parseDelivery.put("requester", ParseUser.getCurrentUser());
-				parseDelivery.put("accepted", false);
+				parseDelivery.put("accepted", null);
 				parseDelivery.put("finished", false);
 				
 				parseDelivery.saveInBackground(new SaveCallback() {
@@ -190,7 +190,7 @@ public class DeliveryFinishFragment extends Fragment {
 					
 					try {
 						JSONObject data = new JSONObject(							
-								"{\"alert\":\"Hey! Can you BringMe this item?\"," +
+								"{\"alert\":\"Hey! Can you Bring this item?\"," +
 								"\"action\":\"pt.ua.icm.bringme.MainActivity\"}");
 					
 						ParsePush push = new ParsePush();

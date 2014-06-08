@@ -21,13 +21,11 @@
 
             <TextView
                 android:id="@+id/courierListItemName"
+                style="@style/textViewTitleStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/finish_delivery_package_name_label"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/green_peas"
-                android:textColorHint="@color/green_peas"
-                android:textStyle="bold" />
+                android:textColorHint="@color/green_peas" />
 
             <TextView
                 android:id="@+id/finish_request_package_name"
@@ -55,7 +53,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
-                android:id="@+id/TextView06"
+                android:id="@+id/actionDeliveryDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
@@ -73,7 +71,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
-                android:id="@+id/TextView04"
+                android:id="@+id/actionDeliveryDetailedOrigin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
@@ -91,7 +89,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
-                android:id="@+id/TextView02"
+                android:id="@+id/actionDeliveryDetailedDestination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
@@ -148,7 +146,6 @@
                 android:paddingRight="20dp"
                 android:text="@string/request" />
         </LinearLayout>
-
     </ScrollView>
 
     <LinearLayout
@@ -173,7 +170,6 @@
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/sending_notification"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
     </LinearLayout>
 
 </FrameLayout>
