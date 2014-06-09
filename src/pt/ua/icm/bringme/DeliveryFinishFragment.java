@@ -12,6 +12,7 @@ import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.PushService;
 import com.parse.SaveCallback;
 import com.parse.SendCallback;
 
@@ -36,6 +37,7 @@ import android.widget.Toast;
 public class DeliveryFinishFragment extends Fragment {
 
 	private Delivery delivery;
+	private ParseObject parseDelivery;
 	
 	LinearLayout deliveryFinishLayout;
 	LinearLayout deliveryFinishLoaderLayout;
@@ -112,7 +114,7 @@ public class DeliveryFinishFragment extends Fragment {
 				
 				ParseGeoPoint destination = AddressHelper.latLngToParseGeoPoint(delivery.destination);
 
-				ParseObject parseDelivery = new ParseObject("Delivery");
+				parseDelivery = new ParseObject("Delivery");
 				
 				parseDelivery.put("origin", AddressHelper.latLngToParseGeoPoint(delivery.origin));
 				parseDelivery.put("detailedOrigin", delivery.detailedOrigin);
@@ -124,7 +126,7 @@ public class DeliveryFinishFragment extends Fragment {
 				parseDelivery.put("packageNotes", delivery.notes);
 				parseDelivery.put("courier", courier);
 				parseDelivery.put("requester", ParseUser.getCurrentUser());
-				parseDelivery.put("accepted", null);
+				//parseDelivery.put("accepted", null);
 				parseDelivery.put("finished", false);
 				
 				parseDelivery.saveInBackground(new SaveCallback() {
@@ -204,6 +206,11 @@ public class DeliveryFinishFragment extends Fragment {
 							public void done(ParseException e) {
 								if(e == null){
 									Log.i(Consts.TAG, "Notification send with success!");
+									PushService.subscribe(getActivity().getApplicationContext(), 
+											"delivery"+parseDelivery.getObjectId(), MainActivity.class);
+									
+									Log.i(Consts.TAG, "Subscribed to: " + "delivery" + parseDelivery.getObjectId());
+									
 									Toast.makeText(getActivity(), "Notification sent!", Toast.LENGTH_SHORT).show();
 									finishDelivery();
 								}

@@ -1,14 +1,22 @@
 package pt.ua.icm.bringme;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
+
 import pt.ua.icm.bringme.helpers.AddressHelper;
 
+import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.SendCallback;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -26,6 +34,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.os.Build;
 
@@ -38,14 +47,14 @@ public class DeliveryActionActivity extends ActionBarActivity {
 
 	private Button acceptButton, rejectButton, finishButton;
 	
+	private LinearLayout finishLayout, acceptanceLayout, actionDeliveryLayout, loader;
+	
 	private ParseObject delivery = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_delivery_action);
-		
-		Intent received = getIntent();
 		
 		actionDeliveryPackageName = (TextView) findViewById(R.id.actionDeliveryPackageName);
 		actionDeliveryRequesterName = (TextView) findViewById(R.id.actionDeliveryRequesterName); 
@@ -58,6 +67,15 @@ public class DeliveryActionActivity extends ActionBarActivity {
 		acceptButton = (Button) findViewById(R.id.actionDeliveryAcceptButton);
 		rejectButton = (Button) findViewById(R.id.actionDeliveryRejectButton);
 		finishButton = (Button) findViewById(R.id.actionDeliveryFinishButton);
+		
+		acceptanceLayout = (LinearLayout) findViewById(R.id.acceptanceLayout);
+		finishLayout = (LinearLayout) findViewById(R.id.finishingLayout);
+		actionDeliveryLayout = (LinearLayout) findViewById(R.id.actionDeliveryLayout);
+		loader = (LinearLayout) findViewById(R.id.actionDeliveryLoader);
+		
+		Intent received = getIntent();
+		
+		showLoader();
 		
 		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Delivery");
 		query.getInBackground(received.getStringExtra("delivery"), new GetCallback<ParseObject>() {
@@ -98,9 +116,43 @@ public class DeliveryActionActivity extends ActionBarActivity {
 					
 					acceptButton.setOnClickListener(acceptDelivery());
 					rejectButton.setOnClickListener(rejectDelivery());
+					finishButton.setOnClickListener(finishDelivery());
+					
+					boolean deliveryAccepted = delivery.getBoolean("accepted"),
+							deliveryFinished = delivery.getBoolean("finished");
+					
+					
+					if(deliveryAccepted && !deliveryFinished){
+						showFinishLayout();
+					}
+					else{
+						showAcceptanceLayout();
+					}
+					
+					showActionDeliveryLayout();
 				}
 			}
 		});
+	}
+	
+	private void showLoader(){
+		actionDeliveryLayout.setVisibility(View.GONE);
+		loader.setVisibility(View.VISIBLE);
+	}
+	
+	private void showActionDeliveryLayout(){
+		actionDeliveryLayout.setVisibility(View.VISIBLE);
+		loader.setVisibility(View.GONE);
+	}
+	
+	private void showAcceptanceLayout(){
+		acceptanceLayout.setVisibility(View.VISIBLE);
+		finishLayout.setVisibility(View.GONE);
+	}
+	
+	private void showFinishLayout(){
+		acceptanceLayout.setVisibility(View.GONE);
+		finishLayout.setVisibility(View.VISIBLE);
 	}
 
 	protected OnClickListener rejectDelivery() {
@@ -125,6 +177,7 @@ public class DeliveryActionActivity extends ActionBarActivity {
 								@Override
 								public void done(ParseException e) {
 									if(e == null){
+										sendRejectedDeliveryNotification();
 										startActivity(new Intent(v.getContext(), MainActivity.class));
 									}
 								}
@@ -163,6 +216,7 @@ public class DeliveryActionActivity extends ActionBarActivity {
 								@Override
 								public void done(ParseException e) {
 									if(e == null){
+										sendAcceptedDeliveryNotification();
 										startActivity(new Intent(v.getContext(), MainActivity.class));
 									}
 								}
@@ -176,6 +230,129 @@ public class DeliveryActionActivity extends ActionBarActivity {
 				dialog.show();
 			}
 		};
+	}
+
+	protected OnClickListener finishDelivery() {
+		return new OnClickListener() {
+			
+			@Override
+			public void onClick(final View v) {
+				delivery.put("finished", true);
+				delivery.saveInBackground(new SaveCallback() {
+					
+					@Override
+					public void done(ParseException e) {
+						if(e == null){
+							sendFinishDeliveryNotification();
+							startActivity(new Intent(v.getContext(), MainActivity.class));
+						}
+					}
+				});
+			}
+		};
+	}
+	
+	private void sendAcceptedDeliveryNotification(){
+		ParseUser requester = delivery.getParseUser("requester");
+		
+		try {
+			requester.fetchIfNeeded();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ParsePush push = new ParsePush();
+		
+		String courierFirstName = ParseUser.getCurrentUser().getString("firstName");
+		String courierLastName = ParseUser.getCurrentUser().getString("lastName");
+		String courierFullName = courierFirstName + " " + courierLastName;
+		
+		push.setMessage(courierFullName + " accepted your request!");
+		push.setChannel("delivery"+ delivery.getObjectId());
+		
+		Log.i(Consts.TAG, "Pushed notification to: " + "delivery" + requester.getObjectId());
+		
+		push.sendInBackground(new SendCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if(e == null){
+					Log.i(Consts.TAG, "Delivery Accepted and notification sent!");
+				}
+				else{
+					Log.e(Consts.TAG, e.getMessage());
+				}
+			}
+		});
+	}
+	
+	private void sendRejectedDeliveryNotification(){
+		ParseUser requester = delivery.getParseUser("requester");
+		
+		try {
+			requester.fetchIfNeeded();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ParsePush push = new ParsePush();
+		
+		String courierFirstName = ParseUser.getCurrentUser().getString("firstName");
+		String courierLastName = ParseUser.getCurrentUser().getString("lastName");
+		String courierFullName = courierFirstName + " " + courierLastName;
+		
+		push.setMessage(courierFullName + " rejected your request!");
+		push.setChannel("delivery"+ delivery.getObjectId());
+		
+		push.sendInBackground(new SendCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if(e == null){
+					Log.i(Consts.TAG, "Delivery Rejected and notification sent!");
+					delivery.deleteInBackground(new DeleteCallback() {
+						
+						@Override
+						public void done(ParseException e) {
+							if(e == null){
+								startActivity(new Intent(getApplicationContext(),MainActivity.class));
+							}
+						}
+					});
+				}
+			}
+		});
+	}
+	
+	private void sendFinishDeliveryNotification() {
+		ParseUser requester = delivery.getParseUser("requester");
+		
+		try {
+			requester.fetchIfNeeded();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ParsePush push = new ParsePush();
+		push.setMessage("Hey! I delivered your package "+ delivery.getString("packageName") + "!");
+		push.setChannel("delivery"+ delivery.getObjectId());
+		
+		/*Map<String, Object> data = new HashMap<String, Object>();
+		data.put("delivery", delivery.getObjectId());
+		
+		push.setData(new JSONObject(data));*/
+		push.sendInBackground(new SendCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if(e == null){
+					Log.i(Consts.TAG, "Delivery Finished and notification sent!");
+				}
+			}
+		});
 	}
 
 	@Override

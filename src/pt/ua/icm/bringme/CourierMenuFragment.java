@@ -68,10 +68,6 @@ public class CourierMenuFragment extends Fragment {
 		
 		courierToggle.setChecked(ParseUser.getCurrentUser().getBoolean("courier"));
 		
-		if(courierToggle.isChecked()){
-			mListener.updateLocation();
-		}
-		
 		courierToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override

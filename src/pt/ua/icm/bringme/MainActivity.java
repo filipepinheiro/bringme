@@ -39,7 +39,9 @@ import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.PushService;
@@ -70,7 +72,8 @@ public class MainActivity extends ActionBarActivity implements
 				"91wrcZYRC5rYdyKxSltowkKtI8nrpzCFMbwKYvUP");
 		
 		PushService.setDefaultPushCallback(this, MainActivity.class);
-		ParseAnalytics.trackAppOpened(getIntent());
+		//ParseAnalytics.trackAppOpened(getIntent());
+		ParseInstallation.getCurrentInstallation().saveInBackground();
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
@@ -89,6 +92,19 @@ public class MainActivity extends ActionBarActivity implements
 		actionBar.setHomeButtonEnabled(true);
 		
 		user = ParseUser.getCurrentUser();
+		
+		ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if(user.getBoolean("courier")){
+					updateLocation();
+					
+					Log.i(Consts.TAG, "Subscribed to channel: bringme"+user.getObjectId());
+					PushService.subscribe(getApplicationContext(), "bringme" + user.getObjectId(), MainActivity.class);
+				}
+			}
+		});
 		
 		Log.i(Consts.TAG, "Last location on Parse: " + AddressHelper.printParseGeoPoint(user.getParseGeoPoint("lastLocation")));
 		
@@ -174,7 +190,6 @@ public class MainActivity extends ActionBarActivity implements
 	public void onListDeliveriesActivity(View view){
 		Intent requestListDeliveriesIntent = new Intent(this, DeliveryStatusActivity.class);
 		startActivity(requestListDeliveriesIntent);
-		
 	}
 
 	public void userLogout(View view){
@@ -305,17 +320,22 @@ public class MainActivity extends ActionBarActivity implements
 		user.saveInBackground(new SaveCallback() {
 			@Override
 			public void done(ParseException e) {
-				if(state){
-					Log.i(Consts.TAG, "Courier mode set to true.");
-					Toast.makeText(getApplicationContext(), "Courier mode ON", Toast.LENGTH_SHORT).show();
-					updateLocation();
+				if(e == null){
+					if(state){
+						Log.i(Consts.TAG, "Courier mode set to true.");
+						
+						updateLocation();
+						PushService.subscribe(getApplicationContext(), "bringme" + user.getObjectId(),MainActivity.class);
+					}
+					else{
+						Log.i(Consts.TAG, "Courier mode set to false.");
+						
+						PushService.unsubscribe(getApplicationContext(), "bringme" + user.getObjectId());
+						Log.i(Consts.TAG, "Unsubscribed to my channel.");
+					}
 				}
 				else{
-					Log.i(Consts.TAG, "Courier mode set to false.");
-					Toast.makeText(getApplicationContext(), "Courier mode OFF", Toast.LENGTH_SHORT).show();
-					
-					Log.i(Consts.TAG, "Unsubscribed to my channel.");
-					PushService.unsubscribe(getApplicationContext(), "bringme" + user.getObjectId());
+					Log.e(Consts.TAG, e.getMessage());
 				}
 			}
 		});
@@ -339,8 +359,6 @@ public class MainActivity extends ActionBarActivity implements
 							public void done(ParseException e) {
 								if(e == null){
 									Log.d(Consts.TAG, "Location saved successfully!");
-									Log.d(Consts.TAG, "User: " + user.getObjectId());
-									PushService.subscribe(getApplicationContext(), "bringme" + user.getObjectId(), MainActivity.class);
 								}
 							}
 						});
