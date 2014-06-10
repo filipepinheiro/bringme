@@ -74,6 +74,8 @@ public class RegisterActivity extends ActionBarActivity {
 			user.put("phoneNumber", phoneNumberValue);
 			user.put("firstName", firstNameValue);
 			user.put("lastName", lastNameValue);
+			user.put("delivered", 0);
+			user.put("requested", 0);
 			
 			user.signUpInBackground(new SignUpCallback() {
 				

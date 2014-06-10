@@ -15,6 +15,7 @@ import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.PushService;
 import com.parse.SaveCallback;
 import com.parse.SendCallback;
 
@@ -210,6 +211,7 @@ public class DeliveryActionActivity extends ActionBarActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if(AlertDialog.BUTTON_POSITIVE == which){
+							Log.d(Consts.TAG, "Accepted to delivery");
 							delivery.put("accepted", true);
 							delivery.saveInBackground(new SaveCallback() {
 								
@@ -218,6 +220,9 @@ public class DeliveryActionActivity extends ActionBarActivity {
 									if(e == null){
 										sendAcceptedDeliveryNotification();
 										startActivity(new Intent(v.getContext(), MainActivity.class));
+									}
+									else{
+										Log.e(Consts.TAG,e.getMessage());
 									}
 								}
 							});
@@ -244,6 +249,7 @@ public class DeliveryActionActivity extends ActionBarActivity {
 					public void done(ParseException e) {
 						if(e == null){
 							sendFinishDeliveryNotification();
+							PushService.unsubscribe(getApplicationContext(), "delivery" + delivery.getObjectId());
 							startActivity(new Intent(v.getContext(), MainActivity.class));
 						}
 					}
@@ -336,8 +342,11 @@ public class DeliveryActionActivity extends ActionBarActivity {
 			e.printStackTrace();
 		}
 		
+		String fullName = ParseUser.getCurrentUser().getString("firstName") + " "
+				+ ParseUser.getCurrentUser().getString("lastName");
+		
 		ParsePush push = new ParsePush();
-		push.setMessage("Hey! I delivered your package "+ delivery.getString("packageName") + "!");
+		push.setMessage(fullName + " delivered your package "+ delivery.getString("packageName") + "!");
 		push.setChannel("delivery"+ delivery.getObjectId());
 		
 		/*Map<String, Object> data = new HashMap<String, Object>();

@@ -73,7 +73,12 @@ public class MainActivity extends ActionBarActivity implements
 		
 		PushService.setDefaultPushCallback(this, MainActivity.class);
 		//ParseAnalytics.trackAppOpened(getIntent());
-		ParseInstallation.getCurrentInstallation().saveInBackground();
+		try {
+			ParseInstallation.getCurrentInstallation().save();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();

@@ -96,30 +96,6 @@ public class LoginActivity extends ActionBarActivity {
 
 	public void loginSuccess() {
 		user = ParseUser.getCurrentUser();
-		/*if (user.has("facebookId")) {
-
-			FacebookImageLoader loader = new FacebookImageLoader();
-			Bitmap profilePic;
-			loader.execute(user.getString("facebookId"));
-			
-			try {
-				profilePic = loader.get();
-
-				ByteArrayOutputStream stream = new ByteArrayOutputStream();
-				profilePic.compress(Bitmap.CompressFormat.PNG, 100, stream);
-				byte[] parsePic = stream.toByteArray();
-				
-				//ParseFile parsePic = new ParseFile(profilePicBytes);
-				user.put("pic", parsePic);
-				user.saveInBackground();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}*/
 
 		Intent menuIntent = new Intent(this, MainActivity.class);
 		startActivity(menuIntent);
@@ -343,6 +319,8 @@ public class LoginActivity extends ActionBarActivity {
 							parseUser.put("email", this.email);
 							parseUser.put("firstName", this.firstName);
 							parseUser.put("lastName", this.lastName);
+							parseUser.put("delivered", 0);
+							parseUser.put("requested", 0);
 							parseUser.put("facebookId", user.getId().toString());
 							
 							parseUser.saveInBackground(new SaveCallback() {
