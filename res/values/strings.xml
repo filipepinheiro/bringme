@@ -86,5 +86,8 @@
     <string name="delivery_details">Delivery Details</string>
     <string name="finish">Finish</string>
     <string name="loading_delivery">Loading Delivery</string>
+    <string name="title_activity_rate_courier">RateCourierActivity</string>
+    <string name="rate_courier_description">Please rate the courier job!</string>
+    <string name="submit">Submit</string>
 
 </resources>

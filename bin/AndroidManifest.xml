@@ -112,7 +112,8 @@
             android:name="pt.ua.icm.bringme.Receiver"
             android:exported="false" >
             <intent-filter>
-                <action android:name="pt.ua.icm.bringme.NEW_DELIVERY" />
+                <action android:name="pt.ua.icm.bringme.FINISHED_DELIVERY" />
+                <action android:name="pt.ua.icm.bringme.DELIVERY_ACCEPTANCE" />
             </intent-filter>
         </receiver>
         <receiver
@@ -128,8 +129,8 @@
 
         <activity
             android:name="pt.ua.icm.bringme.RequestDeliveryActivity"
-            android:label="@string/title_activity_request_delivery"
-            android:hardwareAccelerated="true" >
+            android:hardwareAccelerated="true"
+            android:label="@string/title_activity_request_delivery" >
         </activity>
         <activity
             android:name="pt.ua.icm.bringme.FinishRequestDeliveryActivity"
@@ -154,6 +155,10 @@
         <activity
             android:name="pt.ua.icm.bringme.DeliveryActionActivity"
             android:label="@string/title_activity_delivery_action" >
+        </activity>
+        <activity
+            android:name="pt.ua.icm.bringme.RateCourierActivity"
+            android:label="@string/title_activity_rate_courier" >
         </activity>
     </application>
 

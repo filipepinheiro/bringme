@@ -126,7 +126,6 @@ public class DeliveryFinishFragment extends Fragment {
 				parseDelivery.put("packageNotes", delivery.notes);
 				parseDelivery.put("courier", courier);
 				parseDelivery.put("requester", ParseUser.getCurrentUser());
-				//parseDelivery.put("accepted", null);
 				parseDelivery.put("finished", false);
 				
 				parseDelivery.saveInBackground(new SaveCallback() {
@@ -190,40 +189,44 @@ public class DeliveryFinishFragment extends Fragment {
 			public void done(ParseException e) {
 				if(e == null){
 					
+					JSONObject data = new JSONObject();
 					try {
-						JSONObject data = new JSONObject(							
-								"{\"alert\":\"Hey! Can you Bring this item?\"," +
-								"\"action\":\"pt.ua.icm.bringme.MainActivity\"}");
-					
-						ParsePush push = new ParsePush();
-						push.setExpirationTimeInterval(60*5);
-						push.setChannel("bringme"+courierId);
-						push.setData(data);
-						push.setMessage("Hey! Can you BringMe?");
-						push.sendInBackground(new SendCallback() {
-							
-							@Override
-							public void done(ParseException e) {
-								if(e == null){
-									Log.i(Consts.TAG, "Notification send with success!");
-									PushService.subscribe(getActivity().getApplicationContext(), 
-											"delivery"+parseDelivery.getObjectId(), MainActivity.class);
-									
-									Log.i(Consts.TAG, "Subscribed to: " + "delivery" + parseDelivery.getObjectId());
-									
-									Toast.makeText(getActivity(), "Notification sent!", Toast.LENGTH_SHORT).show();
-									finishDelivery();
-								}
-								else{
-									showFinishDelivery();
-									Toast.makeText(getActivity(), "Notification failed!", Toast.LENGTH_SHORT).show();
-									Log.e(Consts.TAG, "Notification failed! :(");
-								}
-							}
-						});
-					} catch (JSONException jsonException) {
-						jsonException.printStackTrace();
+						data.put("action", "pt.ua.icm.bringme.DELIVERY_ACCEPTANCE");
+						data.put("deliveryId", parseDelivery.getObjectId());
+					} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
+					
+					String currentUserFullName = ParseUser.getCurrentUser().getString("firstName") + " "
+							+ ParseUser.getCurrentUser().getString("lastName");
+
+					ParsePush push = new ParsePush();
+					push.setExpirationTimeInterval(60*5);
+					push.setChannel("bringme"+courierId);
+					push.setData(data);
+					push.setMessage(currentUserFullName + " asked you to deliver something!");
+					push.sendInBackground(new SendCallback() {
+						
+						@Override
+						public void done(ParseException e) {
+							if(e == null){
+								Log.i(Consts.TAG, "Notification sent with success!");
+								PushService.subscribe(getActivity().getApplicationContext(), 
+										"delivery"+parseDelivery.getObjectId(), MainActivity.class);
+								
+								Log.i(Consts.TAG, "Subscribed to: " + "delivery" + parseDelivery.getObjectId());
+								
+								Toast.makeText(getActivity(), "Notification sent!", Toast.LENGTH_SHORT).show();
+								finishDelivery();
+							}
+							else{
+								showFinishDelivery();
+								Toast.makeText(getActivity(), "Notification failed!", Toast.LENGTH_SHORT).show();
+								Log.e(Consts.TAG, "Notification failed! :(");
+							}
+						}
+					});
 				}else{
 					Log.e(Consts.TAG, "Failed to save Current Installation!");					
 				}

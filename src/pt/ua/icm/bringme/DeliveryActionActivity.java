@@ -3,6 +3,7 @@ package pt.ua.icm.bringme;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import pt.ua.icm.bringme.helpers.AddressHelper;
@@ -79,7 +80,7 @@ public class DeliveryActionActivity extends ActionBarActivity {
 		showLoader();
 		
 		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Delivery");
-		query.getInBackground(received.getStringExtra("delivery"), new GetCallback<ParseObject>() {
+		query.getInBackground(received.getStringExtra("deliveryId"), new GetCallback<ParseObject>() {
 			
 			@Override
 			public void done(ParseObject deliveryResult, ParseException e) {
@@ -242,6 +243,7 @@ public class DeliveryActionActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(final View v) {
+				showLoader();
 				delivery.put("finished", true);
 				delivery.saveInBackground(new SaveCallback() {
 					
@@ -250,6 +252,7 @@ public class DeliveryActionActivity extends ActionBarActivity {
 						if(e == null){
 							sendFinishDeliveryNotification();
 							PushService.unsubscribe(getApplicationContext(), "delivery" + delivery.getObjectId());
+							showFinishLayout();
 							startActivity(new Intent(v.getContext(), MainActivity.class));
 						}
 					}
@@ -349,10 +352,16 @@ public class DeliveryActionActivity extends ActionBarActivity {
 		push.setMessage(fullName + " delivered your package "+ delivery.getString("packageName") + "!");
 		push.setChannel("delivery"+ delivery.getObjectId());
 		
-		/*Map<String, Object> data = new HashMap<String, Object>();
-		data.put("delivery", delivery.getObjectId());
+		JSONObject data = new JSONObject();
+		try {
+			data.put("action", "pt.ua.icm.bringme.FINISHED_DELIVERY");
+			data.put("deliveryId", delivery.getObjectId());
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		push.setData(new JSONObject(data));*/
+		push.setData(data);
 		push.sendInBackground(new SendCallback() {
 			
 			@Override

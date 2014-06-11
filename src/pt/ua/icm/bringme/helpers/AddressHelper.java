@@ -13,12 +13,14 @@ public class AddressHelper {
 	
 	public static String getPrettyAddress(Address address){
 		StringBuilder prettyAddress = new StringBuilder("");
-		int maxAddressLine = address.getMaxAddressLineIndex(); 
-		
-		for(int i = 0;i<=maxAddressLine;i++){
-			prettyAddress.append(address.getAddressLine(i));
-			if(i != maxAddressLine){
-				prettyAddress.append(", ");
+		if(address != null){
+			int maxAddressLine = address.getMaxAddressLineIndex(); 
+			
+			for(int i = 0;i<=maxAddressLine;i++){
+				prettyAddress.append(address.getAddressLine(i));
+				if(i != maxAddressLine){
+					prettyAddress.append(", ");
+				}
 			}
 		}
 		

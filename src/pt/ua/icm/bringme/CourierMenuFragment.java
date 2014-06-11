@@ -167,7 +167,7 @@ public class CourierMenuFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					Intent showDeliveryIntent = new Intent(getActivity(), DeliveryActionActivity.class);
-					showDeliveryIntent.putExtra("delivery", delivery.getObjectId());
+					showDeliveryIntent.putExtra("deliveryId", delivery.getObjectId());
 					getActivity().startActivity(showDeliveryIntent);
 				}
 			});
