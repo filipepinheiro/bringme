@@ -27,6 +27,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -44,25 +47,41 @@ import com.parse.ParseUser;
 
 public class DeliveryDetailsActivity extends ActionBarActivity {
 
-	ParseObject delivery;
-	TextView expectedTime, courierName;
+	private ParseObject delivery;
+	private TextView expectedTime, courierName;
+	private RoundedImageView drawerProfilePicture ;
 	
-	GoogleMap map;
-	ArrayList<LatLng> markerPoints;
+	private GoogleMap map;
+	private ArrayList<LatLng> markerPoints;
 	
+	private LinearLayout loader, details;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_delivery_details);
+		
+		loader = (LinearLayout) findViewById(R.id.deliveryDetailsLoader);
+		details = (LinearLayout) findViewById(R.id.deliveryDetailsContainer);
 
+		showLoader();
+		
 		Intent received = getIntent();
 		
 		String deliveryId = received.getStringExtra("deliveryId");
+		drawerProfilePicture = (RoundedImageView) findViewById(R.id.deliveryCourierUserImage);
 		
 		expectedTime = (TextView) findViewById(R.id.expectedTime);
 		courierName = (TextView) findViewById(R.id.deliveryDetailsCourierName);
+		
+		SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.detailLastMapFragment);
+
+		markerPoints = new ArrayList<LatLng>();
+
+		// Getting Map for the SupportMapFragment
+		map = fm.getMap();
 		
 		ParseQuery<ParseObject> queryDelivery = new ParseQuery<ParseObject>("Delivery");
 		queryDelivery.getInBackground(deliveryId, new GetCallback<ParseObject>() {
@@ -71,118 +90,112 @@ public class DeliveryDetailsActivity extends ActionBarActivity {
 			public void done(ParseObject parseDelivery, ParseException e) {
 				if(e == null){
 					delivery = parseDelivery;
+					
+					LatLng startPoint = AddressHelper.parseGeoPointToLatLng(delivery.getParseGeoPoint("origin"));
+					markerPoints.add(startPoint);
+					LatLng endPoint = new LatLng(delivery.getDouble("destinationLat"),delivery.getDouble("destinationLng"));
+					markerPoints.add(endPoint);
+					
+					MapHelper.updateMapCamera(map, startPoint);
+
+					MarkerOptions startMarker = new MarkerOptions();
+					MarkerOptions endMarker = new MarkerOptions();
+
+					// Setting the position of the marker
+					startMarker.position(startPoint);
+					endMarker.position(endPoint);
+
+					/**
+					 * For the start location, the color of marker is GREEN and for the end
+					 * location, the color of marker is RED.
+					 */
+					startMarker.icon(BitmapDescriptorFactory
+							.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+			
+					endMarker.icon(BitmapDescriptorFactory
+							.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+					// Add new marker to the Google Map Android API V2
+					map.addMarker(startMarker);
+					map.addMarker(endMarker);
+			
+					// Checks, whether start and end locations are captured
+					if (markerPoints.size() >= 2) {
+						LatLng origin = markerPoints.get(0);
+						LatLng dest = markerPoints.get(1);
+			
+						// Getting URL to the Google Directions API
+						String url = getDirectionsUrl(origin, dest);
+			
+						DownloadTask downloadTask = new DownloadTask();
+			
+						// Start downloading json data from Google Directions API
+						downloadTask.execute(url);
+					}
+					
+					showDetails();
+					
+					/*String fbId = null;
+					
+					try {
+						fbId = delivery.getParseUser("courier").fetchIfNeeded().getString("facebookId");
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					drawerProfilePicture.setBorderColor(Color
+							.parseColor(getString(R.color.green_peas)));
+
+					if (fbId != null) {
+
+						FacebookImageLoader profilePictureLoader = new FacebookImageLoader();
+
+						Bitmap profilePicture = null;
+
+						try {
+
+							profilePicture = profilePictureLoader.execute(fbId, "normal")
+									.get();
+
+						} catch (InterruptedException e1) {
+							Log.e(Consts.TAG, "Load profile picture was cancelled!");
+							e1.printStackTrace();
+						} catch (ExecutionException e2) {
+							Log.e(Consts.TAG, "Execution Error!");
+							e2.printStackTrace();
+						}
+
+						if (profilePicture != null) {
+							drawerProfilePicture.setImageBitmap(profilePicture);
+						} else {
+							Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
+									R.drawable.default_profile_picture, this);
+							drawerProfilePicture.setImageBitmap(defaultPicture);
+							drawerProfilePicture.setBorderColor(Color
+									.parseColor(getString(R.color.green_peas)));
+						}
+					} else {
+						Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
+								R.drawable.default_profile_picture, this);
+						drawerProfilePicture.setImageBitmap(defaultPicture);
+						drawerProfilePicture.setBorderColor(Color
+								.parseColor(getString(R.color.green_peas)));
+
+					}*/
 				}
 			}
 		});
-		/*final Delivery delivery = (Delivery) i.getParcelableExtra("delivery");
 
-		
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-		query.findInBackground(new FindCallback<ParseObject>() {
-			public void done(List<ParseObject> objects, ParseException e) {
-				if (e == null) {
-					Log.i(Consts.TAG, "LIST = " + objects.size());
-					setNameOfCourier(objects, delivery);
-				} else {
-					Log.i(Consts.TAG, "Delivery List Empty! - " + e);
-				}
-			}
-
-		});*/
-
+	}
 	
-		/*String fbId = delivery.facebookId;
-
-		RoundedImageView drawerProfilePicture = (RoundedImageView) findViewById(R.id.deliveryCourierUserImage);
-		drawerProfilePicture.setBorderColor(Color
-				.parseColor(getString(R.color.green_peas)));
-
-		if (fbId != null) {
-
-			FacebookImageLoader profilePictureLoader = new FacebookImageLoader();
-
-			Bitmap profilePicture = null;
-
-			try {
-
-				profilePicture = profilePictureLoader.execute(fbId, "normal")
-						.get();
-
-			} catch (InterruptedException e) {
-				Log.e(Consts.TAG, "Load profile picture was cancelled!");
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				Log.e(Consts.TAG, "Execution Error!");
-				e.printStackTrace();
-			}
-
-			if (profilePicture != null) {
-				drawerProfilePicture.setImageBitmap(profilePicture);
-			} else {
-				Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
-						R.drawable.default_profile_picture, this);
-				drawerProfilePicture.setImageBitmap(defaultPicture);
-				drawerProfilePicture.setBorderColor(Color
-						.parseColor(getString(R.color.green_peas)));
-			}
-		} else {
-			Bitmap defaultPicture = BitmapHelper.drawableToBitmap(
-					R.drawable.default_profile_picture, this);
-			drawerProfilePicture.setImageBitmap(defaultPicture);
-			drawerProfilePicture.setBorderColor(Color
-					.parseColor(getString(R.color.green_peas)));
-
-		}*/
-
-		SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.detailLastMapFragment);
-
-		markerPoints = new ArrayList<LatLng>();
-
-		// Getting Map for the SupportMapFragment
-		map = fm.getMap();
-
-		LatLng startPoint = AddressHelper.parseGeoPointToLatLng(delivery.getParseGeoPoint("origin"));
-		markerPoints.add(startPoint);
-		LatLng endPoint = new LatLng(delivery.getDouble("destinationLat"),delivery.getDouble("destinationLng"));
-		markerPoints.add(endPoint);
-
-		MapHelper.updateMapCamera(map, startPoint);
-
-		MarkerOptions startMarker = new MarkerOptions();
-		MarkerOptions endMarker = new MarkerOptions();
-
-		// Setting the position of the marker
-		startMarker.position(startPoint);
-		endMarker.position(endPoint);
-
-		/**
-		 * For the start location, the color of marker is GREEN and for the end
-		 * location, the color of marker is RED.
-		 */
-		startMarker.icon(BitmapDescriptorFactory
-				.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-
-		endMarker.icon(BitmapDescriptorFactory
-				.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-		// Add new marker to the Google Map Android API V2
-		map.addMarker(startMarker);
-		map.addMarker(endMarker);
-
-		// Checks, whether start and end locations are captured
-		if (markerPoints.size() >= 2) {
-			LatLng origin = markerPoints.get(0);
-			LatLng dest = markerPoints.get(1);
-
-			// Getting URL to the Google Directions API
-			String url = getDirectionsUrl(origin, dest);
-
-			DownloadTask downloadTask = new DownloadTask();
-
-			// Start downloading json data from Google Directions API
-			downloadTask.execute(url);
-		}
-
+	private void showLoader(){
+		loader.setVisibility(View.VISIBLE);
+		details.setVisibility(View.GONE);
+	}
+	
+	private void showDetails(){
+		loader.setVisibility(View.GONE);
+		details.setVisibility(View.VISIBLE);
 	}
 
 	private static String getDirectionsUrl(LatLng origin, LatLng dest) {

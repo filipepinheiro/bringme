@@ -7,13 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -24,6 +28,7 @@ import com.parse.ParseUser;
 
 public class HistoryActivity extends ActionBarActivity{
 	private ListView list;
+	private LinearLayout loader;
 	private ParseUser user;
 	private HistoryAdapter adapter;
 	
@@ -32,24 +37,76 @@ public class HistoryActivity extends ActionBarActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
 		
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		list = (ListView) findViewById(R.id.historyListView);
+		loader = (LinearLayout) findViewById(R.id.historyLoader);
 
+		showLoader();
+		
 		user = ParseUser.getCurrentUser();
 		
+		Log.i(Consts.TAG, "Query started!");
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Delivery");
 		query.whereEqualTo("requester", user);
 		query.findInBackground(new FindCallback<ParseObject>() {
-
 			@Override
 			public void done(List<ParseObject> objects, ParseException e) {
-				LinkedList<ParseObject> deliveryList = new LinkedList<ParseObject>();
-				deliveryList.addAll(objects);
-				adapter = new HistoryAdapter(deliveryList);
-				list.setAdapter(adapter);
+				if(e == null){
+					Log.i(Consts.TAG, "Query finished!");
+					LinkedList<ParseObject> deliveryList = new LinkedList<ParseObject>();
+					
+					if(objects != null){
+						Log.d(Consts.TAG, "Found " + objects.size() + " deliveries!");
+						for(ParseObject delivery : objects){
+							try {
+								delivery.fetchIfNeeded();
+								deliveryList.add(delivery);
+							} catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					}else{
+						Log.d(Consts.TAG, "No deliveries found!");
+					}
+
+					adapter = new HistoryAdapter(deliveryList);
+					list.setAdapter(adapter);
+					showList();
+				}
+				else{
+					Log.e(Consts.TAG, e.getMessage());
+					Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT)
+					.show();
+					startActivity(new Intent(getApplicationContext(),MainActivity.class));
+				}
 			}
 			
 		});
-		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			startActivity(new Intent(getApplicationContext(), MainActivity.class)
+				.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	private void showLoader(){
+		loader.setVisibility(View.VISIBLE);
+		list.setVisibility(View.GONE);
+	}
+	
+	private void showList(){
+		loader.setVisibility(View.GONE);
+		list.setVisibility(View.VISIBLE);
 	}
 	
 	private class HistoryAdapter extends BaseAdapter{
@@ -67,7 +124,8 @@ public class HistoryActivity extends ActionBarActivity{
 
 		@Override
 		public Object getItem(int position) {
-			return historyList.get(position);
+			ParseObject delivery = historyList.get(position);
+			return delivery;
 		}
 
 		@Override
@@ -80,20 +138,26 @@ public class HistoryActivity extends ActionBarActivity{
 			LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    View rowView = inflater.inflate(R.layout.delivery_row, parent, false);
 		    
-		    TextView packageName = (TextView) findViewById(R.id.delivery_row_package_name);
+		    TextView packageName = (TextView) rowView.findViewById(R.id.delivery_row_package_name);
 		    
 		    final ParseObject delivery = (ParseObject) getItem(position);
-		    packageName.setText(delivery.getString("packageName"));
 		    
-		    rowView.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(v.getContext(), DeliveryDetailsActivity.class);
-					intent.putExtra("deliveryId", delivery.getObjectId());
-					startActivity(intent);
-				}
-			});
+		    if(delivery != null){
+		    	String packageNameString = delivery.getString("packageName");
+		    	if(packageNameString != null && packageName != null){
+		    		packageName.setText(packageNameString);
+		    	}
+			    
+			    rowView.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(v.getContext(), DeliveryDetailsActivity.class);
+						intent.putExtra("deliveryId", delivery.getObjectId());
+						startActivity(intent);
+					}
+				});
+		    }
 		    
 			return rowView;
 		}
