@@ -43,7 +43,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/delivery_row_package_name"
                 style="@style/textViewTitleStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

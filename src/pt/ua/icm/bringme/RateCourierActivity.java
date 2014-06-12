@@ -42,7 +42,7 @@ public class RateCourierActivity extends ActionBarActivity {
 		
 		//UI Initialization
 		submitButton = (Button) findViewById(R.id.submitCourierRate);
-		courierRatingBar  = (RatingBar) findViewById(R.id.rateCourierRating);
+		courierRatingBar  = (RatingBar) findViewById(R.id.profileRating);
 		Log.d(Consts.TAG, "Initialized UI.");
 		
 		String deliveryId = getIntent().getStringExtra("deliveryId");

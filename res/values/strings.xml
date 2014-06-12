@@ -89,5 +89,6 @@
     <string name="title_activity_rate_courier">RateCourierActivity</string>
     <string name="rate_courier_description">Please rate the courier job!</string>
     <string name="submit">Submit</string>
+    <string name="loading_profile">Loading Profile</string>
 
 </resources>

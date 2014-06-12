@@ -48,7 +48,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/green_soft"
-                android:minHeight="28dp"
+                android:minHeight="48dp"
                 android:onClick="openProfileActivity"
                 android:text="Profile" />
 
@@ -57,7 +57,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/green_medium"
-                android:minHeight="28dp"
+                android:minHeight="48dp"
                 android:onClick="openHistoryActivity"
                 android:text="History" />
 
@@ -66,18 +66,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/green_hard"
-                android:minHeight="28dp"
+                android:minHeight="48dp"
                 android:onClick="userLogout"
                 android:text="Logout" />
-
-            <Button
-                android:id="@+id/drawerCreditsButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:minHeight="28dp"
-                android:onClick="creditsActivity"
-                android:text="Credits" />
         </LinearLayout>
     </FrameLayout>
 
